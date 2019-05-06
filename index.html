@@ -9,11 +9,12 @@
     <script type="text/javascript" src="codebird.js"></script>
 </head>
 <body>
-    <h2>The XMLHttpRequest Object</h2>
+    <h2>API Twitter</h2>
     <button type="button" onclick="teste()">Request data</button>
     <p id="demo"></p>
 
     <script>
+    
     async function teste() {
         var cb = new Codebird;
         cb.setConsumerKey("rrUDLNZVqv8DaWX6fkmNrB5V9", "R20GkXiu42758yyy5pfykcswYA7Lnn9rBjhQEN25jMCPYO1YS7");
@@ -21,41 +22,10 @@
         cb.__call("search_tweets", "q=lixo rua calçada", function(reply) {
             console.log(reply);
         });
-        
-        /*var content = "Hello World";
-        var myHeaders = new Headers({
-            'consumer_key': "rrUDLNZVqv8DaWX6fkmNrB5V9", 
-            'consumer_secret': "R20GkXiu42758yyy5pfykcswYA7Lnn9rBjhQEN25jMCPYO1YS7",
-            'token_key': "2455702491-8jbRT6j6tLv5JHkL7WAac31ZfAAcluFRSDsWXXK",
-            'token_secret': "AuaU4YduVSXtcN1oxrbpYs0E3p3AES0xekg6lCzXEtEHW"
-        });
-
-        var myInit = {
-            method: 'GET',
-            headers: myHeaders,
-            mode: 'no-cors',
-            cache: 'default'
-        };
-
-        let a = await fetch("https://api.twitter.com/1.1/search/tweets.json?q=RealMadri", myInit);
-        
-
-        console.log(a);*/
     }
 
-    function loadDoc() {
-        let a;
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                a = JSON.parse(this.responseText)
-                document.getElementById("demo").innerHTML = a["nome"];
-            }
-        };
-        xhttp.open("GET", "oi.json", true);
-        xhttp.send();
-        console.log("TES 11111");
-    }
+    
+
     </script>
     
 </body>
