@@ -5,16 +5,15 @@ t = Twitter('rrUDLNZVqv8DaWX6fkmNrB5V9', 'R20GkXiu42758yyy5pfykcswYA7Lnn9rBjhQEN
 # Melhor busca para testar a api do twiiter para o projeto no LSI
 # b = t.search('lixo rua calçada', 'pt')
 
-b = t.search('lixo rua calçada', 'pt')
+b = t.search('lixo na calçada', 'pt')
 
 import sys
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 
 for r in b:
     u = r['text']
-    print(r['user']['screen_name'])
+    print(r['user']['geo_enable'])
     print("----> ")
     print(u.translate(non_bmp_map))
 
-    print(r['entities']['urls'][0]['url'])
     print('-------\n\n')
