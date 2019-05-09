@@ -25,9 +25,16 @@ app.get("/", (req, res) => {
 });
 
 // Requisição para o "/search".
-app.get('/search/:count', (req, res) => {
-    const count = req.params.count;
-    client.get('/search/tweets', {q: "lixo rua calçada", count: count}, function (error, tweets, response) {
+app.get('/search/:q', (req, res) => {
+    //Parâmetro obrigatório.
+    const q = req.params.q;
+
+    // Parâmetros opcionais.
+    const count = req.query.count || "";
+    const c = req.query.c || "";
+
+    // Requisição.
+    client.get('/search/tweets', {q: q, count: count}, function (error, tweets, response) {
         res.json(tweets);
     });
 });

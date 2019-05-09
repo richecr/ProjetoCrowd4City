@@ -18,6 +18,7 @@ for r in b:
     print(u.translate(non_bmp_map))
     print('-------\n\n')
 '''
+
 '''
 g = t.geo("Campina Grande")
 for r in g:
@@ -25,5 +26,6 @@ for r in g:
     print("-----------------")
 '''
 
-s = t.show(1125743655078322176)
+s = t.show(1125814932426108929)
 print(s['text'])
+
