@@ -31,7 +31,6 @@ app.get('/search/:q', (req, res) => {
 
     // Parâmetros opcionais.
     const count = req.query.count || "";
-    const c = req.query.c || "";
 
     // Requisição.
     client.get('/search/tweets', {q: q, count: count}, function (error, tweets, response) {
