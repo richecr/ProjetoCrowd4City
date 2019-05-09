@@ -1,8 +1,7 @@
 window.search = search;
 
 async function search() {
-    //let a = await fetch("http://localhost:3001/search", { mode: 'no-cors'} );
-    let response = await axios.get("http://localhost:3001/search/lixo rua calçada?count=5");
+    let response = await axios.get("http://localhost:3001/search/campina?count=5&geocode=-7.230677,-35.881639,1mi");
     let dados = response.data;
 
     console.log(dados);

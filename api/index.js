@@ -43,6 +43,7 @@ app.get("/search/:q", async function (req, res) {
     const query = req.params.q;
 
     const count = req.query.count || "";
+    const geocode = req.query.geocode || "";
 
     let headers = {
         Authorization: 'Bearer ' + token
@@ -53,7 +54,8 @@ app.get("/search/:q", async function (req, res) {
                 headers,
                 params: {
                    q: query,
-                   count: count
+                   count: count,
+                   geocode: geocode
                 }
             });
     let dados = response.data;
