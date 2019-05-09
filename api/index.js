@@ -58,9 +58,29 @@ app.get("/search/:q", async function (req, res) {
                    geocode: geocode
                 }
             });
+
     let dados = response.data;
     res.json(dados);
 });
+
+app.get('/show/:id', async function (req, res) {
+    const id = req.params.id;
+
+    let headers = {
+        Authorization: 'Bearer ' + token
+    }
+
+    let response = await axios.get(`https://api.twitter.com/1.1/statuses/show.json?`,
+        {
+            headers,
+            params: {
+                id: id
+            }
+        });
+
+    let dados = response.data;
+    res.json(dados);
+})
 
 // Liberando a porta 3001 para o servidor.
 app.listen(3001, () => console.log("Servidor rodando na porta mágica: 3001"));
