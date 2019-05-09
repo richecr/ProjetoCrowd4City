@@ -1,8 +1,8 @@
 const express = require('express');
 const OAuth2 = require('oauth').OAuth2;
-const https = require('https');
 const axios = require('axios');
 
+// Inicializando o express.
 var app = express();
 
 // Liberando os cors.
@@ -13,6 +13,7 @@ app.use((req, res, next) => {
     next();
 });
 
+// Configurando a autenticação.
 var config = {
     "consumerKey": "rrUDLNZVqv8DaWX6fkmNrB5V9",
     "consumerSecret": "R20GkXiu42758yyy5pfykcswYA7Lnn9rBjhQEN25jMCPYO1YS7",
@@ -29,13 +30,15 @@ oauth2.getOAuthAccessToken('', {
 });
 
 
+// Avisando ao servidor qual a página root.
 app.use(express.static('public'));
 
-
+// Rota '/'.
 app.get("/", function (req, res) {
     res.send("Oi");
 });
 
+// Rota 'search/:q'. q => texto a ser procurado.
 app.get("/search/:q", async function (req, res) {
     const query = req.params.q;
 
@@ -55,7 +58,7 @@ app.get("/search/:q", async function (req, res) {
             });
     let dados = response.data;
     res.json(dados);
-})
+});
 
-
+// Liberando a porta 3001 para o servidor.
 app.listen(3001, () => console.log("Servidor rodando na porta mágica: 3001"));
