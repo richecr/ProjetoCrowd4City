@@ -1,5 +1,5 @@
 window.search = search;
-
+var html;
 // campina grande: geocode=-7.230677,-35.881639,1mi
 async function search() {
     
@@ -20,7 +20,19 @@ async function search() {
     */
 
     // Pegando curtidas.
+    /*
     let response = await axios.get("http://localhost:3001/tweet/favorites/1126444918736596992");
     let dados = response.data;
     console.log(dados['curtidas']);
+    */
+
+    // TESTES
+    /*
+    let response = await axios.get("http://localhost:3001/teste");
+    let dados = response.data;
+    let d = JSON.stringify(dados);
+    html = document.createElement('html');
+    html.innerHTML = d;
+    console.log(html);
+    */
 }

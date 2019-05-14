@@ -98,13 +98,27 @@ app.get('/tweet/favorites/:id', async (req, res) => {
         });
 
     let dados = JSON.parse(JSON.stringify(response.data));
-    console.log(dados);
     let r = {
         curtidas: dados['favorite_count']
     };
 
     res.json(r);
 
+});
+
+app.get("/teste", async function (req, res) {
+    
+    let headers = {
+        Authorization: 'Bearer ' + token
+    }
+
+    let response = await axios.get(`https://twitter.com/search?q=twitterdev`,
+        {
+            headers
+        });
+
+    let dados = response.data;
+    res.json(dados);
 });
 
 // Liberando a porta 3001 para o servidor.
