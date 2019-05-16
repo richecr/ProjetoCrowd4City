@@ -1,19 +1,23 @@
-const express = require('express');
-const router = express.Router();
+const axios = require('axios');
+require('dotenv/config');
 
-router.get("/", async function (req, res) {
+module.exports = {
+    async teste(req, res) {
+        const id = req.params.id;
+
+        let headers = {
+            Authorization: 'Bearer ' + process.env.TOKEN
+        }
     
-    let headers = {
-        Authorization: 'Bearer ' + token
+        let response = await axios.get(`https://api.twitter.com/1.1/statuses/show.json?`,
+            {
+                headers,
+                params: {
+                    id: id
+                }
+            });
+    
+        let dados = response.data;
+        return res.json(dados['text']);
     }
-
-    let response = await axios.get(`https://twitter.com/search?q=twitterdev`,
-        {
-            headers
-        });
-
-    let dados = response.data;
-    res.json(dados);
-});
-
-module.exports = router;
+};
