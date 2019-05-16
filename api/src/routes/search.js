@@ -1,6 +1,4 @@
 const axios = require('axios');
-
-const OAuth2 = require('oauth').OAuth2;
 require('dotenv/config');
 
 module.exports = {
