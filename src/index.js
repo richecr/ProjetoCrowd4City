@@ -4,11 +4,11 @@ var html;
 async function search() {
     
     // Buscando os tweets
-    /*
+
     let response = await axios.get("http://localhost:3001/search/campina?count=5&geocode=-7.230677,-35.881639,1mi");
     let dados = response.data;
     console.log(dados);
-    */
+
     
     // Pegando link do meu tweet.
     /*
@@ -27,10 +27,12 @@ async function search() {
     */
 
     // TESTES
+    /*
     let response = await axios.get("http://localhost:3001/textoCompleto/1129022426325635073");
     let dados = response.data;
     let res = dados.split(' ');
     let resultado = res[res.length - 1];
 
     console.log(resultado);
+    */
 }
