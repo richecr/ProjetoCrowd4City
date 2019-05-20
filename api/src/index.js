@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 // Avisando ao servidor qual a página root.
 app.use(express.static('public'));
 app.use(express.json());
-app.use(require('./src/routes/routes.js'));
+app.use(require('./routes/base/routes.js'));
 
 
 /*

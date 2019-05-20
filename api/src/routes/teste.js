@@ -1,7 +1,7 @@
 const axios = require('axios');
 require('dotenv/config');
 
-const headers = require('./headers');
+const headers = require('../util/headers');
 
 module.exports = {
     async teste(req, res) {
