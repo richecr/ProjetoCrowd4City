@@ -27,12 +27,10 @@ async function search() {
     */
 
     // TESTES
-    /*
-    let response = await axios.get("http://localhost:3001/teste");
+    let response = await axios.get("http://localhost:3001/textoCompleto/1129022426325635073");
     let dados = response.data;
-    let d = JSON.stringify(dados);
-    html = document.createElement('html');
-    html.innerHTML = d;
-    console.log(html);
-    */
+    let res = dados.split(' ');
+    let resultado = res[res.length - 1];
+
+    console.log(resultado);
 }
