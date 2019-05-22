@@ -4,11 +4,11 @@ var html;
 async function search() {
     
     // Buscando os tweets
-
-    let response = await axios.get("http://localhost:3001/search/Real madrid");
+    /*
+    let response = await axios.get("http://localhost:3001/search/Eu, que nunca tive sorte em nada");
     let dados = response.data;
     console.log(dados);
-
+    */
     
     // Pegando link do meu tweet.
     /*
@@ -36,9 +36,7 @@ async function search() {
     console.log(resultado);
     */
 
-   //let response = await axios.post("http://localhost:3001/retweetar/37929603");
-   //let dados = response.data;
-
-   //console.log(dados);
-
+    let response = await axios.post("http://localhost:3001/retweetar/1131241861027455000");
+    let dados = response.data;
+    console.log(dados);
 }
