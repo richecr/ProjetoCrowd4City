@@ -5,7 +5,7 @@ async function search() {
     
     // Buscando os tweets
 
-    let response = await axios.get("http://localhost:3001/search/campina?count=5&geocode=-7.230677,-35.881639,1mi");
+    let response = await axios.get("http://localhost:3001/search/Real madrid");
     let dados = response.data;
     console.log(dados);
 
@@ -35,4 +35,10 @@ async function search() {
 
     console.log(resultado);
     */
+
+   //let response = await axios.post("http://localhost:3001/retweetar/37929603");
+   //let dados = response.data;
+
+   //console.log(dados);
+
 }

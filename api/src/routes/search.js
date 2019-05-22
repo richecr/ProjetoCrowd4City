@@ -9,15 +9,18 @@ module.exports = {
         const count = req.query.count || "";
         const geocode = req.query.geocode || "";
 
-        let response = await axios.get(`https://api.twitter.com/1.1/search/tweets.json?`,
-            {
-                headers,
-                params: {
-                   q: query,
-                   count: count,
-                   geocode: geocode
-                }
-            });
+        const config = {
+            headers,
+            params: {
+                q: query,
+                count: count,
+                geocode: geocode,
+                lang: 'pt',
+                tweet_mode: "extended"
+            }
+        }
+
+        let response = await axios.get(`https://api.twitter.com/1.1/search/tweets.json?`, config);
 
         let dados = response.data;
         return res.json(dados);
