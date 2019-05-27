@@ -14,7 +14,7 @@ module.exports = {
         };
         
         request.post({ url: url, oauth: oauth }, function (err, response, request) {
-            console.log(response); 
+           res.json(JSON.parse(response.body)); 
         });
     },
 };
