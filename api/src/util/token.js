@@ -2,10 +2,10 @@ const OAuth2 = require('oauth').OAuth2;
 
 // Configurando a autenticação.
 var config = {
-    "consumerKey": "og4SjxhGjBENZw8AxAmQNNOyU",
-    "consumerSecret": "c5jPRyoNjCyV5CWdmhxPNwGO27jyg3kltrXDHLhq8MuritDvrg",
-    "accessToken": "855074511498170368-zN5YGgGbyZwVPeGdonYTzYuTzdVerNQ",
-    "accessTokenSecret": "sa7PG7HBZnZvDBeXbQZKAoqCAqI4UoE9d5lFhA5hyZVgz"
+    "consumerKey": "5seEmVC04JjQXSIQBIxPLrNsk",
+    "consumerSecret": "Zl9ZA4RDidTFbgiZZVCLolV1vzmLuWONIKPn14KLWMSTEWStDZ",
+    "accessToken": "855074511498170368-phycV4NNzwpOex7ZHg9d4Eo17N642Xd",
+    "accessTokenSecret": "rY093cMYhYccUJ8QH6zCu60nZp6tbT7EzNVgbdoPsobXu"
 }
 
 var token = "";

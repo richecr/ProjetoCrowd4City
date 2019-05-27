@@ -12,6 +12,8 @@ app.use((req, res, next) => {
     next();
 });
 
+// AAAAAAAAAAAAAAAAAAAAADI%2B%2BgAAAAAATg0ZaIKGbfcdNcsjR97sQagkJ7c%3DrMrJ0oAMd373RAwQ4k5YDJm204hsaSkxhg05pmJEH26doMx5Ke
+
 // Avisando ao servidor qual a página root.
 app.use(express.static('public'));
 app.use(express.json());

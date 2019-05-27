@@ -3,6 +3,8 @@ require('dotenv/config');
 
 const headers = require('../util/headers');
 
+const request = require('request');
+
 module.exports = {
     async search(req, res) {
         const query = req.params.q;
@@ -18,11 +20,11 @@ module.exports = {
                 lang: 'pt',
                 tweet_mode: "extended"
             }
-        }
+        };
 
         let response = await axios.get(`https://api.twitter.com/1.1/search/tweets.json?`, config);
-
         let dados = response.data;
+
         return res.json(dados);
     },
 };

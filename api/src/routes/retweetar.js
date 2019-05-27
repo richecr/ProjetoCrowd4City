@@ -1,22 +1,20 @@
-const axios = require('axios');
 require('dotenv/config');
-
-const headers = require('../util/headers');
+const request = require('request');
 
 module.exports = {
     async retweetar(req, res) {
         const id = req.params.id;
-        const url = 'https://api.twitter.com/1.1/statuses/retweet/'+id+'.json'
-        const config = {
-            headers,
-            params: {
-                id: id
-            }
-        }
+        const url = 'https://api.twitter.com/1.1/statuses/retweet/'+id+'.json';
 
-        let response = await axios.post(url, config);
-
-        let dados = response.data;
-        return res.json(dados);
+        var oauth = {
+            consumer_key: "5seEmVC04JjQXSIQBIxPLrNsk",
+            consumer_secret: "Zl9ZA4RDidTFbgiZZVCLolV1vzmLuWONIKPn14KLWMSTEWStDZ",
+            token: "855074511498170368-phycV4NNzwpOex7ZHg9d4Eo17N642Xd",
+            token_secret: "rY093cMYhYccUJ8QH6zCu60nZp6tbT7EzNVgbdoPsobXu"
+        };
+        
+        request.post({ url: url, oauth: oauth }, function (err, response, request) {
+            console.log(response); 
+        });
     },
 };
