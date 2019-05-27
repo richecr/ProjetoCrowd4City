@@ -36,7 +36,14 @@ async function search() {
     console.log(resultado);
     */
 
-    let response = await axios.post("http://localhost:3001/retweetar/1131241861027455000");
+    let response = await axios.post("http://localhost:3001/retweetar/1132998185096499200");
+    let dados = response.data;
+    console.log(dados);
+
+}
+
+async function search1() {
+    let response = await axios.get("http://localhost:3001/search/Campina grande");
     let dados = response.data;
     console.log(dados);
 }
