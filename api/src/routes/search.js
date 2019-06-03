@@ -3,8 +3,6 @@ require('dotenv/config');
 
 const headers = require('../util/headers');
 
-const request = require('request');
-
 module.exports = {
     async search(req, res) {
         const query = req.params.q;
