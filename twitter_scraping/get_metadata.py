@@ -1,3 +1,4 @@
+# encode: utf-8
 import tweepy
 import json
 import math
@@ -9,9 +10,9 @@ from tweepy import TweepError
 from time import sleep
 
 # CHANGE THIS TO THE USER YOU WANT
-user = 'realdonaldtrump'
+user = 'dados'
 
-with open('api_keys.json') as f:
+with open('sample_api_keys.json') as f:
     keys = json.load(f)
 
 auth = tweepy.OAuthHandler(keys['consumer_key'], keys['consumer_secret'])
@@ -83,11 +84,11 @@ print('creating minimized json master file')
 with open(output_file_short, 'w') as outfile:
     json.dump(results, outfile)
 
-with open(output_file_short) as master_file:
+with open(output_file_short, encoding="utf-8") as master_file:
     data = json.load(master_file)
     fields = ["favorite_count", "source", "text", "in_reply_to_screen_name", "is_retweet", "created_at", "retweet_count", "id_str"]
     print('creating CSV version of minimized json master file')
     f = csv.writer(open('{}.csv'.format(user), 'w'))
     f.writerow(fields)
     for x in data:
-        f.writerow([x["favorite_count"], x["source"], x["text"], x["in_reply_to_screen_name"], x["is_retweet"], x["created_at"], x["retweet_count"], x["id_str"]])
+        f.writerow([x["favorite_count"], x["source"], x["text"].encode("utf-8"), x["in_reply_to_screen_name"], x["is_retweet"], x["created_at"], x["retweet_count"], x["id_str"]])

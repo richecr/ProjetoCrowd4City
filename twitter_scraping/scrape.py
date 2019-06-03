@@ -17,7 +17,7 @@ except FileNotFoundError:
 
 # edit these three variables
 user = 'lixo nas ruas'
-end = datetime.datetime(2019, 3, 7)  # year, month, day
+end = datetime.datetime(2019, 6, 3)  # year, month, day
 print(start)
 # only edit these if you're having problems
 delay = 1  # time to wait on each page load before reading the page
