@@ -76,7 +76,8 @@ with open(output_file) as json_data:
             "favorite_count": entry["favorite_count"],
             "source": get_source(entry),
             "id_str": entry["id_str"],
-            "is_retweet": is_retweet(entry)
+            "is_retweet": is_retweet(entry),
+            "coordinates": entry["coordinates"]
         }
         results.append(t)
 
@@ -86,9 +87,9 @@ with open(output_file_short, 'w') as outfile:
 
 with open(output_file_short, encoding="utf-8") as master_file:
     data = json.load(master_file)
-    fields = ["favorite_count", "source", "text", "in_reply_to_screen_name", "is_retweet", "created_at", "retweet_count", "id_str"]
+    fields = ["favorite_count", "source", "text", "in_reply_to_screen_name", "is_retweet", "created_at", "retweet_count", "id_str", "coordinates"]
     print('creating CSV version of minimized json master file')
     f = csv.writer(open('{}.csv'.format(user), 'w'))
     f.writerow(fields)
     for x in data:
-        f.writerow([x["favorite_count"], x["source"], x["text"].encode("utf-8"), x["in_reply_to_screen_name"], x["is_retweet"], x["created_at"], x["retweet_count"], x["id_str"]])
+        f.writerow([x["favorite_count"], x["source"], x["text"].encode("utf-8"), x["in_reply_to_screen_name"], x["is_retweet"], x["created_at"], x["retweet_count"], x["id_str"], x["coordinates"]])
