@@ -53,19 +53,24 @@ async function search2() {
     let dados = response.data;
     console.log(dados);
 }
-
+var cont = 0;
 async function buscar(max_id) {
     if (max_id != undefined) {
         let response = await axios.get("http://localhost:3001/search/lixo na rua?max="+max_id);
         let dados = response.data;
         console.log(dados);
-        console.log(max_id);
+        
+        if (cont <= 7) {
+            cont++;
+            let ultimoIndice = dados.statuses.length - 1;
+            buscar( dados.statuses[ultimoIndice].id_str );
+        }
     } else {
         let response = await axios.get("http://localhost:3001/search/lixo na rua");
         let dados = response.data;
         console.log(dados);
         let ultimoIndice = dados.statuses.length - 1;
-        
-        buscar(dados.statuses[ultimoIndice].id_str);
+
+        buscar( dados.statuses[ultimoIndice].id_str );
     }
 }
