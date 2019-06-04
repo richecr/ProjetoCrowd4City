@@ -11,7 +11,8 @@ module.exports = {
             {
                 headers,
                 params: {
-                    id: id
+                    id: id,
+                    tweet_mode: "extended"
                 }
             });
 

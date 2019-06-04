@@ -43,7 +43,7 @@ async function search() {
 }
 
 async function search1() {
-    let response = await axios.get("http://localhost:3001/search/Campina grande");
+    let response = await axios.get("http://localhost:3001/search/lixo na rua");
     let dados = response.data;
     console.log(dados);
 }
@@ -52,4 +52,20 @@ async function search2() {
     let response = await axios.post("http://localhost:3001/unretweetar/1135528177026183168");
     let dados = response.data;
     console.log(dados);
+}
+
+async function buscar(max_id) {
+    if (max_id != undefined) {
+        let response = await axios.get("http://localhost:3001/search/lixo na rua?max="+max_id);
+        let dados = response.data;
+        console.log(dados);
+        console.log(max_id);
+    } else {
+        let response = await axios.get("http://localhost:3001/search/lixo na rua");
+        let dados = response.data;
+        console.log(dados);
+        let ultimoIndice = dados.statuses.length - 1;
+        
+        buscar(dados.statuses[ultimoIndice].id_str);
+    }
 }

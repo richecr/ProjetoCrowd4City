@@ -8,6 +8,7 @@ module.exports = {
         const query = req.params.q;
         const count = req.query.count || "";
         const geocode = req.query.geocode || "";
+        const max_id = req.query.max || "";
 
         const config = {
             headers,
@@ -16,9 +17,13 @@ module.exports = {
                 count: count,
                 geocode: geocode,
                 lang: 'pt',
-                tweet_mode: "extended"
+                tweet_mode: "extended",
             }
         };
+
+        if (max_id != "") {
+            config.params['max_id'] = max_id;
+        }
 
         let response = await axios.get(`https://api.twitter.com/1.1/search/tweets.json?`, config);
         let dados = response.data;
