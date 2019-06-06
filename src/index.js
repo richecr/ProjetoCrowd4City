@@ -43,7 +43,7 @@ async function search() {
 }
 
 async function search1() {
-    let response = await axios.get("http://localhost:3001/search/lixo na rua");
+    let response = await axios.get("http://localhost:3001/search/lixos na rua");
     let dados = response.data;
     console.log(dados);
 }
@@ -58,7 +58,7 @@ var tweets = [];
 
 async function buscar(max_id) {
     if (max_id != undefined) {
-        let response = await axios.get("http://localhost:3001/search/lixo na rua?max="+max_id);
+        let response = await axios.get("http://localhost:3001/search/lixos na rua?max="+max_id);
         let dados = response.data;
         dados.statuses.forEach(element => {
             tweets.push(element);
@@ -80,4 +80,11 @@ async function buscar(max_id) {
         
         buscar( dados.statuses[ultimoIndice].id_str );
     }
+}
+
+async function carregar() {
+    const response = await axios.get("./dados/dados.json");
+    const dados = response.data;
+
+    console.log(dados);
 }

@@ -15,8 +15,14 @@ try:
 except FileNotFoundError:
     start = datetime.datetime(2016,10,1)
 
+# Para Lixo: lixo na rua
+# Para Segurança: falta de segurança na rua
+# Para saúde: 
+# Para Educação: 
+
 # edit these three variables
-user = 'lixo nas ruas'
+user = 'falta de segurança na rua'
+
 end = datetime.datetime(2019, 6, 4)  # year, month, day
 print(start)
 print(end)
@@ -24,6 +30,9 @@ print(end)
 delay = 1  # time to wait on each page load before reading the page
 driver = webdriver.Firefox()  # options are Chrome() Firefox() Safari()
 
+'''
+["1093673934187315200", "1101443847681384448", "1120977738737815552", "1101195226755026945", "1126806623027179522", "1118093056635486209", "1103115430577799169", "1115725094779748352", "1099345913397604353", "1086001567634018309", "1093222233735118849", "1100820543241101312", "1133571494552973315", "1128631342294605827", 
+'''
 
 # don't mess with this stuff
 twitter_ids_filename = 'all_ids.json'
