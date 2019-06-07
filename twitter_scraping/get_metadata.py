@@ -43,7 +43,8 @@ for go in range(i):
     end += 100
     tweets = api.statuses_lookup(id_batch, tweet_mode="extended")
     for tweet in tweets:
-        all_data.append(dict(tweet._json))
+        all_data.append(tweet)
+
 
 print('metadata collection complete')
 print('creating master json file')
