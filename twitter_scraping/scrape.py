@@ -16,12 +16,12 @@ except FileNotFoundError:
     start = datetime.datetime(2016,10,1)
 
 # Para Lixo: lixo na rua
-# Para Segurança: falta de segurança na rua
-# Para saúde: 
+# Para Segurança: falta de segurança na rua, rua perigosa
+# Para saúde: falta de hospitais na rua, sem hospitais na rua, médico não atende
 # Para Educação: 
 
 # edit these three variables
-user = 'falta de segurança na rua'
+user = 'falta de hospitais na rua'
 
 end = datetime.datetime(2019, 6, 4)  # year, month, day
 print(start)
