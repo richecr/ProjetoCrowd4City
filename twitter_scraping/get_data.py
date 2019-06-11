@@ -29,7 +29,7 @@ end = 100
 limit = len(ids)
 i = math.ceil(limit / 100)
 
-while (end <= 200):
+while (end <= len(ids)):
     print("currently getting {} - {}".format(start, end))
     sleep(6)
     id_batch = ids[start:end]
@@ -39,8 +39,6 @@ while (end <= 200):
     for tweet in tweets:
         all_data.append(tweet)
 
-print(all_data[199])
-print(all_data[1])
 tweets_dict = {}
 
 tweets_json = [];
