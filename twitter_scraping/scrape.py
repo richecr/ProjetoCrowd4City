@@ -17,13 +17,13 @@ except FileNotFoundError:
 
 # Para Lixo: lixo na rua
 # Para Segurança: falta de segurança na rua, rua perigosa
-# Para saúde: falta de hospitais na rua, sem hospitais na rua, médico não atende
-# Para Educação: 
+# Para saúde: falta de hospitais na rua, sem hospitais na rua, médico não atende, hospital não funciona na rua, hospital sem atendimento
+# Para Educação: escola sem aulas, bairro sem escola, bairro sem creche, escola sem merenda
 
 # edit these three variables
-user = 'falta de hospitais na rua'
+user = 'escola sem merenda'
 
-end = datetime.datetime(2019, 6, 4)  # year, month, day
+end = datetime.datetime(2019, 6, 11)  # year, month, day
 print(start)
 print(end)
 # only edit these if you're having problems
