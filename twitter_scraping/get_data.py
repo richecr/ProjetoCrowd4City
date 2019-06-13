@@ -29,7 +29,7 @@ end = 100
 limit = len(ids)
 i = math.ceil(limit / 100)
 
-while (end <= 200):
+for go in range(i):
     print("currently getting {} - {}".format(start, end))
     sleep(6)
     id_batch = ids[start:end]
@@ -37,17 +37,9 @@ while (end <= 200):
     end += 100
     tweets = api.statuses_lookup(id_batch, tweet_mode="extended")
     for tweet in tweets:
-        all_data.append(tweet)
-
-print(all_data[199])
-print(all_data[1])
-tweets_dict = {}
-
-tweets_json = [];
-for t in all_data:
-    tweets_json.append(dict(tweet._json));
+        all_data.append(dict(tweet._json))
 
 print('metadata collection complete')
 print('creating master json file')
 with open(output_file, 'w') as outfile:
-    json.dump(tweets_json, outfile)
+    json.dump(all_data, outfile)

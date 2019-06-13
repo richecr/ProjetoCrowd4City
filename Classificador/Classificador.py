@@ -4,13 +4,16 @@ class Classificador():
     def __init__(self, x_train, y_train):
         self.x_train = x_train
         self.y_train = y_train
+        self.treinar()
         self.chaves_seguranca = [("segurança", 5), ("perigo", 3), ("perigoso", 3), ("falta", 1), ("bandido", 5), ("bandidos", 5), ("ladrão", 5), ("ladrões", 5), ("andar", 3), ("ruim", 2)]
         self.chaves_lixos = [("lixo", 5), ("higiene", 4), ("lixeira", 5), ("falta", 1), ("jogado", 3), ("entulho", 4)]
         self.chaves_saude = [("saúde", 5), ("hospitais", 5), ("hospital", 5), ("médico", 5), ("fechado", 3), ("posto", 4), ("enfermeira", 5)]
         self.chaves_educacao = [("educação", 5), ("escolas", 5), ("escola", 5), ("universidades", 5), ("universidade", 5), ("falta", 1), ("ruim", 2), ("professores", 5), ("merenda", 4)]
 
-    def predicts(self, x_test):
+    def treinar(self):
         predicts = []
+        #for text in self.x_train:
+        #    result = self.chave(test)
     
     def chave(self, texto):
         palavras = texto.split(" ")
