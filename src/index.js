@@ -115,18 +115,6 @@ async function contarTweets() {
         }
     }
 
-    dados.forEach(element => {
-        var count = 0;
-        dados1.forEach(e => {
-            if (e['id_str'] === element) {
-                count += 1;
-            }
-        });
-        if (count === 0) {
-            console.log(element);
-        }
-    });
-
     /*
     const response1 = await axios.get(BASE_URL + "/lixo/dados.json");
     add(dados, response1.data);
