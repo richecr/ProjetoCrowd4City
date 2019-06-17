@@ -9,11 +9,6 @@ import zlib
 from tweepy import TweepError
 from time import sleep
 
-
-# Total de tweets:
-# lixo: 11717
-# segurançaa:
-
 # CHANGE THIS TO THE USER YOU WANT
 user = 'dados'
 
@@ -24,9 +19,9 @@ auth = tweepy.OAuthHandler(keys['consumer_key'], keys['consumer_secret'])
 auth.set_access_token(keys['access_token'], keys['access_token_secret'])
 api = tweepy.API(auth)
 user = user.lower()
-output_file = 'dados/lixo/{}.json'.format(user)
+output_file = 'dados/saude/{}.json'.format(user)
 
-with open('./dados/lixo/ids.json') as f:
+with open('./dados/saude/ids.json') as f:
     ids = json.load(f)
 
 print('total ids: {}'.format(len(ids)))
@@ -56,7 +51,7 @@ with open(output_file, 'w') as outfile:
 output = [[tweet['id_str'], tweet['full_text'], tweet['retweet_count'], tweet['favorite_count'], tweet['retweeted'], tweet['coordinates'], tweet['created_at']] for tweet in all_data]
 
 # write to csv
-with open('./dados/lixo/dados.csv', 'w', encoding="utf-8") as file:
+with open('./dados/saude/dados.csv', 'w', encoding="utf-8") as file:
     writer = csv.writer(file)
     writer.writerow(["id_str", "full_text", "retweet_count", "favorite_count", "retweeted", "coordinates", "created_at"])
     writer.writerows(output)

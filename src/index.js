@@ -83,7 +83,7 @@ async function buscar(max_id) {
 }
 
 async function carregar() {
-    const response = await axios.get("./dados/dados.json");
+    const response = await axios.get(BASE_URL + "/saude/ids.json");
     const dados = response.data;
 
     console.log(dados);

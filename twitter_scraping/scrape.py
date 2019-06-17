@@ -17,11 +17,11 @@ except FileNotFoundError:
 
 # Para Lixo: lixo na rua. TWEETS: 4698
 # Para Segurança: falta de segurança na rua, rua perigosa. TWEETS: 1447
-# Para saúde: falta de hospitais na rua, sem hospitais na rua, médico não atende, hospital não funciona na rua, hospital sem atendimento. TWEETS: 1211
+# Para saúde: falta de hospitais na rua, sem hospitais na rua, médico não atende, hospital não funciona na rua, hospital sem atendimento. TWEETS: 1493
 # Para Educação: escola sem aulas, bairro sem escola, bairro sem creche, escola sem merenda. TWEETS: 3125
 
 # edit these three variables
-user = 'lixo na rua'
+user = 'hospital sem atendimento'
 
 end = datetime.datetime(2019, 6, 13)  # year, month, day
 print(start)
@@ -32,7 +32,7 @@ driver = webdriver.Firefox()  # options are Chrome() Firefox() Safari()
 
 
 # don't mess with this stuff
-twitter_ids_filename = './dados/lixo/ids.json'
+twitter_ids_filename = './dados/saude/ids.json'
 
 
 days = (end - start).days + 1
