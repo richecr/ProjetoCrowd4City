@@ -92,11 +92,11 @@ async function carregar() {
 const BASE_URL = "../twitter_scraping/dados";
 
 async function contarTweets() {
-    const response = await axios.get(BASE_URL + "/lixo/ids.json");
+    const response = await axios.get(BASE_URL + "/transporte/ids.json");
     const dados = response.data;
     console.log(dados);
 
-    const response1 = await axios.get(BASE_URL + "/lixo/dados.json");
+    const response1 = await axios.get(BASE_URL + "/transporte/dados.json");
     const dados1 = response1.data;
     console.log(dados1);
 

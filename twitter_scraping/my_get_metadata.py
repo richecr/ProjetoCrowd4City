@@ -19,9 +19,9 @@ auth = tweepy.OAuthHandler(keys['consumer_key'], keys['consumer_secret'])
 auth.set_access_token(keys['access_token'], keys['access_token_secret'])
 api = tweepy.API(auth)
 user = user.lower()
-output_file = 'dados/poluicaoSonora/{}.json'.format(user)
+output_file = 'dados/transporte/{}.json'.format(user)
 
-with open('./dados/poluicaoSonora/ids.json') as f:
+with open('./dados/transporte/ids.json') as f:
     ids = json.load(f)
 
 print('total ids: {}'.format(len(ids)))
@@ -51,7 +51,7 @@ with open(output_file, 'w') as outfile:
 output = [[tweet['id_str'], tweet['full_text'], tweet['retweet_count'], tweet['favorite_count'], tweet['retweeted'], tweet['coordinates'], tweet['created_at']] for tweet in all_data]
 
 # write to csv
-with open('./dados/poluicaoSonora/dados.csv', 'w', encoding="utf-8") as file:
+with open('./dados/transporte/dados.csv', 'w', encoding="utf-8") as file:
     writer = csv.writer(file)
     writer.writerow(["id_str", "full_text", "retweet_count", "favorite_count", "retweeted", "coordinates", "created_at"])
     writer.writerows(output)

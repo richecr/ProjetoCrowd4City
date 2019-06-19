@@ -21,7 +21,7 @@ except FileNotFoundError:
 # Para Educação: escola sem aulas, bairro sem escola, bairro sem creche, escola sem merenda. TWEETS: 3125
 # Para Poluição Sonora: som alto na rua, rua com muito barulho. TWEETS: 1805
 # Para Transporte: não passa onibus na rua, onibus demora demais na rua. TWEETS: 249
-# Para Arborização: não tem uma arvore na rua, deviamos plantar mais arvores na rua. TWEETS: 
+# Para Arborização: não tem uma arvore na rua, deviamos plantar mais arvores na rua. TWEETS: 393
 
 # edit these three variables
 user = 'deviamos plantar mais arvores na rua'
