@@ -88,7 +88,42 @@ class Classificador():
         
         return 0
 
-c = Classificador([], [])
+class Classificador1():
+    def __init__(self, x_train, y_train):
+        self.x_train = x_train
+        self.y_train = y_train
+        self.chaves = [
+            ("sem escola", 5), ("sem saude", 5), ("sem hospital", 5), ("com lixo", 5)
+        ]
+    
+    def treinar(self):
+        predicts = []
+    
+    def chave(self, texto):
+        palavras = texto.split(" ")
+        p = self.pontos(palavras)
+
+        if (p >= 5):
+            return "SIM"
+        else:
+            return "NÃO"
+
+    
+    def pontos(self, texto):
+        pontos = 0
+        for palavra in texto:
+            pontos += self.contem(palavra)
+
+        return pontos
+    
+    def contem(self, palavra):
+        for tupla in self.chaves:
+            if (re.search(tupla[0], palavra) != None):
+                return tupla[1]
+
+        return 0
+
+c = Classificador1([], [])
 
 print( c.chave("rua com hospital fechado") )
 print( c.chave("rua sem segurança alguma") )

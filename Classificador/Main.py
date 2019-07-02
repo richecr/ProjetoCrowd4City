@@ -1,14 +1,13 @@
+import numpy as np
+import pandas as pd
+from sklearn import metrics
+from sklearn.metrics import accuracy_score
 from sklearn.pipeline import Pipeline
+from sklearn.naive_bayes import MultinomialNB, GaussianNB
+from sklearn.linear_model import SGDClassifier
+from sklearn.model_selection import cross_val_score, cross_val_predict, train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.linear_model import SGDClassifier
-from sklearn.naive_bayes import MultinomialNB, GaussianNB
-from sklearn.model_selection import cross_val_score, cross_val_predict, train_test_split
-from sklearn.metrics import accuracy_score
-
-import numpy as np
-
-import pandas as pd
 
 # Carregando os arquivos.
 tweets = pd.read_csv("tweets.csv", encoding='utf-8')
@@ -27,12 +26,16 @@ pip_simples = Pipeline([
 pip_simples.fit(tweets['full_text'], tweets['reclamacao'])
 
 # Função para avaliar a eficácia do modelo. 
-def avaliaModelo(clf, X, y):
-    resultados = cross_val_predict(clf, X, y, cv=5)
-    print(pd.crosstab(y, resultados, rownames=['Real'], colnames=['Predito'], margins=True))
-    return np.mean(cross_val_score(clf, X, y, cv=5))
+def avaliaModelo():
+    # Validando os Modelos com Validação Cruzada
+    resultados = cross_val_predict(pip_simples, tweets['full_text'], tweets['reclamacao'], cv=10)
+    # Medindo a acurácia média do modelo.
+    print(metrics.accuracy_score(tweets['reclamacao'], resultados))
+    reclamacao1 = ['não','sim']
+    print (metrics.classification_report(tweets['reclamacao'], resultados, reclamacao1))
+    print (pd.crosstab(tweets['reclamacao'], resultados, rownames=['Real'], colnames=['Predito'], margins=True))
 
-print(avaliaModelo(pip_simples, tweets['full_text'], tweets['reclamacao']))
+print(avaliaModelo())
 
 # Testando o modelo.
 predicted = pip_simples.predict(tests['full_text'])
@@ -40,6 +43,8 @@ print(predicted)
 
 # Precisão do modelo.
 print(np.mean(predicted == tests['reclamacao']))
+
+
 
 '''
 with open("../twitter_scraping/tweets_testes.csv", "r", encoding="utf-8") as file:
