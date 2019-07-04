@@ -19,6 +19,8 @@ def limpa_dados(instancia):
 tweets = pd.read_csv("tweets.csv", encoding='utf-8')
 tests = pd.read_csv("testes.csv", encoding='utf-8')
 
+tweets = tweets.drop_duplicates();
+
 tweets_limpos = [limpa_dados(i) for i in tweets['full_text']]
 ttweets_testes_limpos = [limpa_dados(i) for i in tests['full_text']]
 
