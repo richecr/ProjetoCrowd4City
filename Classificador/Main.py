@@ -1,3 +1,4 @@
+import re
 import numpy as np
 import pandas as pd
 from sklearn import metrics
@@ -9,9 +10,17 @@ from sklearn.model_selection import cross_val_score, cross_val_predict, train_te
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 
+# Limpa os tweets: retirando marcações, links.
+def limpa_dados(instancia):
+    instancia = re.sub(r"http\S+", "", instancia).lower().replace('.','').replace(';','').replace('-','').replace(':','').replace(')','')
+    return (instancia)
+
 # Carregando os arquivos.
 tweets = pd.read_csv("tweets.csv", encoding='utf-8')
 tests = pd.read_csv("testes.csv", encoding='utf-8')
+
+tweets_limpos = [limpa_dados(i) for i in tweets['full_text']]
+ttweets_testes_limpos = [limpa_dados(i) for i in tests['full_text']]
 
 # Criando o classificador.
 pip_simples = Pipeline([
@@ -23,12 +32,12 @@ pip_simples = Pipeline([
 ])
 
 # treinando.
-pip_simples.fit(tweets['full_text'], tweets['reclamacao'])
+pip_simples.fit(tweets_limpos, tweets['reclamacao'])
 
 # Função para avaliar a eficácia do modelo. 
 def avaliaModelo():
     # Validando os Modelos com Validação Cruzada
-    resultados = cross_val_predict(pip_simples, tweets['full_text'], tweets['reclamacao'], cv=10)
+    resultados = cross_val_predict(pip_simples, tweets_limpos, tweets['reclamacao'], cv=10)
     # Medindo a acurácia média do modelo.
     print(metrics.accuracy_score(tweets['reclamacao'], resultados))
     reclamacao1 = ['não','sim']
@@ -38,7 +47,7 @@ def avaliaModelo():
 print(avaliaModelo())
 
 # Testando o modelo.
-predicted = pip_simples.predict(tests['full_text'])
+predicted = pip_simples.predict(ttweets_testes_limpos)
 print(predicted)
 
 # Precisão do modelo.
