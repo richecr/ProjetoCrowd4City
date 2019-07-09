@@ -27,7 +27,7 @@ def avaliaModelo():
 tweets = pd.read_csv("tweets.csv", encoding='utf-8')
 tests = pd.read_csv("testes.csv", encoding='utf-8')
 
-tweets = tweets.drop_duplicates();
+tweets = tweets.drop_duplicates()
 
 # Limpando os dados para melhor utilização.
 tweets_ = [limpa_dados(i) for i in tweets['full_text'].values]
