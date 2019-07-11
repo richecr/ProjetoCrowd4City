@@ -9,20 +9,32 @@ def escrever(text, resp):
         writer.writerows(row)
 
 # write to csv
-fileR = pd.read_csv('../twitter_scraping//dados/lixo/dados.csv', encoding="utf-8")
+fileR = pd.read_csv('../twitter_scraping/dados/lixo/dados.csv', encoding="utf-8")
 
 tweets = []
 
-# lyka chegou em casa agr ja foi botando os lixo na rua organizando a cozinha, eh disso q eu to falando
-# Parei nesse tweet.
-# Achar o ID desse tweets.
+def acharIndiceTweet(tweet_text):
+    cont = 0
+    for t in fileR.itertuples(0):
+        if (tweet_text in t[1]):
+            print(t)
+            return cont
+        else:
+            cont += 1
+    return cont
 
-for t in fileR.itertuples(0):
-    print(t[1])
-    if (resp == "s"):
-        escrever(t[1], "sim")
-    elif (resp == "p"):
-        continue
+indice = acharIndiceTweet("I liked a @YouTube video https://t.co/uWTA1QLoaa jogando lixo na rua")
+
+cont = 0
+for t in fileR.itertuples(270):
+    if (cont == indice):
+        print(t[2])
+        resp = input("Sim ou não: ")
+        if (resp == "s"):
+            escrever(t[2], "sim")
+        elif (resp == "p"):
+            continue
+        else:
+            escrever(t[2], 'não')
     else:
-        escrever(t[1], 'não')
-
+        cont += 1
