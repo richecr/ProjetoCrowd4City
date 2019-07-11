@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import csv
 
@@ -23,7 +24,7 @@ def acharIndiceTweet(tweet_text):
             cont += 1
     return cont
 
-indice = acharIndiceTweet("é 2019 e as pessoas jogam lixo na rua cara as vezes eu quero me matar só de pensar nisso")
+indice = acharIndiceTweet("@roxmo Retardado de merda ! Usar crianças para torturar,interesse proprio!")
 
 cont = 0
 for t in fileR.itertuples(0):
@@ -32,9 +33,12 @@ for t in fileR.itertuples(0):
         resp = input("Sim ou não: ")
         if (resp == "s"):
             escrever(t[1], "sim")
+            os.system('cls')
         elif (resp == "n"):
             escrever(t[1], 'não')
+            os.system('cls')
         else:
+            os.system('cls')
             continue
     else:
         cont += 1
