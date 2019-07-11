@@ -23,18 +23,18 @@ def acharIndiceTweet(tweet_text):
             cont += 1
     return cont
 
-indice = acharIndiceTweet("I liked a @YouTube video https://t.co/uWTA1QLoaa jogando lixo na rua")
+indice = acharIndiceTweet("Mas não se preocupa que eu… — Meu anjo, tu já me fez me sentir um")
 
 cont = 0
-for t in fileR.itertuples(270):
+for t in fileR.itertuples(0):
     if (cont == indice):
-        print(t[2])
+        print(t[1])
         resp = input("Sim ou não: ")
         if (resp == "s"):
-            escrever(t[2], "sim")
-        elif (resp == "p"):
-            continue
+            escrever(t[1], "sim")
+        elif (resp == "n"):
+            escrever(t[1], 'não')
         else:
-            escrever(t[2], 'não')
+            continue
     else:
         cont += 1
