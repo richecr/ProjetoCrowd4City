@@ -23,7 +23,7 @@ def acharIndiceTweet(tweet_text):
             cont += 1
     return cont
 
-indice = acharIndiceTweet("Mas não se preocupa que eu… — Meu anjo, tu já me fez me sentir um")
+indice = acharIndiceTweet("é 2019 e as pessoas jogam lixo na rua cara as vezes eu quero me matar só de pensar nisso")
 
 cont = 0
 for t in fileR.itertuples(0):
