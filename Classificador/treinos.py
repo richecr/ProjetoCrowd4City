@@ -24,7 +24,7 @@ def acharIndiceTweet(tweet_text):
             cont += 1
     return cont
 
-indice = acharIndiceTweet("@roxmo Retardado de merda ! Usar crianças para torturar,interesse proprio!")
+indice = acharIndiceTweet("Eu não consigo ser indiferente a gatos passando fome na rua. Vi um agora,")
 
 cont = 0
 for t in fileR.itertuples(0):
