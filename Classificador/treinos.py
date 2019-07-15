@@ -10,7 +10,7 @@ def escrever(text, resp):
         writer.writerows(row)
 
 # write to csv
-fileR = pd.read_csv('../twitter_scraping/dados/lixo/dados.csv', encoding="utf-8")
+fileR = pd.read_csv('../twitter_scraping/dados/poluicaoSonora/dados.csv', encoding="utf-8")
 
 tweets = []
 
@@ -24,7 +24,7 @@ def acharIndiceTweet(tweet_text):
             cont += 1
     return cont
 
-indice = acharIndiceTweet("Aqui no meu país Novo Oriente, o povo vive jogando lixo na rua e querendo que o prefeito e o pessoal da limpeza varra a porta da casa deles.")
+indice = acharIndiceTweet("Nosso som tem que chegar até eles pra calar a boca desse povo sem cérebro.")
 
 cont = 0
 for t in fileR.itertuples(0):
