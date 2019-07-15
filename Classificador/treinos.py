@@ -24,7 +24,7 @@ def acharIndiceTweet(tweet_text):
             cont += 1
     return cont
 
-indice = acharIndiceTweet("Eu não consigo ser indiferente a gatos passando fome na rua. Vi um agora,")
+indice = acharIndiceTweet("o menino que eu quero me viu na rua hj um verdadeiro lixo e me mandou um video com a legenda “linda dmsss”")
 
 cont = 0
 for t in fileR.itertuples(0):
