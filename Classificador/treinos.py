@@ -24,7 +24,7 @@ def acharIndiceTweet(tweet_text):
             cont += 1
     return cont
 
-indice = acharIndiceTweet("")
+indice = acharIndiceTweet("maior silêncio aqui na rua, e o som tá alto dms aqui no terraço")
 
 cont = 0
 for t in fileR.itertuples(0):
