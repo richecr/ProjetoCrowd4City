@@ -82,7 +82,7 @@ def avaliaModelo():
     resultados = cross_val_predict(pipeline_simples, tweets, reclamacao, cv=10)
     # Medindo a acurácia média do modelo.
     print(metrics.accuracy_score(reclamacao, resultados))
-    reclamacao1 = ['não','sim']
+    reclamacao1 = ['neg','pos']
     print (metrics.classification_report(reclamacao, resultados, reclamacao1))
     print (pd.crosstab(reclamacao, resultados, rownames=['Real'], colnames=['Predito'], margins=True))
 

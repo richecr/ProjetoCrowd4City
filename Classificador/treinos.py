@@ -24,7 +24,7 @@ def acharIndiceTweet(tweet_text):
             cont += 1
     return cont
 
-indice = acharIndiceTweet("Algumas meninas aki do prédio são muito sem noção chegam 3AM da rua e fazem maior barulho sem respeito nenhum com quem está dormindo af")
+indice = acharIndiceTweet("TO ESCUTANDO MUITO BARULHO AQUI NA RUA TO COM MUITO MEDO MEU DEUS")
 
 cont = 0
 for t in fileR.itertuples(0):
@@ -32,10 +32,10 @@ for t in fileR.itertuples(0):
         print(t[1])
         resp = input("Sim ou não: ")
         if (resp == "s"):
-            escrever(t[1], "sim")
+            escrever(t[1], "pos")
             os.system('cls')
         elif (resp == "n"):
-            escrever(t[1], 'não')
+            escrever(t[1], 'neg')
             os.system('cls')
         else:
             os.system('cls')
