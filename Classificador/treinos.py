@@ -24,7 +24,7 @@ def acharIndiceTweet(tweet_text):
             cont += 1
     return cont
 
-indice = acharIndiceTweet("Pessoal estou vendendo essa caixa de Propaganda pra Moto 🏍 não deu certo na minha , ")
+indice = acharIndiceTweet("@carol_deoliver @J_LIVRES @PM_Alagoas Primeiro que não é na rua né! segundo que existem regras ")
 
 cont = 0
 for t in fileR.itertuples(0):
