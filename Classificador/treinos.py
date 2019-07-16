@@ -24,7 +24,7 @@ def acharIndiceTweet(tweet_text):
             cont += 1
     return cont
 
-indice = acharIndiceTweet("@carol_deoliver @J_LIVRES @PM_Alagoas Primeiro que não é na rua né! segundo que existem regras ")
+indice = acharIndiceTweet("@PrefSalvador Quando resolverão o som alto na rua Itapuã em nova Brasília de Itapuã ?")
 
 cont = 0
 for t in fileR.itertuples(0):
