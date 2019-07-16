@@ -94,23 +94,6 @@ for t, c in zip (testes,modelo.predict(freq_testes)):
 print (modelo.classes_)
 modelo.predict_proba(freq_testes).round(2)
 
-# Função para negação da frase
-def marque_negacao(texto):
-    negacoes = ['sem','não', 'nao']
-    negacao_detectada = False
-    resultado = []
-    palavras = texto.split()
-    for p in palavras:
-        p = p.lower()
-        if negacao_detectada == True:
-            p = p + '_NEG'
-        if p in negacoes:
-            negacao_detectada = True
-        resultado.append(p)
-    return (" ".join(resultado))
-
-print(marque_negacao("escola com aula"))
-
 ## Modelo usando pipelines.
 
 pipeline_simples = Pipeline([
@@ -125,14 +108,20 @@ pipeline_simples.steps
 # Validando os Modelos com Validação Cruzada
 resultados = cross_val_predict(pipeline_simples, tweets, reclamacao, cv=10)
 
+
+# Função para avaliar a eficácia do modelo. 
+def avaliaModelo():
+    # Validando os Modelos com Validação Cruzada
+    resultados = cross_val_predict(pipeline_simples, tweets, reclamacao, cv=10)
+    # Medindo a acurácia média do modelo.
+    print(metrics.accuracy_score(reclamacao, resultados))
+    reclamacao1 = ['não','sim']
+    print (metrics.classification_report(reclamacao, resultados, reclamacao1))
+    print (pd.crosstab(reclamacao, resultados, rownames=['Real'], colnames=['Predito'], margins=True))
+
+
 # Medindo a acurácia média do modelo.
-print(metrics.accuracy_score(reclamacao,resultados))
-
-# Medindo a validação do modelo.
-reclamacao1 = ['não','sim']
-print (metrics.classification_report(reclamacao, resultados, reclamacao1))
-
-print (pd.crosstab(reclamacao, resultados, rownames=['Real'], colnames=['Predito'], margins=True))
+avaliaModelo()
 
 print(pipeline_simples.predict(testes))
 
