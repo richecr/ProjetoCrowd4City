@@ -1,134 +1,147 @@
+import nltk
 import re
+import pandas as pd
+from nltk import word_tokenize
+from sklearn import metrics
+from sklearn.pipeline import Pipeline
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import cross_val_predict
+from sklearn.feature_extraction.text import CountVectorizer
+import numpy as np
 
-class Classificador():
-    def __init__(self, x_train, y_train):
-        self.x_train = x_train
-        self.y_train = y_train
-        self.treinar()
-        self.chaves_seguranca = [("segurança", 5), ("perigo", 3), ("perigoso", 3), ("falta", 1), ("bandido", 5), ("bandidos", 5), ("ladrão", 5), ("ladrões", 5), ("andar", 3), ("ruim", 2)]
-        self.chaves_lixos = [("lixo", 5), ("higiene", 4), ("lixeira", 5), ("falta", 1), ("jogado", 3), ("entulho", 4)]
-        self.chaves_saude = [("saúde", 5), ("hospitais", 5), ("hospital", 5), ("médico", 5), ("fechado", 3), ("posto", 4), ("enfermeira", 5)]
-        self.chaves_educacao = [("educação", 5), ("escolas", 5), ("escola", 5), ("universidades", 5), ("universidade", 5), ("falta", 1), ("ruim", 2), ("professores", 5), ("merenda", 4)]
+### Carregando dados.
+data = pd.read_csv('tweets.csv', encoding='utf-8')
 
-    def treinar(self):
-        predicts = []
-        #for text in self.x_train:
-        #    result = self.chave(test)
-    
-    def chave(self, texto):
-        palavras = texto.split(" ")
+### Pre-Processamento dos dados.
+# Remove duplicadas, caso exista.
+data.drop_duplicates(['full_text'], inplace=True)
 
-        pSeguranca = self.pontosSeguranca(palavras)
-        pLixo = self.pontosLixo(palavras)
-        pSaude = self.pontosSaude(palavras)
-        pEducacao = self.pontosEducacao(palavras)
+# Separando os dados de sua classificação
+tweets = data['full_text']
+reclamacao = data['reclamacao']
 
-        if (pSeguranca > pLixo):
-            return "SEGURANÇA"
-        elif (pSaude > pLixo):
-            return "SAÚDE"
-        elif (pEducacao > pLixo):
-            return "EDUCAÇÃO"
-        else:
-            return "LIXO"
+# Instala bibliotecas e baixa a base de dados
+nltk.download('stopwords')
+nltk.download('rslp')
 
-    def pontosSeguranca(self, texto):
-        pontos = 0
-        for palavra in texto:
-            pontos += self.contemSeguranca(palavra)
-        
-        return pontos
+#Funções de Pre-Processamento.
+# Função que remove as palavras consideradas irrelevantes para o conjunto de resultados.
+def RemoveStopWords(instancia):
+    stopwords = set(nltk.corpus.stopwords.words('portuguese'))
+    palavras = [i for i in instancia.split() if not i in stopwords]
+    return (" ".join(palavras))
 
-    def contemSeguranca(self, palavra):
-        for tupla in self.chaves_seguranca:
-            if (re.search(tupla[0], palavra) != None):
-                return tupla[1]
+# Função para o processo de reduzir palavras flexionadas.
+def Stemming(instancia):
+    stemmer = nltk.stem.RSLPStemmer()
+    palavras = []
+    for w in instancia.split():
+        palavras.append(stemmer.stem(w))
+    return (" ".join(palavras))
 
-        return 0
+# Função que faz a limpeza dos tweets: Removendo links, marcações e etc.
+def limpa_dados(instancia):
+    instancia = re.sub(r"http\S+", "", instancia).lower().replace('.','').replace(';','').replace('-','').replace(':','').replace(')','')
+    return (instancia)
 
-    def pontosLixo(self, texto):
-        pontos = 0
-        for palavra in texto:
-            pontos += self.contemLixo(palavra)
-        
-        return pontos
+# Aplicando funções de pre-processamento.
+def preprocessamento(instancia):
+    stemmer = nltk.stem.RSLPStemmer()
+    instancia = re.sub(r"http\S+", "", instancia).lower().replace('.','').replace(';','').replace('-','').replace(':','').replace(')','')
+    stopwords = set(nltk.corpus.stopwords.words('portuguese'))
+    palavras = [stemmer.stem(i) for i in instancia.split() if not i in stopwords]
+    return (" ".join(palavras))
 
-    def contemLixo(self, palavra):
-        for tupla in self.chaves_lixos:
-            if (re.search(tupla[0], palavra) != None):
-                return tupla[1]
+# Aplica a função em todos os dados
+tweets = [preprocessamento(i) for i in tweets]
 
-        return 0
-    
-    def pontosSaude(self, texto):
-        pontos = 0
-        for palavra in texto:
-            pontos += self.contemSaude(palavra)
-        
-        return pontos
+# Testando o modelo com algumas instâncias simples
+testes = pd.read_csv('testes.csv', encoding='utf-8')
+r = testes['reclamacao']
+testes = testes['full_text']
 
-    def contemSaude(self, palavra):
-        for tupla in self.chaves_saude:
-            if (re.search(tupla[0], palavra) != None):
-                return tupla[1]
+# Aplica a função de Pré-processamento nos dados de testes.
+testes = [preprocessamento(i) for i in testes]
 
-        return 0
+## Modelo usando pipelines.
+pipeline_simples = Pipeline([
+  ('counts', CountVectorizer()),
+  ('classifier', MultinomialNB())
+])
 
-    def pontosEducacao(self, texto):
-        pontos = 0
-        for palavra in texto:
-            pontos += self.contemEducacao(palavra)
-        
-        return pontos
-    
-    def contemEducacao(self, palavra):
-        for tupla in self.chaves_educacao:
-            if (re.search(tupla[0], palavra) != None):
-                return tupla[1]
-        
-        return 0
+# Gera modelo simples.
+pipeline_simples.fit(tweets, reclamacao)
+pipeline_simples.steps
 
-class Classificador1():
-    def __init__(self, x_train, y_train):
-        self.x_train = x_train
-        self.y_train = y_train
-        self.chaves = [
-            ("sem escola", 5), ("sem saude", 5), ("sem hospital", 5), ("com lixo", 5)
-        ]
-    
-    def treinar(self):
-        predicts = []
-    
-    def chave(self, texto):
-        palavras = texto.split(" ")
-        p = self.pontos(palavras)
+# Validando os Modelos com Validação Cruzada
+resultados = cross_val_predict(pipeline_simples, tweets, reclamacao, cv=10)
 
-        if (p >= 5):
-            return "SIM"
-        else:
-            return "NÃO"
+# Função para avaliar a eficácia do modelo. 
+def avaliaModelo():
+    # Validando os Modelos com Validação Cruzada
+    resultados = cross_val_predict(pipeline_simples, tweets, reclamacao, cv=10)
+    # Medindo a acurácia média do modelo.
+    print(metrics.accuracy_score(reclamacao, resultados))
+    reclamacao1 = ['não','sim']
+    print (metrics.classification_report(reclamacao, resultados, reclamacao1))
+    print (pd.crosstab(reclamacao, resultados, rownames=['Real'], colnames=['Predito'], margins=True))
 
-    
-    def pontos(self, texto):
-        pontos = 0
-        for palavra in texto:
-            pontos += self.contem(palavra)
+# Medindo a acurácia média do modelo.
+avaliaModelo()
 
-        return pontos
-    
-    def contem(self, palavra):
-        for tupla in self.chaves:
-            if (re.search(tupla[0], palavra) != None):
-                return tupla[1]
+predicoes = pipeline_simples.predict(testes)
+print(predicoes)
 
-        return 0
+print(np.mean(r == predicoes))
 
-c = Classificador1([], [])
+'''
+### Bigrams
+vectorizer = CountVectorizer(ngram_range=(1,2))
+freq_tweets = vectorizer.fit_transform(tweets)
+modelo = MultinomialNB()
+modelo.fit(freq_tweets, reclamacao)
 
-print( c.chave("rua com hospital fechado") )
-print( c.chave("rua sem segurança alguma") )
-print( c.chave("rua cheio de lixo, não dá nem pra andar") )
-print( c.chave("minha rua é um lixo de segurança, é bastante perigoso andar por aqui") )
-print( c.chave("Não tem uma escola boa nessa rua"))
-print( c.chave("Não tem uma escola nessa rua"))
-print( c.chave("escolas sem merendas, sem professores") )
+resultados = cross_val_predict(modelo, freq_tweets, reclamacao, cv=10)
+
+print(metrics.accuracy_score(reclamacao, resultados))
+
+reclamacao1 = ['não','sim']
+print (metrics.classification_report(reclamacao, resultados, reclamacao1))
+
+print (pd.crosstab(reclamacao, resultados, rownames=['Real'], colnames=['Predito'], margins=True))
+
+print(modelo.predict(freq_testes))
+
+---------
+
+### Criando o modelo.
+# Instancia o objeto que faz a vetorização dos dados de texto.
+vectorizer = CountVectorizer(analyzer="word")
+
+# Aplica o vetorizador nos dados de texto
+freq_tweets = vectorizer.fit_transform(tweets)
+type(freq_tweets)
+
+
+modelo = MultinomialNB()
+modelo.fit(freq_tweets, reclamacao)
+
+# Formato (Linhas, Colunas) da matriz
+freq_tweets.shape
+freq_tweets.A
+
+# Aplica a função de Pré-processamento nos dados de testes.
+testes = [preprocessamento(i) for i in testes]
+
+# Transforma os dados de teste em vetores de palavras.
+freq_testes = vectorizer.transform(testes)
+
+# Probabilidades de cada classe
+print (modelo.classes_)
+modelo.predict_proba(freq_testes).round(2)
+
+# Fazendo a classificação com o modelo treinado.
+for t, c in zip (testes,modelo.predict(freq_testes)):
+    print (t +", "+ c)
+
+'''
