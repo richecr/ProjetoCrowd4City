@@ -6,13 +6,20 @@ from selenium.common.exceptions import NoSuchElementException, StaleElementRefer
 import youtube_dl
 import json
 
-driver = webdriver.Chrome(executable_path=r"F:\Rick\Downloads\chromedriver_win32\chromedriver.exe")
-driver.get("http://g1.globo.com/busca/?q=calendario+jpb+campina+grande&page=1&order=recent&species=v%C3%ADdeos")
+driver = webdriver.Firefox()
+driver.get("http://g1.globo.com/busca/?q=calendario+jpb&page=1&order=recent&species=v%C3%ADdeos")
 cont  = 0
 found_noticias = driver.find_elements_by_css_selector(".results__list")
-noticias = found_noticias.children
+# noticias = found_noticias[0]
 
-print(noticias)
+n = found_noticias[0].find_elements_by_css_selector(".widget widget--card widget--info")
+
+for noticia in n:
+    div = noticia.find_elements_by_css_selector(".widget--info__text-container")
+    a = div.find_elements_by_css_selector("a")
+
+    print(a.get_attribute("href"))
+
 
 '''
 while (cont < 6):    
