@@ -30,7 +30,7 @@ for noticia in n:
 
     links.append(a[0].get_attribute("href"))
 
-print(len(links))
+print("Quantidade de noticias: ", len(links))
 # write to json
 with open("./links.json", 'w') as outfile:
     json.dump(links, outfile)
