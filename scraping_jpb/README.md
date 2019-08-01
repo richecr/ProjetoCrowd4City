@@ -1,5 +1,5 @@
 # Scraping jpb
->> Código tem como objetivo fazer web scraping nos vídeos do quadro, Calendário, do JPB. E depois fazer estudos sobre os textos, extraindo os problemas urbanos citados em cada vídeo e sua localidade.
+> Código tem como objetivo fazer web scraping nos vídeos do quadro, Calendário, do JPB. E depois fazer estudos sobre os textos, extraindo os problemas urbanos citados em cada vídeo e sua localidade.
 
 ## Fluxo de execução:
 
