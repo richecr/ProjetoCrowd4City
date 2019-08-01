@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import json
 import youtube_dl
 
@@ -10,6 +11,11 @@ def my_hook(d):
 
 ydl_opts = {
     'format': 'bestaudio/best',
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'wav',
+        'preferredquality': '192',
+    }],
     'noplaylist' : True,
     'progress_hooks': [my_hook],
 }

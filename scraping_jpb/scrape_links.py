@@ -12,7 +12,8 @@ driver.get("http://g1.globo.com/busca/?q=calendario+jpb&page=1&order=recent&spec
 cont  = 0
 found_noticias = driver.find_elements_by_css_selector(".results__list")
 n = found_noticias[0].find_elements_by_tag_name("li")
-quantidade = 5
+quantidade = 1
+
 if (len(n) > quantidade):
     novo_n = []
     for i in range(0, quantidade):
