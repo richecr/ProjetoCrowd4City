@@ -3,7 +3,7 @@
 
 ## Fluxo de execução:
 
-### scrape_links:
+### scrape links:
 
 - Script que realiza o web scraping no site do [Calendário JPB](http://g1.globo.com/busca/?q=calendario+jpb&page=1&order=recent&species=v%C3%ADdeos).
 
@@ -11,7 +11,7 @@
 
 -Utiliza a lib `selenium`.
 
-### baixar_videos:
+### baixar videos:
 
 - Script que realiza o download dos áudios dos vídeos através dos links salvos no arquivo `links.json`. E converte todos os áudios para `wav`.
 
@@ -19,15 +19,15 @@
 
 - OBS: Mova os áudios para pasta `audios`. Por enquanto isso esta manual.
 
-### speech_rec:
+### speech rec:
 
 - Script que realiza a conversão/extração dos áudios para texto. E salvo todos os textos de cada áudio no arquivo `textos_videos.csv`.
 
-- Utiliza a lib `speech_recognition`
+- Utiliza a lib `SpeechRecognition`
 
-### processa_texto:
+### processar texto:
 
 - Script que realiza o processamento inteligente dos textos. Excluíndo palavras desnecessárias, como: Stop Words e etc.
 
-- Utiliza a lib `Spacy`.
+- Utiliza a lib `spacy`.
 
