@@ -25,6 +25,13 @@ for t in textos_limpos:
 
 print("-----------------------\n")
 print(txts)
+
+# Carregando modelo em português.
+nlp = spacy.load('pt')
+doc = nlp(txts[0])
+
+[print((entity, entity.label_)) for entity in doc.ents]
+
 '''
 textos = pd.read_csv("./textos_videos.csv")
 textos = textos.drop_duplicates()
@@ -33,12 +40,4 @@ textos_limpos = [txt for txt in textos['texto']]
 # print(textos_limpos[0])
 
 print(textos_limpos)
-
-# Carregando modelo em português.
-nlp = spacy.load('pt')
-
-doc = nlp(txts[0])
-
-# [print((token.orth_, token.pos_)) for token in doc]
-[print((entity, entity.label_)) for entity in doc.ents]
 '''
