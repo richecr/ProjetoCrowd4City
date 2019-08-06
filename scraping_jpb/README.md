@@ -9,6 +9,8 @@
 
 - Captura as urls de uma quantidade específica de vídeos e salvando-as em um arquivo json, `links.json`.
 
+-Utiliza a lib `selenium`.
+
 ### baixar_videos:
 
 - Script que realiza o download dos áudios dos vídeos através dos links salvos no arquivo `links.json`. E converte todos os áudios para `wav`.
