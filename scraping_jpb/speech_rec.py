@@ -4,7 +4,7 @@ import os
 import csv
 
 fields = ["titulo", "texto"]
-f = csv.writer(open('./textos_videos.csv', 'w'))
+f = csv.writer(open('./textos_videos.csv', 'w', encoding='utf-8'))
 f.writerow(fields)
 
 r = sr.Recognizer()

@@ -30,7 +30,10 @@ print(txts)
 nlp = spacy.load('pt')
 doc = nlp(txts[0])
 
-[print((entity, entity.label_)) for entity in doc.ents]
+# Salvar as entidades que foram classificadas como LOC.
+ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
+print(ents_loc)
+
 
 '''
 textos = pd.read_csv("./textos_videos.csv")
