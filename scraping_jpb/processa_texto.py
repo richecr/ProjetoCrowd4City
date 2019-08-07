@@ -3,8 +3,11 @@ import nltk
 import spacy
 import pandas as pd
 
+import requests
+import json
+
 textos_limpos = []
-arq = csv.DictReader(open("./textos_videos.csv"))
+arq = csv.DictReader(open("./textos_videos.csv", encoding='utf-8'))
 
 for p in arq:
     textos_limpos.append(p["texto"])
@@ -34,6 +37,11 @@ doc = nlp(txts[0])
 ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
 print(ents_loc)
 
+# Básico: Indo atras do endereço, da primeira entidade, usando a API do mapbox - geocoding
+response = requests.get('https://api.mapbox.com/geocoding/v5/mapbox.places/' + str(ents_loc[0]) + ', joão pessoa.json?access_token=pk.eyJ1IjoicmljaGVsdG9uIiwiYSI6ImNqejFrNnRkdDA1NDkzaW1samUyY2pkc2YifQ.Nl_sJiP2M1hm-gXdm7zR1w')
+enderecos = response.json()
+
+print(enderecos)
 
 '''
 textos = pd.read_csv("./textos_videos.csv")
