@@ -38,10 +38,16 @@ ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
 print(ents_loc)
 
 # Básico: Indo atras do endereço, da primeira entidade, usando a API do mapbox - geocoding
-response = requests.get('https://api.mapbox.com/geocoding/v5/mapbox.places/' + str(ents_loc[0]) + ', joão pessoa.json?access_token=pk.eyJ1IjoicmljaGVsdG9uIiwiYSI6ImNqejFrNnRkdDA1NDkzaW1samUyY2pkc2YifQ.Nl_sJiP2M1hm-gXdm7zR1w')
+response = requests.get('https://api.mapbox.com/geocoding/v5/mapbox.places/' + ents_loc[0].__str__() + ', joão pessoa.json?access_token=pk.eyJ1IjoicmljaGVsdG9uIiwiYSI6ImNqejFrNnRkdDA1NDkzaW1samUyY2pkc2YifQ.Nl_sJiP2M1hm-gXdm7zR1w')
 enderecos = response.json()
 
-print(enderecos)
+ends = enderecos['features'][0]
+print(ends)
+
+if (ends['relevance'] >= 0.5):
+    print("CORRETO")
+else:
+    print("ERRADO, Tenta outra combinação")
 
 '''
 textos = pd.read_csv("./textos_videos.csv")
