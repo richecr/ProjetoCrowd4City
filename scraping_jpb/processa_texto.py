@@ -45,7 +45,10 @@ ends = enderecos['features'][0]
 print(ends)
 
 if (ends['relevance'] >= 0.5):
-    print("CORRETO")
+    if (ends['context'][2]['text'] == "João Pessoa"):
+        print("CORRETO")
+    else:
+        print("ERRADO, Tenta outra combinação")
 else:
     print("ERRADO, Tenta outra combinação")
 
