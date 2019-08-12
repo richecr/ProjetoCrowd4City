@@ -13,11 +13,11 @@ arq = csv.DictReader(open("./textos_videos.csv", encoding='utf-8'))
 for p in arq:
     textos_limpos.append(p["texto"])
 
-print(textos_limpos)
+# print(textos_limpos)
 
+'''
 # Removendo stop words
 txts = []
-'''
 nltk.download('stopwords')
 stop_words = nltk.corpus.stopwords.words('portuguese')
 for t in textos_limpos:
@@ -31,6 +31,7 @@ for t in textos_limpos:
 print("-----------------------\n")
 print(txts)
 '''
+
 # Carregando modelo em português.
 nlp = spacy.load('pt_core_news_sm')
 doc = nlp(textos_limpos[0])
@@ -45,6 +46,7 @@ g = geocoder.arcgis(ents_loc[0].__str__())
 end = g.json
 print(end)
 
+
 if (end['confidence'] >= 5):
     if ("campina grande" in end['address'].lower()):
         print("CORRETO")
@@ -53,6 +55,20 @@ if (end['confidence'] >= 5):
 else:
     print("ERRADO, Tenta outra combinação")
 
+def pre_processamento(texto):
+    novo_texto = ""
+    for palavra in texto:
+        novo_texto += palavra.lower()
+
+    return novo_texto
+
+def tf(palavra, texto):
+    resultado = 0
+    for p in texto:
+        if (palavra.lower() == p.lower()):
+            resultado += 1
+
+    return resultado
 
 # Básico: Indo atras do endereço, da primeira entidade, usando a API do mapbox - geocoding
 '''
