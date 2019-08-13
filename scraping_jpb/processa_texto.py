@@ -50,9 +50,10 @@ def achar_inicio_nome_rua(texto):
             break
 
     for i in range(inicio, len(texto.split())):
-        if cont <= 5:
+        if cont < 5:
+            if (texto.split()[i].lower() not in ["de", "da", "do"]):
+                cont += 1
             saida.append(texto.split()[i])
-            cont += 1
 
     return saida
 
