@@ -40,6 +40,22 @@ def verifica_endereco(end):
     else:
         return False
 
+def achar_inicio_nome_rua(texto):
+    saida = []
+    inicio = 0
+    cont = 0
+    for i in range(len(texto.split())):
+        if texto.split()[i].lower() == "rua":
+            inicio = i + 1
+            break
+
+    for i in range(inicio, len(texto.split())):
+        if cont <= 5:
+            saida.append(texto.split()[i])
+            cont += 1
+
+    return saida
+
 textos_limpos = []
 arq = csv.DictReader(open("./textos_videos.csv", encoding='utf-8'))
 
@@ -58,6 +74,7 @@ print(ents_loc)
 
 end_encontrados = concantena_end(ents_loc)
 
+print(achar_inicio_nome_rua(textos_limpos[0]))
 # Básico: Indo atras do endereço, da primeira entidade, usando a API do geocoder com arcgis.
 # Para testes # ents_loc[0] = "Rua João Sergio de almeida"
 flag = False
@@ -68,12 +85,14 @@ for loc in ents_loc:
     end = g.json
     ends.append(end)
 print("1: ", ends)
+print("\n----------------\n")
 
 ends_corretos = []
 for e in ends:
     if (verifica_endereco(e)):
         ends_corretos.append(e)
 print("2: ", ends_corretos)
+print("\n----------------\n")
 
 end_final = ends_corretos[0]
 end_final_confidence = ends_corretos[0]
@@ -82,6 +101,7 @@ for ed in ends_corretos:
     if (ed['confidence'] > end_final_confidence['confidence']):
         end_final = end
 print("3: ", end_final)
+print("\n----------------\n")
 
 '''
 # Removendo stop words
