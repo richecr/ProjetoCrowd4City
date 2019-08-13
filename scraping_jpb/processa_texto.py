@@ -22,22 +22,23 @@ def tf(palavra, texto):
 
     return resultado
 
-'''
-# Removendo stop words
-txts = []
-nltk.download('stopwords')
-stop_words = nltk.corpus.stopwords.words('portuguese')
-for t in textos_limpos:
-    te = ""
-    for palavra in t.split(" "):
-        if (palavra not in stop_words):
-            te += palavra
-            te += " "
-    txts.append(te)
+def concantena_end(lista_end):
+    saida = []
+    for i in range(len(lista_end) - 1):
+        for j in range(i+1, len(lista_end)):
+            temp = str(lista_end[i]) + " " + str(lista_end[j])
+            saida.append(temp)
 
-print("-----------------------\n")
-print(txts)
-'''
+    return saida
+
+def verifica_endereco(end):
+    if (end['confidence'] >= 5):
+        if ("joão pessoa" in end['address'].lower()):
+            return True
+        else:
+            return False
+    else:
+        return False
 
 textos_limpos = []
 arq = csv.DictReader(open("./textos_videos.csv", encoding='utf-8'))
@@ -55,19 +56,49 @@ doc = nlp(textos_limpos[0])
 ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
 print(ents_loc)
 
+end_encontrados = concantena_end(ents_loc)
+
 # Básico: Indo atras do endereço, da primeira entidade, usando a API do geocoder com arcgis.
 # Para testes # ents_loc[0] = "Rua João Sergio de almeida"
-g = geocoder.arcgis(ents_loc[0].__str__())
-end = g.json
-print(end)
+flag = False
+ends = []
+for loc in ents_loc:
+    l = str(loc)
+    g = geocoder.arcgis(l)
+    end = g.json
+    ends.append(end)
+print("1: ", ends)
 
-if (end['confidence'] >= 5):
-    if ("campina grande" in end['address'].lower()):
-        print("CORRETO")
-    else:
-        print("ERRADO, Tenta outra combinação")
-else:
-    print("ERRADO, Tenta outra combinação")
+ends_corretos = []
+for e in ends:
+    if (verifica_endereco(e)):
+        ends_corretos.append(e)
+print("2: ", ends_corretos)
+
+end_final = ends_corretos[0]
+end_final_confidence = ends_corretos[0]
+
+for ed in ends_corretos:
+    if (ed['confidence'] > end_final_confidence['confidence']):
+        end_final = end
+print("3: ", end_final)
+
+'''
+# Removendo stop words
+txts = []
+nltk.download('stopwords')
+stop_words = nltk.corpus.stopwords.words('portuguese')
+for t in textos_limpos:
+    te = ""
+    for palavra in t.split(" "):
+        if (palavra not in stop_words):
+            te += palavra
+            te += " "
+    txts.append(te)
+
+print("-----------------------\n")
+print(txts)
+'''
 
 # Básico: Indo atras do endereço, da primeira entidade, usando a API do mapbox - geocoding
 '''
