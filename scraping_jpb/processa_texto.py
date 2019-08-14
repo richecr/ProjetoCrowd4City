@@ -7,6 +7,11 @@ import requests
 import json
 import geocoder
 
+# Ruas de Campina grande
+ruas = []
+with open("./ruas.json") as f:
+    ruas = json.load(f)
+
 def pre_processamento(texto):
     novo_texto = ""
     for palavra in texto:
@@ -32,6 +37,8 @@ def concantena_end(lista_end):
     return saida
 
 def verifica_endereco(end):
+    if (end['address'].lower() in ruas):
+        return True
     if (end['confidence'] >= 5):
         if ("joão pessoa" in end['address'].lower()):
             return True
@@ -50,7 +57,7 @@ def achar_inicio_nome_rua(texto):
             break
 
     for i in range(inicio, len(texto.split())):
-        if cont < 5:
+        if cont < 3:
             if (texto.split()[i].lower() not in ["de", "da", "do"]):
                 cont += 1
             saida.append(texto.split()[i])
@@ -81,7 +88,7 @@ print(achar_inicio_nome_rua(textos_limpos[0]))
 flag = False
 ends = []
 for loc in ents_loc:
-    l = str(loc)
+    l = str(loc) + ", campina grande"
     g = geocoder.arcgis(l)
     end = g.json
     ends.append(end)
@@ -103,6 +110,7 @@ for ed in ends_corretos:
         end_final = end
 print("3: ", end_final)
 print("\n----------------\n")
+
 
 '''
 # Removendo stop words
