@@ -88,7 +88,7 @@ print(achar_inicio_nome_rua(textos_limpos[0]))
 flag = False
 ends = []
 for loc in ents_loc:
-    l = str(loc) + ", campina grande"
+    l = str(loc)
     g = geocoder.arcgis(l)
     end = g.json
     ends.append(end)
