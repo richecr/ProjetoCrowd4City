@@ -84,7 +84,6 @@ def verfica(ents_loc):
 
     ends_corretos = []
     for e in ends:
-        print(e['address'])
         if (verifica_endereco(e)):
             ends_corretos.append(e)
     print("2: ", json.dumps(ends_corretos, indent=4))
@@ -96,16 +95,22 @@ def verfica(ents_loc):
             if (ed['confidence'] > end_final_confidence['confidence']):
                 end_final = ed
         print("3: ", end_final)
+        return True
+    else:
+        return False
 
 def main():
+    cont = 0
     nlp = spacy.load('pt_core_news_sm')
     for texto in textos_limpos:
         doc = nlp(texto)
         ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
         end_encontrados = concantena_end(ents_loc)
         print(ents_loc)
-        verfica(end_encontrados)
+        if verfica(end_encontrados):
+            cont += 1
         print("\n------------------------------------------------\n")
+    print(cont)
 
 main()
 
