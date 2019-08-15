@@ -40,7 +40,7 @@ def verifica_endereco(end):
     if (end['address'].lower() in ruas):
         return True
     if (end['confidence'] >= 5):
-        if ("joão pessoa" in end['address'].lower()):
+        if (", joão pessoa" in end['address'].lower() or ", paraíba" in end['address'].lower()):
             return True
         else:
             return False
@@ -72,6 +72,44 @@ for p in arq:
 
 # print(textos_limpos)
 
+def verfica(ents_loc):
+    ends = []
+    for loc in ents_loc:
+        l = str(loc)
+        g = geocoder.arcgis(l)
+        end = g.json
+        if (end != None):
+            ends.append(end)
+    # print("1: ", json.dumps(ends, indent=4))
+
+    ends_corretos = []
+    for e in ends:
+        print(e['address'])
+        if (verifica_endereco(e)):
+            ends_corretos.append(e)
+    print("2: ", json.dumps(ends_corretos, indent=4))
+
+    if (len(ends_corretos)):
+        end_final = ends_corretos[0]
+        end_final_confidence = ends_corretos[0]
+        for ed in ends_corretos:
+            if (ed['confidence'] > end_final_confidence['confidence']):
+                end_final = ed
+        print("3: ", end_final)
+
+def main():
+    nlp = spacy.load('pt_core_news_sm')
+    for texto in textos_limpos:
+        doc = nlp(texto)
+        ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
+        end_encontrados = concantena_end(ents_loc)
+        print(ents_loc)
+        verfica(end_encontrados)
+        print("\n------------------------------------------------\n")
+
+main()
+
+'''
 # Carregando modelo em português.
 nlp = spacy.load('pt_core_news_sm')
 doc = nlp(textos_limpos[0])
@@ -110,7 +148,7 @@ for ed in ends_corretos:
         end_final = end
 print("3: ", end_final)
 print("\n----------------\n")
-
+'''
 
 '''
 # Removendo stop words
