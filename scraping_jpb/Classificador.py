@@ -1,6 +1,14 @@
 import re
+import nltk
 import numpy as np
 import pandas as pd
+from nltk.tokenize import word_tokenize
+from nltk.tokenize import sent_tokenize
+from nltk.probability import FreqDist
+from collections import defaultdict
+from nltk.corpus import stopwords
+from heapq import nlargest
+from string import punctuation
 from sklearn import metrics
 from sklearn.metrics import accuracy_score
 from sklearn.pipeline import Pipeline
@@ -28,7 +36,41 @@ resolvidos = data['resolvido']
 nltk.download('stopwords')
 nltk.download('rslp')
 
-#Funções de Pre-Processamento.
+docs = data['texto'].tolist()
+
+# Criando um vocabulário de palavras.
+# Eliminando as palavras que aparecem em 85% dos textos.
+# Eliminando as stopwords.
+cv = CountVectorizer(max_df=0.85, stop_words=stopwords.words('portuguese'))
+word_count_vector = cv.fit_transform(docs)
+# print(word_count_vector)
+
+print(list(cv.vocabulary_.keys())[:15])
+
+tfidf_transformer = TfidfTransformer(smooth_idf=True, use_idf=True)
+tfidf_transformer.fit(word_count_vector)
+
+# Função para resumir um texto.
+def sumarizacao(texto):
+    sentencas = sent_tokenize(texto)
+    palavras = word_tokenize(texto.lower())
+    stopwords1 = set(stopwords.words('portuguese') + list(punctuation))
+    palavras_sem_stopwords = [palavra for palavra in palavras if palavra not in stopwords1]
+    frequencia = FreqDist(palavras_sem_stopwords)
+    sentencas_importantes = defaultdict(int)
+    for i, sentenca in enumerate(sentencas):
+        for palavra in word_tokenize(sentenca.lower()):
+            if palavra in frequencia:
+                sentencas_importantes[i] += frequencia[palavra]
+    idx_sentencas_importantes = nlargest(4, sentencas_importantes, sentencas_importantes.get)
+
+    txt = ""
+    for i in sorted(idx_sentencas_importantes):
+        txt += sentencas[i]
+
+    return txt
+
+# Funções de Pre-Processamento.
 # Função que remove as palavras consideradas irrelevantes para o conjunto de resultados.
 def RemoveStopWords(instancia):
     stopwords = set(nltk.corpus.stopwords.words('portuguese'))
