@@ -7,7 +7,6 @@ import requests
 import json
 import geocoder
 
-requests.get("/geocoding/v5/mapbox.places/rua joao sergio de almeida.json")
 # Ruas de Campina grande
 ruas = []
 with open("./ruas.json") as f:
