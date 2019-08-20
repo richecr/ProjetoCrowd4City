@@ -3,6 +3,7 @@ import json
 import youtube_dl
 import os
 
+# Testar esse código em casa.
 def get_videos():
     urls = open('./links.json', 'r')
     urls.read()
