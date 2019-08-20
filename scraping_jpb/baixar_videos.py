@@ -3,7 +3,9 @@ import json
 import youtube_dl
 import os
 
+
 # Testar esse código em casa.
+'''
 def get_videos():
     urls = open('./links.json', 'r')
     urls.read()
@@ -11,8 +13,8 @@ def get_videos():
     get_vids = os.system("youtube-dl --verbose -o '/audios/%(title)s.%(ext)s' https://globoplay.globo.com/v/7843006/ ")
 
 get_videos()
-
 '''
+
 with open('./links.json') as f:
     links = json.load(f)
 
@@ -37,9 +39,5 @@ for link in links:
         link = link.split("%2F")
         link = "https://globoplay.globo.com/v/" + link[4]
         print(link)
-        try:
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([link])
-        except:
-            continue
-'''
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([link])

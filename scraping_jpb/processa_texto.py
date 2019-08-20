@@ -104,6 +104,7 @@ def verfica(ents_loc):
 response = requests.get("https://api.mapbox.com/geocoding/v5/mapbox.places/rua joao sergio de almeida.json?access_token=pk.eyJ1IjoicmljaGVsdG9uIiwiYSI6ImNqejFrNnRkdDA1NDkzaW1samUyY2pkc2YifQ.Nl_sJiP2M1hm-gXdm7zR1w")
 loc = response.json()
 print(loc)
+print(loc['features'][3]['context'][1]['text']) # Santa Catarina
 '''
 
 def main():
