@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 import json
 import youtube_dl
 
-with open('links.json') as f:
+with open('../links.json') as f:
     links = json.load(f)
 
 def my_hook(d):
@@ -23,6 +23,6 @@ ydl_opts = {
 for link in links:
     link = link.split("%2F")
     link = "https://globoplay.globo.com/v/" + link[4]
-
+    print(link)
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([link])

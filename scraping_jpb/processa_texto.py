@@ -7,6 +7,7 @@ import requests
 import json
 import geocoder
 
+requests.get("/geocoding/v5/mapbox.places/rua joao sergio de almeida.json")
 # Ruas de Campina grande
 ruas = []
 with open("./ruas.json") as f:
@@ -98,6 +99,13 @@ def verfica(ents_loc):
         return True
     else:
         return False
+
+'''
+# Testar com a API do mapbox. Pode ser que seja melhor.
+response = requests.get("https://api.mapbox.com/geocoding/v5/mapbox.places/rua joao sergio de almeida.json?access_token=pk.eyJ1IjoicmljaGVsdG9uIiwiYSI6ImNqejFrNnRkdDA1NDkzaW1samUyY2pkc2YifQ.Nl_sJiP2M1hm-gXdm7zR1w")
+loc = response.json()
+print(loc)
+'''
 
 def main():
     cont = 0
