@@ -1,7 +1,9 @@
+import os
 import re
 import csv
 import nltk
 import spacy
+import scipy.sparse
 import pandas as pd
 
 from string import punctuation
@@ -9,11 +11,17 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 
-from gensim.utils import simple_preprocess
+from gensim.utils import simple_preprocess, lemmatize
+from gensim.models import LdaModel, LdaMulticore
 from smart_open import smart_open
+from gensim import matutils, models
 from gensim import corpora
 from pprint import pprint
-import os
+
+nltk.download('stopwords')
+stop_words = stopwords.words('portuguese')
+
+stop_words = stop_words + ["aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos"]
 
 ### Carregando dados.
 data = pd.read_csv('../textos_videos.csv', encoding='utf-8')
@@ -21,9 +29,48 @@ t = data['texto']
 
 textos = []
 for texto in t:
-    textos.append(texto)
+    textos.append(texto.lower())
 # print(textos)
 
+nlp = spacy.load('pt_core_news_sm')
+data_processada = []
+
+def buscar_entidade(palavra, entidades):
+    for ent in entidades:
+        if (ent.text == palavra):
+            return ent
+    return -1
+
+for texto in textos:
+    t = nlp(texto)
+    doc_out = []
+    entidades = [entity for entity in doc.ents]
+    for palavra in texto.split():
+        if (palavra not in stop_words):
+            verifica_entidade = buscar_entidade(palavra, entidades)
+            if (verifica_entidade != -1):
+                if (verifica_entidade.label_ == "NN" or verifica_entidade.label_ == "NN")
+            doc_out.append(palavra)
+
+        else:
+            continue
+    data_processada.append(doc_out)
+
+print(data_processada[0][:5])
+
+dct = corpora.Dictionary(data_processada)
+corpus = [dct.doc2bow(line) for line in data_processada]
+
+lda_model = LdaMulticore(corpus=corpus,
+                         id2word=dct,
+                         num_topics=4,
+                         passes=10)
+
+lda_model.save('lda_model.model')
+
+print(lda_model.print_topics(-1))
+
+'''
 # Tokenização dos textos.
 tokenized_list = [simple_preprocess(doc) for doc in textos]
 
@@ -35,6 +82,7 @@ mycorpus = [mydict.doc2bow(doc, allow_update=True) for doc in tokenized_list]
 # Convertendo os id's em palavras novamente. Melhorar visualização.
 word_counts = [[(mydict[id], count) for id, count in line] for line in mycorpus]
 pprint(word_counts)
+'''
 
 '''
 def sort_coo(coo_matrix):

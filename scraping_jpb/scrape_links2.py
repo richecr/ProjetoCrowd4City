@@ -12,7 +12,7 @@ driver.get("https://globoplay.globo.com/busca/?q=calend%C3%A1rio+jpb")
 cont  = 0
 found_noticias = driver.find_elements_by_css_selector(".tiled-grid-widget")
 n = found_noticias[0].find_elements_by_tag_name("li")
-quantidade = 800
+quantidade = 1362
 
 if (len(n) > quantidade):
     novo_n = []
