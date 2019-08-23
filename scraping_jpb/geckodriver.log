@@ -1602,3 +1602,476 @@ console.error: BroadcastService:
 
 1566154791911	Marionette	INFO	Stopped listening on port 44671
 [Parent 27398, Gecko_IOThread] WARNING: pipe error (79): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1566498738336	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.WHchZkjbPAPV"
+1566498743582	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566498743583	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566498743583	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566498743583	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566498751025	Marionette	INFO	Listening on port 36275
+1566498751102	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 16016, Chrome_ChildThread] WARNING: pipe error (31): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 16066, Chrome_ChildThread] WARNING: pipe error (3): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+Exiting due to channel error.
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x160032,name=PBackground::Msg_PHttpBackgroundChannelConstructor) Channel error: cannot send/recv
+
+[Child 16016, Chrome_ChildThread] WARNING: pipe error (3): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+Exiting due to channel error.
+Exiting due to channel error.
+1566498804710	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.vSfE0Gkk03RP"
+1566498805578	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566498805579	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566498805579	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566498805579	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566498808769	Marionette	INFO	Listening on port 46287
+1566498808821	Marionette	WARN	TLS certificate errors will be ignored for this session
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1566498997993	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.1eWI2lLuDqm3"
+1566498998752	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566498998752	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566498998752	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566498998753	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566499001872	Marionette	INFO	Listening on port 38933
+1566499001907	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://devtools/client/jsonview/converter-observer.js, line 74: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsIHttpChannel.contentType]
+1566499022173	Marionette	INFO	Stopped listening on port 38933
+1566503205541	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.vfvTPUdMAzKt"
+1566503212806	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566503212807	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566503212807	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566503212807	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566503220606	Marionette	INFO	Listening on port 44423
+1566503220616	Marionette	WARN	TLS certificate errors will be ignored for this session
+1566503237071	Marionette	INFO	Stopped listening on port 44423
+1566503285859	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.XWXepx39B0sD"
+1566503286532	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566503286532	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566503286532	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566503286532	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566503289549	Marionette	INFO	Listening on port 36899
+1566503289572	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[Parent 24872, Gecko_IOThread] WARNING: pipe error (125): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1566503337098	Marionette	INFO	Stopped listening on port 36899
+1566503369770	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.neUZQAvftFoz"
+1566503370769	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566503370769	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566503370769	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566503370769	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566503373519	Marionette	INFO	Listening on port 36639
+1566503373585	Marionette	WARN	TLS certificate errors will be ignored for this session
+1566503387126	Marionette	INFO	Stopped listening on port 36639
+JavaScript error: https://globoplay.globo.com/busca/?q=calend%C3%A1rio+jpb, line 12: NS_ERROR_NOT_INITIALIZED: 
+JavaScript error: https://globoplay.globo.com/busca/?q=calend%C3%A1rio+jpb, line 12: NS_ERROR_NOT_INITIALIZED: 
+1566503408936	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.5QRDbT5MXPXY"
+1566503409616	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566503409616	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566503409617	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566503409617	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566503412152	Marionette	INFO	Listening on port 36329
+1566503412249	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1566503465169	Marionette	INFO	Stopped listening on port 36329
+JavaScript error: resource://gre/modules/osfile/osfile_async_front.jsm, line 400: Error: OS.File has been shut down. Rejecting post to stat
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 4646: NS_ERROR_UNEXPECTED: Component returned failure code: 0x8000ffff (NS_ERROR_UNEXPECTED) [nsIWindowMediator.getEnumerator]
+1566503474826	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.83Vq2TauQ3pz"
+1566503475499	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566503475499	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566503475499	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566503475500	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566503478385	Marionette	INFO	Listening on port 38797
+1566503478440	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221566500463412%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:201:13
+
+1566503535258	Marionette	INFO	Stopped listening on port 38797
+1566503567681	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.NRSh9UrbN0zX"
+1566503568389	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566503568390	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566503568390	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566503568390	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566503571164	Marionette	INFO	Listening on port 42829
+1566503571193	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1566503603224	Marionette	INFO	Stopped listening on port 42829
+1566503607855	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.syZsxKg9IdAq"
+1566503608531	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566503608531	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566503608531	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566503608531	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566503611043	Marionette	INFO	Listening on port 33035
+1566503611071	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/usr/lib/firefox/firefox:26856): dconf-WARNING **: 16:54:11.753: Unable to open /var/lib/flatpak/exports/share/dconf/profile/user: Permissão negada
+[Parent 26783, Gecko_IOThread] WARNING: pipe error (93): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 26783, Gecko_IOThread] WARNING: pipe error (79): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1566503681130	Marionette	INFO	Stopped listening on port 33035
+1566504951535	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.GZz5wSi8CMZR"
+1566504958416	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566504958416	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566504958416	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566504958416	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566504967972	Marionette	INFO	Listening on port 33655
+1566504968000	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221566500463412%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:201:13
+
+1566505070952	Marionette	INFO	Stopped listening on port 33655
+[Child 28880, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x600027,name=PNecko::Msg_RemoveRequestContext) Channel closing: too late to send/recv, messages will be lost
+
+1566505142855	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.kfKfSh4q0Yjr"
+1566505144665	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566505144666	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566505144666	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566505144666	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566505148569	Marionette	INFO	Listening on port 34811
+1566505148594	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221566500463412%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:201:13
+
+[Parent 29342, Gecko_IOThread] WARNING: pipe error (79): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1566505368044	Marionette	INFO	Stopped listening on port 34811
+1566505387932	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.MyQcI1lg8q9I"
+1566505389879	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566505389879	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566505389879	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566505389880	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566505393175	Marionette	INFO	Listening on port 40265
+1566505393266	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221566500463412%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:201:13
+
+
+(/usr/lib/firefox/firefox:30047): dconf-WARNING **: 17:23:43.395: Unable to open /var/lib/flatpak/exports/share/dconf/profile/user: Permissão negada
+1566505495457	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1566505497199	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1566505498960	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1566505503325	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1566505505105	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1566505507081	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1566505508941	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1566505510856	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+bail@chrome://marionette/content/sync.js:223:64
+1566505876802	Marionette	INFO	Stopped listening on port 40265
+1566505887177	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.zWl4ob0Uu3Zr"
+1566505888000	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566505888000	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566505888000	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566505888000	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566505890716	Marionette	INFO	Listening on port 38603
+1566505890790	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221566500463412%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:201:13
+
+[Parent 30764, Gecko_IOThread] WARNING: pipe error (79): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1566506135926	Marionette	INFO	Stopped listening on port 38603
+1566506182474	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.FfF7hN7rOoxc"
+1566506184020	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566506184020	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566506184020	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566506184021	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566506188092	Marionette	INFO	Listening on port 42993
+1566506188105	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221566500463412%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:201:13
+
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+Exiting due to channel error.
+1566514984679	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.SBgf5KISDQr7"
+1566514991709	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566514991709	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566514991710	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566514991710	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566515002386	Marionette	INFO	Listening on port 39215
+1566515002456	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://globoplay.globo.com/busca/?q=calend%C3%A1rio+jpb, line 12: NS_ERROR_NOT_INITIALIZED: 
+JavaScript error: https://globoplay.globo.com/busca/?q=calend%C3%A1rio+jpb, line 12: NS_ERROR_NOT_INITIALIZED: 
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1566515047887	Marionette	INFO	Stopped listening on port 39215
+1566515060872	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.iuRiabwULCjv"
+1566515061616	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566515061616	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566515061616	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566515061616	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566515064658	Marionette	INFO	Listening on port 42875
+1566515064696	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221566506664698%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:201:13
+
+[Parent 7893, Gecko_IOThread] WARNING: pipe error (79): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 7893, Gecko_IOThread] WARNING: pipe error (87): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1566516605580	Marionette	INFO	Stopped listening on port 42875
+1566516613856	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.zpBbfYwLW9jM"
+1566516615224	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566516615224	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566516615224	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566516615224	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566516619042	Marionette	INFO	Listening on port 45945
+1566516619071	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221566506664698%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:201:13
+
+
+(/usr/lib/firefox/firefox:9209): dconf-WARNING **: 20:31:34.476: Unable to open /var/lib/flatpak/exports/share/dconf/profile/user: Permissão negada
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+[Parent 9135, Gecko_IOThread] WARNING: pipe error (80): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1566516732924	Marionette	INFO	Stopped listening on port 45945
+1566516930898	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.kzv5Pzl4ufeS"
+1566516932608	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566516932608	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566516932608	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566516932608	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566516935751	Marionette	INFO	Listening on port 46675
+1566516935818	Marionette	WARN	TLS certificate errors will be ignored for this session
+1566517004713	Marionette	INFO	Stopped listening on port 46675
+1566517071722	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.JIdlCwnt0u2Y"
+1566517072396	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566517072396	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566517072397	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566517072397	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566517075086	Marionette	INFO	Listening on port 41421
+1566517075135	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: http://%(server)s/dummy/blocklist//buckets/monitor/collections/changes/records?_expected=%221566506664698%22 is not a valid URL..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:201:13
+
+1566517126439	Marionette	INFO	Stopped listening on port 41421
+1566517165892	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.dgiv8yafVCnG"
+1566517166676	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566517166677	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566517166677	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566517166677	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566517169415	Marionette	INFO	Listening on port 34265
+1566517169508	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error: Pipe quebrado: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 727
+[Child 12576, Chrome_ChildThread] WARNING: pipe error (3): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1566517224085	Marionette	INFO	Stopped listening on port 34265
+1566517235522	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.eARDCcZk6oQT"
+1566517236196	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566517236196	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566517236196	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566517236196	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566517239575	Marionette	INFO	Listening on port 40641
+1566517239635	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3500BC,name=PContent::Msg_ScriptError) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3500BC,name=PContent::Msg_ScriptError) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x53000E,name=PHttpChannel::Msg_DeletingChannel) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3500BC,name=PContent::Msg_ScriptError) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3500BC,name=PContent::Msg_ScriptError) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3500BC,name=PContent::Msg_ScriptError) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1566517260350	Marionette	INFO	Stopped listening on port 40641
+1566517268602	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.Dwpi3Y8991Xu"
+1566517269255	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566517269256	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566517269256	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566517269256	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566517271983	Marionette	INFO	Listening on port 35437
+1566517272148	Marionette	WARN	TLS certificate errors will be ignored for this session
+1566517286613	Marionette	INFO	Stopped listening on port 35437
+1566517295674	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.mQresRLBG0tE"
+1566517296351	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566517296352	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566517296352	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566517296352	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566517299071	Marionette	INFO	Listening on port 33553
+1566517299092	Marionette	WARN	TLS certificate errors will be ignored for this session
+1566517314335	Marionette	INFO	Stopped listening on port 33553
+1566517321224	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.iOJKiEGzQzQg"
+1566517321892	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566517321892	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1566517321893	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566517321893	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566517324637	Marionette	INFO	Listening on port 34383
+1566517324739	Marionette	WARN	TLS certificate errors will be ignored for this session
+1566517347009	Marionette	INFO	Stopped listening on port 34383

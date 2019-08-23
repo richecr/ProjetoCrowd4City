@@ -5,7 +5,7 @@ import csv
 from time import sleep
 
 fields = ["titulo", "texto"]
-f = csv.writer(open('./textos_videos1.csv', 'w', encoding='utf-8'))
+f = csv.writer(open('./textos_videos.csv', 'w', encoding='utf-8'))
 f.writerow(fields)
 
 r = sr.Recognizer()

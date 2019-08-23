@@ -40,7 +40,7 @@ def verifica_endereco(end):
     if (end['address'].lower() in ruas):
         return True
     if (end['confidence'] >= 5):
-        if (", joão pessoa" in end['address'].lower() or ", paraíba" in end['address'].lower()):
+        if (", campina grande" in end['address'].lower() and ", paraíba" in end['address'].lower()):
             return True
         else:
             return False
@@ -95,9 +95,9 @@ def verfica(ents_loc):
             if (ed['confidence'] > end_final_confidence['confidence']):
                 end_final = ed
         print("3: ", end_final)
-        return True
+        return (True, end_final)
     else:
-        return False
+        return (False, [])
 
 '''
 # Testar com a API do mapbox. Pode ser que seja melhor.
@@ -106,6 +106,21 @@ loc = response.json()
 print(loc)
 print(loc['features'][3]['context'][1]['text']) # Santa Catarina
 '''
+fields = ["texto"]
+f = csv.writer(open('./processamento/textos_limpos.csv', 'w', encoding='utf-8'))
+f.writerow(fields)
+
+def removerEnderecosTextos(ends, texto):
+    t = ""
+    ends = ends['address'].split(", ")[0].lower()
+    for p in texto.split():
+        if (p not in ends):
+            t += p
+        else:
+            continue
+        t += " "
+    t = t.strip()
+    f.writerow([t])
 
 def main():
     cont = 0
@@ -115,8 +130,10 @@ def main():
         ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
         end_encontrados = concantena_end(ents_loc)
         print(ents_loc)
-        if verfica(end_encontrados):
+        result = verfica(end_encontrados)
+        if result[0]:
             cont += 1
+            removerEnderecosTextos(result[1], texto.lower())
         print("\n------------------------------------------------\n")
     print(cont)
 
