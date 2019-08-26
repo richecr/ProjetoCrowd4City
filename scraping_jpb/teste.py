@@ -1,13 +1,12 @@
-import pandas as pd
-import pickle
+import os
+import csv
+import json
+from os import path
+from time import sleep
 
-data = pd.read_pickle('./textos_videos.csv')
+PATH_AUDIOS = path.dirname(path.realpath(__file__)) + "/audios/"
 
-from gensim import matutils, models
-import scipy.sparse
+lista_audios = os.listdir(PATH_AUDIOS)
 
-tdm = data.transpose()
-tdm.head()
-
-sparse_counts = scipy.sparse.csr_matrix(tdm)
-corpus = matutils.Sparse2Corpus(sparse_counts)
+for audio in lista_audios:
+    print(audio)

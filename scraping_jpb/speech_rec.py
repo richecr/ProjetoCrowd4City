@@ -22,11 +22,13 @@ PATH_AUDIOS = path.dirname(path.realpath(__file__)) + "/audios/"
 lista_audios = os.listdir(PATH_AUDIOS)
 cont = 1
 iniciar_em = 0
+libera = False
 
 for audio in lista_audios:
-    if (iniciar_em > 0):
-        iniciar_em -= 1
-    else:
+    if ("2936021" in audio):
+        libera = True
+        continue
+    if libera:
         print("Começa")
         print(audio)
         audio1 = audio

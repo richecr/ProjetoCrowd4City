@@ -11,6 +11,7 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 
+from gensim.models.coherencemodel import CoherenceModel
 from gensim.utils import simple_preprocess, lemmatize
 from gensim.models import LdaModel, LdaMulticore
 from smart_open import smart_open
@@ -21,7 +22,7 @@ from pprint import pprint
 nltk.download('stopwords')
 stop_words = stopwords.words('portuguese')
 
-stop_words = stop_words + ["aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos"]
+stop_words = stop_words + ["aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"]
 
 ### Carregando dados.
 data = pd.read_csv('../textos_videos.csv', encoding='utf-8')
@@ -41,19 +42,27 @@ def buscar_entidade(palavra, entidades):
             return ent
     return -1
 
-for texto in textos:
-    t = nlp(texto)
-    doc_out = []
-    entidades = [entity for entity in doc.ents]
-    for palavra in texto.split():
-        if (palavra not in stop_words):
-            verifica_entidade = buscar_entidade(palavra, entidades)
-            if (verifica_entidade != -1):
-                if (verifica_entidade.label_ == "NN" or verifica_entidade.label_ == "NN")
-            doc_out.append(palavra)
+allowed_postags = ['NOUN', 'ADJ', 'PRON', "VERB"]
 
+for texto in textos:
+    doc_out = []
+    doc = nlp(texto)
+    for token in doc:
+        if (token.text not in stop_words):
+            if (token.pos_ in allowed_postags):
+                doc_out.append(token.text)
+            else:
+                continue
         else:
             continue
+    data_processada.append(doc_out)
+    '''
+    for palavra in texto.split():
+        if (palavra not in stop_words):
+            doc_out.append(palavra)
+        else:
+            continue
+    '''
     data_processada.append(doc_out)
 
 print(data_processada[0][:5])
@@ -63,12 +72,29 @@ corpus = [dct.doc2bow(line) for line in data_processada]
 
 lda_model = LdaMulticore(corpus=corpus,
                          id2word=dct,
-                         num_topics=4,
-                         passes=10)
+                         random_state=100,
+                         num_topics=7,
+                         passes=10,
+                         chunksize=1000,
+                         batch=False,
+                         alpha='asymmetric',
+                         decay=0.5,
+                         offset=75,
+                         eta=None,
+                         eval_every=0,
+                         iterations=100,
+                         gamma_threshold=0.001,
+                         per_word_topics=True
+                         )
+
 
 lda_model.save('lda_model.model')
 
 print(lda_model.print_topics(-1))
+
+coherence_model_lda = CoherenceModel(model=lda_model, texts=data_processada, dictionary=dct, coherence='c_v')
+coherence_lda = coherence_model_lda.get_coherence()
+print('\nCoherence Score: ', coherence_lda)
 
 '''
 # Tokenização dos textos.
