@@ -2114,3 +2114,4 @@ console.error: BroadcastService:
 1566556843594	Marionette	WARN	TLS certificate errors will be ignored for this session
 1566557091798	Marionette	INFO	Stopped listening on port 40269
 [Parent 16864, Gecko_IOThread] WARNING: pipe error (79): Conexão fechada pela outra ponta: file /build/firefox-BlSS22/firefox-68.0.2+linuxmint1+tina/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1566592002634	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.tpblAxUiZbn0"
