@@ -3,6 +3,7 @@ import re
 import csv
 import nltk
 import spacy
+import gensim
 import scipy.sparse
 import pandas as pd
 
@@ -22,7 +23,7 @@ from pprint import pprint
 nltk.download('stopwords')
 stop_words = stopwords.words('portuguese')
 
-stop_words = stop_words + ["aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"]
+stop_words = stop_words + ["vez", "vem", "olha", "pessoal", "tudo", "dia", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"]
 
 ### Carregando dados.
 data = pd.read_csv('../textos_videos.csv', encoding='utf-8')
@@ -42,8 +43,7 @@ def buscar_entidade(palavra, entidades):
             return ent
     return -1
 
-allowed_postags = ['NOUN', 'ADJ', 'PRON', "VERB"]
-
+allowed_postags = ['NOUN', 'ADJ', 'PRON']
 for texto in textos:
     doc_out = []
     doc = nlp(texto)
@@ -56,129 +56,52 @@ for texto in textos:
         else:
             continue
     data_processada.append(doc_out)
-    '''
-    for palavra in texto.split():
-        if (palavra not in stop_words):
-            doc_out.append(palavra)
-        else:
-            continue
-    '''
-    data_processada.append(doc_out)
 
 print(data_processada[0][:5])
 
 dct = corpora.Dictionary(data_processada)
-corpus = [dct.doc2bow(line) for line in data_processada]
 
-lda_model = LdaMulticore(corpus=corpus,
-                         id2word=dct,
-                         random_state=100,
-                         num_topics=7,
-                         passes=10,
-                         chunksize=1000,
-                         batch=False,
-                         alpha='asymmetric',
-                         decay=0.5,
-                         offset=75,
-                         eta=None,
-                         eval_every=0,
-                         iterations=100,
-                         gamma_threshold=0.001,
-                         per_word_topics=True
-                         )
+t = data_processada
+corpus = [dct.doc2bow(line) for line in t]
 
+lda_model = LdaModel(corpus=corpus,
+                    id2word=dct,
+                    num_topics=5, 
+                    random_state=100,
+                    update_every=1,
+                    passes=80,
+                    alpha='asymmetric',
+                    per_word_topics=True)
 
-lda_model.save('lda_model.model')
+topics = lda_model.print_topics(-1)
+for topic in topics:
+    print(topic)
 
-print(lda_model.print_topics(-1))
-
-coherence_model_lda = CoherenceModel(model=lda_model, texts=data_processada, dictionary=dct, coherence='c_v')
+coherence_model_lda = CoherenceModel(model=lda_model, texts=data_processada, corpus=corpus, dictionary=dct, coherence='c_v')
 coherence_lda = coherence_model_lda.get_coherence()
-print('\nCoherence Score: ', coherence_lda)
+print('\nCoherence Score LDAModel: ', coherence_lda)
+
+print("------------------------")
+mallet_path = '/home/rick/Documentos/mallet-2.0.8/bin/mallet'
+ldamallet = gensim.models.wrappers.LdaMallet(mallet_path, corpus=corpus, num_topics=5, id2word=dct)
+# print(ldamallet.show_topics(formatted=False))
+coherence_model_ldamallet = CoherenceModel(model=ldamallet, texts=data_processada, dictionary=dct, coherence='c_v')
+coherence_ldamallet = coherence_model_ldamallet.get_coherence()
+print('\nCoherence Score LDAMallet: ', coherence_ldamallet)
+topics = ldamallet.print_topics(-1)
+for topic in topics:
+    print(topic)
 
 '''
-# Tokenização dos textos.
-tokenized_list = [simple_preprocess(doc) for doc in textos]
+(0, [('situação', 0.021352313167259787), ('nada', 0.017334404775571115), ('lixo', 0.01658822178854322), ('sabe', 0.013947881988290667), ('passar', 0.013603489840431637), ('carro', 0.013086901618643095), ('ninguém', 0.011938927792446333), ('vezes', 0.011192744805418436), ('faz', 0.010389163127080702), ('dá', 0.008839398461715072)])
+(1, [('obra', 0.04798346553457714), ('comunidade', 0.01653446542285778), ('prazo', 0.010780918333147134), ('parte', 0.009998882806390347), ('data', 0.009552005362529327), ('mês', 0.009160987599150933), ('resposta', 0.008714110155289912), ('secretário', 0.008602390794324656), ('secretaria', 0.008099653669981008), ('dar', 0.007932074628533126)])
+(2, [('escola', 0.026628748707342297), ('resolvido', 0.01809720785935884), ('ano', 0.011504653567735263), ('local', 0.00969493278179938), ('boa', 0.008725439503619441), ('ficou', 0.00814374353671148), ('muro', 0.007885211995863495), ('chegou', 0.007562047569803516), ('grande', 0.007303516028955533), ('lado', 0.006851085832471561)])
+(3, [('água', 0.0330845624963272), ('casa', 0.030498912851854028), ('esgoto', 0.01974496092143151), ('situação', 0.015102544514309221), ('cagepa', 0.014044778750661104), ('chuva', 0.013986013986013986), ('resolver', 0.012928248222365869), ('buraco', 0.012340600575894693), ('tava', 0.01098901098901099), ('resolvido', 0.010636422401128283)])
+(4, [('praça', 0.02206913369505578), ('coisa', 0.014265683106748766), ('tava', 0.013595074071816132), ('comunidade', 0.013107358410046942), ('vendo', 0.011766140340181674), ('quadra', 0.010790709016643297), ('certeza', 0.009876242150826069), ('fazendo', 0.009754313235383772), ('bom', 0.008839846369566542), ('ginásio', 0.008413095165518502)])
 
-# Criação do Corpus
-mydict = corpora.Dictionary()
-mycorpus = [mydict.doc2bow(doc, allow_update=True) for doc in tokenized_list]
-# pprint(mycorpus)
-
-# Convertendo os id's em palavras novamente. Melhorar visualização.
-word_counts = [[(mydict[id], count) for id, count in line] for line in mycorpus]
-pprint(word_counts)
-'''
-
-'''
-def sort_coo(coo_matrix):
-    tuples = zip(coo_matrix.col, coo_matrix.data)
-    return sorted(tuples, key=lambda x: (x[1], x[0]), reverse=True)
-
-def extract_topn_from_vector(feature_names, sorted_items, topn=10):
-    """get the feature names and tf-idf score of top n items"""
-    
-    #use only topn items from vector
-    sorted_items = sorted_items[:topn]
-
-    score_vals = []
-    feature_vals = []
-
-    for idx, score in sorted_items:
-        fname = feature_names[idx]
-        
-        #keep track of feature name and its corresponding score
-        score_vals.append(round(score, 3))
-        feature_vals.append(feature_names[idx])
-
-    #create a tuples of feature,score
-    #results = zip(feature_vals,score_vals)
-    results= {}
-    for idx in range(len(feature_vals)):
-        results[feature_vals[idx]]=score_vals[idx]
-    
-    return results
-
-def pre_processamento(texto):
-    texto = texto.lower()
-    texto = re.sub("(\\d|\\W)+", " ", texto)
-    stopwords1 = set(stopwords.words('portuguese') + list(punctuation))
-    res = ""
-    for p in texto.split():
-        if (p not in stopwords1):
-            res += p + " "
-
-    return res
-
-data['texto'] = data['texto'].apply(lambda x:pre_processamento(x))
-
-nltk.download('stopwords')
-
-docs = data['texto'].tolist()
-
-# Criando um vocabulário de palavras.
-# Eliminando as palavras que aparecem em 85% dos textos.
-# Eliminando as stopwords.
-cv = CountVectorizer(max_df=0.85, stop_words=stopwords.words('portuguese'))
-word_count_vector = cv.fit_transform(docs)
-
-print(list(cv.vocabulary_.keys())[:10])
-
-tfidf_transformer = TfidfTransformer(smooth_idf=True, use_idf=True)
-tfidf_transformer.fit(word_count_vector)
-
-feature_names = cv.get_feature_names()
-
-doc = docs[0]
-
-tf_idf_vector = tfidf_transformer.transform(cv.transform([doc]))
-
-sorted_items = sort_coo(tf_idf_vector.tocoo())
-
-keywords = extract_topn_from_vector(feature_names, sorted_items, 15)
-
-print("========TEXTO========")
-print(doc)
-print("========KEYWORDS========")
-print(keywords)
+(0, '0.018*"obra" + 0.008*"situação" + 0.007*"comunidade" + 0.006*"calçamento" + 0.005*"serviço" + 0.005*"nada" + 0.005*"volta" + 0.005*"mês" + 0.005*"tava" + 0.004*"mercado"')
+(1, '0.014*"escola" + 0.008*"resolvido" + 0.008*"comunidade" + 0.007*"nada" + 0.006*"lixo" + 0.006*"tava" + 0.005*"obra" + 0.005*"situação" + 0.005*"serviço" + 0.005*"muro"')
+(2, '0.022*"água" + 0.015*"casa" + 0.013*"esgoto" + 0.011*"situação" + 0.007*"cagepa" + 0.007*"buraco" + 0.007*"chuva" + 0.006*"obra" + 0.005*"carro" + 0.005*"calçamento"')
+(3, '0.017*"praça" + 0.013*"obra" + 0.009*"comunidade" + 0.005*"tempo" + 0.005*"nada" + 0.005*"tava" + 0.004*"sabe" + 0.004*"dá" + 0.004*"vendo" + 0.004*"resolvido"')
+(4, '0.015*"escola" + 0.010*"quadra" + 0.006*"situação" + 0.006*"reforma" + 0.006*"comunidade" + 0.006*"ano" + 0.006*"tava" + 0.006*"ginásio" + 0.005*"coisa" + 0.005*"obra"')
 '''
