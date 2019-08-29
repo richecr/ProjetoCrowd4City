@@ -57,7 +57,7 @@ for texto in textos:
             continue
     data_processada.append(doc_out)
 
-print(data_processada[0][:5])
+# print(data_processada[0][:5])
 
 dct = corpora.Dictionary(data_processada)
 
@@ -91,6 +91,8 @@ print('\nCoherence Score LDAMallet: ', coherence_ldamallet)
 topics = ldamallet.print_topics(-1)
 for topic in topics:
     print(topic)
+
+
 
 '''
 (0, [('situação', 0.021352313167259787), ('nada', 0.017334404775571115), ('lixo', 0.01658822178854322), ('sabe', 0.013947881988290667), ('passar', 0.013603489840431637), ('carro', 0.013086901618643095), ('ninguém', 0.011938927792446333), ('vezes', 0.011192744805418436), ('faz', 0.010389163127080702), ('dá', 0.008839398461715072)])
