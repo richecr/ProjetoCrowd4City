@@ -12,6 +12,14 @@ from gensim.utils import simple_preprocess
 from gensim.parsing.preprocessing import STOPWORDS
 from gensim.models.coherencemodel import CoherenceModel
 
+def removeEnderecosDeTexto(texto, entidades_loc):
+    saida = ""
+    for palavra in texto:
+        if (palavra not in entidades_loc):
+            saida += palavra + " "
+
+    return saida.strip()
+
 np.random.seed(2018)
 nltk.download('wordnet')
 
@@ -44,7 +52,9 @@ def preprocess(text):
 	for token in doc:
 		if (token.text not in gensim.parsing.preprocessing.STOPWORDS):
 			if (token.pos_ in allowed_postags):
-				doc_out.append(lemmatize_stemming(token.text.lower()))
+				ents = [entity for entity in doc.ents if entity.label_ == "LOC"]
+				text1 = removeEnderecosDeTexto(token.text.lower(), ents)
+				doc_out.append(lemmatize_stemming(text1))
 			else:
 				continue
 		else:
