@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from nltk.stem import *
 from nltk.stem.porter import *
+import matplotlib.pyplot as plt
 from nltk.corpus import stopwords
 from gensim import corpora, models
 from gensim.utils import simple_preprocess
@@ -33,30 +34,23 @@ from nltk import word_tokenize, pos_tag
 def lemmatize_stemming(text):
     return stemmer.stem(WordNetLemmatizer().lemmatize(text, pos='v'))
 
-allowed_postags = ['NOUN', 'ADJ', 'PRON']
 # Colocando todas as palavras para caixa baixa.
 # Removendo acentos e pontuações.
 # Remover palavras com menos de 3 letras.
+allowed_postags = ['NOUN', 'ADJ', 'PRON']
 def preprocess(text):
 	doc_out = []
 	doc = nlp(text)
 	for token in doc:
 		if (token.text not in gensim.parsing.preprocessing.STOPWORDS):
 			if (token.pos_ in allowed_postags):
-				doc_out.append(lemmatize_stemming(token.text))
+				doc_out.append(lemmatize_stemming(token.text.lower()))
 			else:
 				continue
 		else:
 			continue
 
 	return doc_out
-	'''
-    result = []
-    for token in gensim.utils.simple_preprocess(text):
-        if token not in gensim.parsing.preprocessing.STOPWORDS and len(token) > 3:
-            result.append(lemmatize_stemming(token))
-    return result
-	'''
 
 processed_docs = dados['texto'].map(preprocess)
 print(processed_docs[:10])
@@ -75,37 +69,54 @@ dictionary.filter_extremes(no_below=15, no_above=0.5, keep_n=100000)
 # Bag-of-words.
 bow_corpus = [dictionary.doc2bow(doc) for doc in processed_docs]
 
-'''
-bow_doc_4310 = bow_corpus[50]
-for i in range(len(bow_doc_4310)):
-    print("A palavra {} (\"{}\") apareceu {} vez(es).".format(bow_doc_4310[i][0], 
-                                               dictionary[bow_doc_4310[i][0]], 
-bow_doc_4310[i][1]))
-'''
-
 tfidf = models.TfidfModel(bow_corpus)
 corpus_tfidf = tfidf[bow_corpus]
 
-'''
-lda_model = gensim.models.LdaMulticore(bow_corpus, num_topics=5, id2word=dictionary, passes=2, workers=2)
-
-for idx, topic in lda_model.print_topics(-1):
-    print('Topic: {} \nWords: {}'.format(idx, topic))
-
-lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=5, id2word=dictionary, passes=2, workers=4)
-for idx, topic in lda_model_tfidf.print_topics(-1):
-    print('Topic: {} Word: {}'.format(idx, topic))
-
-'''
 lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=5, id2word=dictionary, passes=10, workers=4)
 for idx, topic in lda_model_tfidf.print_topics(-1):
     print('Topic: {} Word: {}'.format(idx, topic))
 
-
-
-coherence_model_lda = CoherenceModel(model=lda_model_tfidf, texts=processed_docs, corpus=bow_corpus, dictionary=dictionary, coherence='c_v')
+coherence_model_lda = CoherenceModel(model=lda_model_tfidf, texts=processed_docs, corpus=corpus_tfidf, dictionary=dictionary, coherence='c_v')
 coherence_lda = coherence_model_lda.get_coherence()
 print('\nCoherence Score LDAModelTfIdf: ', coherence_lda)
+
+def compute_coherence_values(dct, corpus_tfidf, texts, limit, start, step):
+    """
+    Compute c_v coherence for various number of topics
+
+    Parameters:
+    ----------
+    dictionary : Gensim dictionary
+    corpus : Gensim corpus
+    texts : List of input texts
+    limit : Max num of topics
+
+    Returns:
+    -------
+    model_list : List of LDA topic models
+    coherence_values : Coherence values corresponding to the LDA model with respective number of topics
+    """
+    coherence_values = []
+    model_list = []
+    for num_topics in range(start, limit, step):
+        model = gensim.models.LdaMulticore(corpus_tfidf, num_topics=num_topics, id2word=dct, passes=10, workers=4)
+        model_list.append(model)
+        coherencemodel = CoherenceModel(model=model, texts=texts, dictionary=dct, corpus=corpus_tfidf , coherence='c_v')
+        coherence_values.append(coherencemodel.get_coherence())
+
+    return model_list, coherence_values
+
+model_list, coherence_values = compute_coherence_values(dictionary, corpus_tfidf, processed_docs, 6, 3, 1)
+limit=6; start=3; step=1;
+x = range(start, limit, step)
+plt.plot(x, coherence_values)
+plt.xlabel("Num Topics")
+plt.ylabel("Coherence score")
+plt.legend(("coherence_values"), loc='best')
+plt.show()
+
+for m, cv in zip(x, coherence_values):
+    print("Num Topics =", m, " has Coherence Value of", round(cv, 4))
 
 print("-------")
 unseen_document = 'calendário JPB aqui nas nossas telas nós vamos agora até o bairro Jardim Paulistano zona sul de Campinas Você lembra que nossa equipe ouviu os moradores da Rua Riachuelo que reclamavam da falta de calçamento no local então o problema foi resolvido só que na época a prefeitura também se comprometeu e fazer o calçamento da Rua Ariel que fica bem pertinho essa parte foi feita mas só que pela metade Laisa grisi foi conferido calendário JPB desembarcou aqui no Jardim Paulistano E olha que maravilha hoje é possível andar na rua com calçamento sem tanta poeira sem pisar em lama Quando chove essa foi uma conquista dos moradores junto com calendário Desde o ano passado em 2015 quando a prefeitura calçou essa rua calça com a Rua Riachuelo também mas presta atenção dois passos seguintes e rua de terra essa rua que esse trechinho não foi calçado vou aqui conversar com os moradores já tá todo mundo reunido Por que me explica como é que pode só esse trechinho não foi calçada só esse trecho você imagina que fizeram as duas por duas partes né fizeram aquela parte de lá aí ficou a metade depois fizeram essa daqui aí deixar essa parte aqui sem sem tá feita né nessa parte de baixo é pior ainda porque quando chove a água invade a Casa dos moradores e olha só aqui nessa casa foi colocado um monte de pedra bem na frente para impedir que a água entre vamos lá falar com ela é dona Severina é dona Bill Olá tudo bom com a senhora como é que tá aqui essa situação a senhora Teve que colocar pedra aqui né é chover em entrar aqui sozinha imagina aperreio Aí tem que dar um jeito aqui é pior difícil hein dona Bill quanto tempo já que a senhora mora aqui nessa rua 8 anos viu o resultado de vergonha né a gente não tem né É porque se ele tivesse vergonha ele já tinha feito isso todos vocês moram aqui nessa rua aí o que que acontece nessas ruas aqui né aí o que que acontece a Rua Areal lá em cima Foi calçada a Rua Riachuelo também E vocês ficaram só um gostinho só na saudade e o pior que não se desviar da Lama dos buracos e ele prometeu Então olha você tá vendo aquela cerâmica Vale Aí depois ele dá o que é o povo que bota para que ele possa passar infelizmente é uma situação difícil a gente já pediu muitas vezes recado dado essa essa rua que já é assunto do calendário a gente conseguiu algumas ruas outras não voltamos em 2016 em 2016 o secretário André agra secretário de obras de Campina Grande e disse que ia voltar aqui não foi então vamos lá calendário novo quem é o representante'
@@ -124,3 +135,4 @@ unseen_document = "Jaguaribe a Escola Estadual Professora Maria do Carmo de Mira
 bow_vector = dictionary.doc2bow(preprocess(unseen_document))
 for index, score in sorted(lda_model_tfidf[bow_vector], key=lambda tup: -1*tup[1]):
     print("Score: {}\t Topic: {}".format(score, lda_model_tfidf.print_topic(index, 10)))
+
