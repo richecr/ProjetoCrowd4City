@@ -72,13 +72,13 @@ bow_corpus = [dictionary.doc2bow(doc) for doc in processed_docs]
 tfidf = models.TfidfModel(bow_corpus)
 corpus_tfidf = tfidf[bow_corpus]
 
+'''
 lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=5, id2word=dictionary, passes=10, workers=4)
-for idx, topic in lda_model_tfidf.print_topics(-1):
-    print('Topic: {} Word: {}'.format(idx, topic))
 
 coherence_model_lda = CoherenceModel(model=lda_model_tfidf, texts=processed_docs, corpus=corpus_tfidf, dictionary=dictionary, coherence='c_v')
 coherence_lda = coherence_model_lda.get_coherence()
 print('\nCoherence Score LDAModelTfIdf: ', coherence_lda)
+'''
 
 def compute_coherence_values(dct, corpus_tfidf, texts, limit, start, step):
     """
@@ -101,11 +101,24 @@ def compute_coherence_values(dct, corpus_tfidf, texts, limit, start, step):
     for num_topics in range(start, limit, step):
         model = gensim.models.LdaMulticore(corpus_tfidf, num_topics=num_topics, id2word=dct, passes=10, workers=4)
         model_list.append(model)
-        coherencemodel = CoherenceModel(model=model, texts=texts, dictionary=dct, corpus=corpus_tfidf , coherence='c_v')
+        coherencemodel = CoherenceModel(model=model, texts=texts, corpus=corpus_tfidf, dictionary=dct, coherence='c_v')
         coherence_values.append(coherencemodel.get_coherence())
 
     return model_list, coherence_values
 
+model_list, coherence_values = compute_coherence_values(dictionary, corpus_tfidf, processed_docs, 8, 5, 1)
+limit=8; start=5; step=1;
+x = range(start, limit, step)
+plt.plot(x, coherence_values)
+plt.xlabel("Num Topics")
+plt.ylabel("Coherence score")
+plt.legend(("coherence_values"), loc='best')
+plt.show()
+
+for m, cv in zip(x, coherence_values):
+    print("Num Topics =", m, " has Coherence Value of", round(cv, 4))
+
+'''
 print("-------")
 unseen_document = 'calendário JPB aqui nas nossas telas nós vamos agora até o bairro Jardim Paulistano zona sul de Campinas Você lembra que nossa equipe ouviu os moradores da Rua Riachuelo que reclamavam da falta de calçamento no local então o problema foi resolvido só que na época a prefeitura também se comprometeu e fazer o calçamento da Rua Ariel que fica bem pertinho essa parte foi feita mas só que pela metade Laisa grisi foi conferido calendário JPB desembarcou aqui no Jardim Paulistano E olha que maravilha hoje é possível andar na rua com calçamento sem tanta poeira sem pisar em lama Quando chove essa foi uma conquista dos moradores junto com calendário Desde o ano passado em 2015 quando a prefeitura calçou essa rua calça com a Rua Riachuelo também mas presta atenção dois passos seguintes e rua de terra essa rua que esse trechinho não foi calçado vou aqui conversar com os moradores já tá todo mundo reunido Por que me explica como é que pode só esse trechinho não foi calçada só esse trecho você imagina que fizeram as duas por duas partes né fizeram aquela parte de lá aí ficou a metade depois fizeram essa daqui aí deixar essa parte aqui sem sem tá feita né nessa parte de baixo é pior ainda porque quando chove a água invade a Casa dos moradores e olha só aqui nessa casa foi colocado um monte de pedra bem na frente para impedir que a água entre vamos lá falar com ela é dona Severina é dona Bill Olá tudo bom com a senhora como é que tá aqui essa situação a senhora Teve que colocar pedra aqui né é chover em entrar aqui sozinha imagina aperreio Aí tem que dar um jeito aqui é pior difícil hein dona Bill quanto tempo já que a senhora mora aqui nessa rua 8 anos viu o resultado de vergonha né a gente não tem né É porque se ele tivesse vergonha ele já tinha feito isso todos vocês moram aqui nessa rua aí o que que acontece nessas ruas aqui né aí o que que acontece a Rua Areal lá em cima Foi calçada a Rua Riachuelo também E vocês ficaram só um gostinho só na saudade e o pior que não se desviar da Lama dos buracos e ele prometeu Então olha você tá vendo aquela cerâmica Vale Aí depois ele dá o que é o povo que bota para que ele possa passar infelizmente é uma situação difícil a gente já pediu muitas vezes recado dado essa essa rua que já é assunto do calendário a gente conseguiu algumas ruas outras não voltamos em 2016 em 2016 o secretário André agra secretário de obras de Campina Grande e disse que ia voltar aqui não foi então vamos lá calendário novo quem é o representante'
 bow_vector = dictionary.doc2bow(preprocess(unseen_document))
@@ -123,4 +136,4 @@ unseen_document = "Jaguaribe a Escola Estadual Professora Maria do Carmo de Mira
 bow_vector = dictionary.doc2bow(preprocess(unseen_document))
 for index, score in sorted(lda_model_tfidf[bow_vector], key=lambda tup: -1*tup[1]):
     print("Score: {}\t Topic: {}".format(score, lda_model_tfidf.print_topic(index, 10)))
-
+'''
