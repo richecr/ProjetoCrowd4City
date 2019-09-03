@@ -64,9 +64,11 @@ def preprocess(text):
 
 	return doc_out
 
+# Chamando a função de pre-processamento para cada texto.
 processed_docs = dados['texto'].map(preprocess)
 # print(processed_docs[:10])
 
+# Criando dicionário de palavras.
 dictionary = gensim.corpora.Dictionary(processed_docs)
 count = 0
 for k, v in dictionary.iteritems():
@@ -81,14 +83,21 @@ for k, v in dictionary.iteritems():
 # Após essas duas etapas, mantenha apenas os 100000
 dictionary.filter_extremes(no_below=15, no_above=0.5, keep_n=100000)
 
-# Bag-of-words.
+# Bag of Words(Saco de Palavras).
 bow_corpus = [dictionary.doc2bow(doc) for doc in processed_docs]
 
+# Usando TF-IDF.
 tfidf = models.TfidfModel(bow_corpus)
 corpus_tfidf = tfidf[bow_corpus]
 
-lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=4, id2word=dictionary, passes=10, workers=4, alpha=0.1)
+# Criando e treinando o modelo.
+lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=4, id2word=dictionary, passes=10, workers=4)
 
+# Imprimir os tópicos.
+for topic in lda_model_tfidf.print_topics(-1):
+	print(topic)
+
+# Verificando o 'coherence score' para avaliar a qualidade dos tópicos aprendidos.
 coherence_model_lda = CoherenceModel(model=lda_model_tfidf, texts=processed_docs, corpus=corpus_tfidf, dictionary=dictionary, coherence='c_v')
 coherence_lda = coherence_model_lda.get_coherence()
 print('\nCoherence Score LDAModelTfIdf: ', coherence_lda)
