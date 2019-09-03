@@ -82,15 +82,14 @@ def preprocess(texto):
 
 	return doc_out
 
+# CONFIGURAÇÕES DE BIBLIOTECAS.
 np.random.seed(2018)
 nltk.download('wordnet')
-
 nlp = spacy.load('pt_core_news_sm')
 
-# Carregando os dados.
+# CARREGANDO OS DADOS.
 dados = pd.read_csv("../textos_videos.csv")
 textos = dados['texto']
-
 # print(textos[:5])
 
 gensim.parsing.preprocessing.STOPWORDS.union(["tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"])
@@ -128,7 +127,7 @@ corpus_tfidf = tfidf[bow_corpus]
 # Criando e treinando o modelo.
 lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=4, id2word=dictionary, passes=10, workers=4)
 
-# Imprimir os tópicos.
+# Imprimir os tópicos do modelo.
 for topic in lda_model_tfidf.print_topics(-1):
 	print(topic)
 	print("-----------")
