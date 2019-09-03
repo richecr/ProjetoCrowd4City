@@ -107,8 +107,8 @@ def compute_coherence_values(dct, corpus_tfidf, texts, limit, start, step):
 
     Parameters:
     ----------
-    dictionary : Gensim dictionary
-    corpus : Gensim corpus
+    dct : Gensim dictionary
+    corpus_tfidf : Gensim corpus TF-IDF
     texts : List of input texts
     limit : Max num of topics
 

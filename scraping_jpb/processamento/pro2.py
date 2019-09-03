@@ -19,7 +19,7 @@ stop_words = stopwords.words('portuguese')
 stop_words = stop_words + ["tudo", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"]
 
 no_features = 1000
-no_topics = 5
+no_topics = 4
 no_top_words = 10
 
 def nmf():
