@@ -33,26 +33,7 @@ def verificar_palavra_entidade_loc(palavra, entidades_loc):
 
 	return False
 
-np.random.seed(2018)
-nltk.download('wordnet')
-
 stemmer = PorterStemmer()
-
-nlp = spacy.load('pt_core_news_sm')
-
-# Carregando os dados.
-dados = pd.read_csv("../textos_videos.csv")
-textos = dados['texto']
-dados.drop_duplicates(['texto'], inplace=True)
-
-# print(textos[:5])
-
-gensim.parsing.preprocessing.STOPWORDS.union(["tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"])
-
-from nltk import word_tokenize, pos_tag
-
-# Pré-processamento dos dados.
-
 # Lematização
 def lemmatize_stemming(palavra):
     """
@@ -85,16 +66,6 @@ def preprocess(texto):
 	Retorno:
 	----------
 	doc_out : Lista de palavras que passaram pelo pré-processamento.
-
-	Autor:
-	----------
-	Rich Elton
-		- E-mail : <richelton14@gmail.com>
-		- GitHub : <https://github.com/Rickecr>
-	
-	Data:
-	---------
-	31/09/2019
 	"""
 	doc_out = []
 	doc = nlp(texto)
@@ -110,6 +81,23 @@ def preprocess(texto):
 			continue
 
 	return doc_out
+
+np.random.seed(2018)
+nltk.download('wordnet')
+
+nlp = spacy.load('pt_core_news_sm')
+
+# Carregando os dados.
+dados = pd.read_csv("../textos_videos.csv")
+textos = dados['texto']
+
+# print(textos[:5])
+
+gensim.parsing.preprocessing.STOPWORDS.union(["tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"])
+
+from nltk import word_tokenize, pos_tag
+
+# PRÉ-PROCESSAMENTO DOS DADOS.
 
 # Chamando a função de pré-processamento para cada texto.
 processed_docs = dados['texto'].map(preprocess)
@@ -138,7 +126,7 @@ tfidf = models.TfidfModel(bow_corpus)
 corpus_tfidf = tfidf[bow_corpus]
 
 # Criando e treinando o modelo.
-lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=4, id2word=dictionary, passes=80, workers=4, alpha='asymmetric')
+lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=4, id2word=dictionary, passes=10, workers=4)
 
 # Imprimir os tópicos.
 for topic in lda_model_tfidf.print_topics(-1):
