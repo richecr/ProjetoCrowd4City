@@ -11,6 +11,38 @@ from nltk.stem import WordNetLemmatizer
 # Objetivo é colocar todos os textos(dados) em um arquivo CSV, pré-processados.
 # Resultado é ter um arquivo com todos os textos(dados) pré-processados.
 
+def verificar_palavra_entidade_loc(palavra, entidades_loc):
+	"""
+	Verifica se a palavra é uma entidade de localização.
+
+	Parâmetros:
+	----------
+	palavra : 'String'\n
+	entidades_loc : 'List' de entidades de localizações.
+
+	Retorno:
+	----------
+	True : Caso a palavra seja uma entidade de localização.\n
+	False : Caso a palavra não seja uma entidade de localização.
+	"""
+    
+	for e in entidades_loc:
+		if (e.text.lower() == palavra.text.lower()):
+			return True
+
+	return False
+
+def para_texto(lista):
+	saida = ""
+	for palavra in lista:
+		saida += palavra + " "
+
+	return saida.strip()
+
+fields = ["titulo", "texto"]
+f = csv.writer(open('./processamento/textos_limpos.csv', 'w', encoding='utf-8'))
+f.writerow(fields)
+
 # Carregando dados.
 dados = csv.DictReader(open("./textos_videos.csv", encoding='utf-8'))
 textos = []
@@ -32,11 +64,16 @@ def lematização(palavra):
     return stemmer.stem(WordNetLemmatizer().lemmatize(palavra, pos="v"))
 
 allowed_postags = ['NOUN', 'ADJ', 'PRON']
-def pre_processamento(texto):
+def pre_processamento(texto, titulo):
+    doc_out = []
     doc = nlp(texto)
     entidades_loc = [entidade for entidade in doc.ents if entidade.label_ == "LOC"]
     for token in doc:
-        if (token.text not in gensim.parsing.preprocessing.STOPWORDS):
-            if(token.pos_ in allowed_postags):
-                if (token)
+        if (token.text not in gensim.parsing.preprocessing.STOPWORDS && token.pos_ in allowed_postags && not verificar_palavra_entidade_loc(token.text, entidades_loc)):
+            doc_out.append(lematização(token.text))
 
+	texto = para_texto(doc_out)
+	f.writerow(texto, titulo)
+
+for texto, titulo in textos, titulo_textos:
+	pre_processamento(texto, titulo)
