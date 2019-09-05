@@ -27,7 +27,7 @@ def verificar_palavra_entidade_loc(palavra, entidades_loc):
 	"""
     
 	for e in entidades_loc:
-		if (e.text.lower() == palavra.text.lower()):
+		if (e.text.lower() == palavra.lower()):
 			return True
 
 	return False
@@ -69,11 +69,11 @@ def pre_processamento(texto, titulo):
     doc = nlp(texto)
     entidades_loc = [entidade for entidade in doc.ents if entidade.label_ == "LOC"]
     for token in doc:
-        if (token.text not in gensim.parsing.preprocessing.STOPWORDS && token.pos_ in allowed_postags && not verificar_palavra_entidade_loc(token.text, entidades_loc)):
+        if (token.text not in gensim.parsing.preprocessing.STOPWORDS and token.pos_ in allowed_postags and not verificar_palavra_entidade_loc(token.text, entidades_loc)):
             doc_out.append(lematização(token.text))
 
-	texto = para_texto(doc_out)
-	f.writerow(texto, titulo)
+    texto = para_texto(doc_out)
+    f.writerow([titulo, texto])
 
-for texto, titulo in textos, titulo_textos:
+for texto, titulo in zip(textos, titulo_textos):
 	pre_processamento(texto, titulo)
