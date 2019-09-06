@@ -94,7 +94,8 @@ nltk.download('wordnet')
 nlp = spacy.load('pt_core_news_sm')
 
 # CARREGANDO OS DADOS.
-dados = pd.read_csv("../textos_videos.csv")
+dados = pd.read_csv("./textos_limpos.csv")
+dados.drop_duplicates(['texto'], inplace=True)
 textos = dados['texto']
 # print(textos[:5])
 
