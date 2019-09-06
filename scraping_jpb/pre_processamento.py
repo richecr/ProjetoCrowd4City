@@ -17,8 +17,10 @@ def verificar_palavra_entidade_loc(palavra, entidades_loc):
 
 	Parâmetros:
 	----------
-	palavra : 'String'\n
-	entidades_loc : 'List' de entidades de localizações.
+	palavra : String
+		- Palavra a ser verificada.
+	entidades_loc : List
+		- Lista de entidades de localizações reconhecidas pelo Spacy.
 
 	Retorno:
 	----------
@@ -32,12 +34,81 @@ def verificar_palavra_entidade_loc(palavra, entidades_loc):
 
 	return False
 
-def para_texto(lista):
-	saida = ""
-	for palavra in lista:
-		saida += palavra + " "
+def lista_para_texto(lista):
+    """
+	Transforma uma lista de palavras em texto.
 
-	return saida.strip()
+	Parâmetros:
+	----------
+	lista : List
+		- Lista de palavras.
+
+	Retorno:
+	----------
+	texto : String
+		- O texto contento todas as palavras da lista.
+	"""
+    texto = ""
+    for palavra in lista:
+        texto += palavra + " "
+
+    return texto.strip()
+
+# Configurando bibliotecas e variaveis globais.
+stemmer = PorterStemmer()
+nlp = spacy.load("pt_core_news_sm")
+gensim.parsing.preprocessing.STOPWORDS.union(["tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"])
+
+
+def lematizacao(palavra):
+    """
+	Realiza a lematização de uma palavra.
+
+	Parâmetro:
+	----------
+	palavra : String
+		- Palavra que irá sofrer a lematização.
+
+	Retorno:
+	----------
+	palavra : String
+		- Palavra lematizada.
+	"""
+    return stemmer.stem(WordNetLemmatizer().lemmatize(palavra, pos="v"))
+
+allowed_postags = ['NOUN', 'ADJ', 'PRON']
+def pre_processamento(texto, titulo):
+    """
+	Realiza o pré-processamento de um texto:
+		- Remove Stop Words.
+		- Remove palavras que são entidades de localizações.
+		- Colocar as palavras para caixa baixa.
+		- Realiza a lematização das palavras.
+		- Apenas palavras que são: substantivos, adjetivos e pronomes.
+
+	Parâmetro:
+	----------
+	texto : String
+		- Texto que irá sofrer o pré-processamento.
+	titulo: String
+		- Titulo do texto.
+
+	Retorno:
+	----------
+	doc_out : List
+		- Lista de palavras que passaram pelo pré-processamento.
+	"""
+    doc_out = []
+    doc = nlp(texto)
+    entidades_loc = [entidade for entidade in doc.ents if entidade.label_ == "LOC"]
+    for token in doc:
+        if (token.text not in gensim.parsing.preprocessing.STOPWORDS and token.pos_ in allowed_postags and not verificar_palavra_entidade_loc(token.text, entidades_loc)):
+            doc_out.append(lematizacao(token.text))
+
+    texto = lista_para_texto(doc_out)
+    return texto
+
+# PREPARANDO ARQUIVOS.
 
 fields = ["titulo", "texto"]
 f = csv.writer(open('./processamento/textos_limpos.csv', 'w', encoding='utf-8'))
@@ -52,28 +123,6 @@ for arq in dados:
     textos.append(arq['texto'])
     titulo_textos.append(arq['titulo'])
 
-# ---------
-
-# Configurando bibliotecas e variaveis globais.
-stemmer = PorterStemmer()
-nlp = spacy.load("pt_core_news_sm")
-gensim.parsing.preprocessing.STOPWORDS.union(["tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"])
-
-
-def lematização(palavra):
-    return stemmer.stem(WordNetLemmatizer().lemmatize(palavra, pos="v"))
-
-allowed_postags = ['NOUN', 'ADJ', 'PRON']
-def pre_processamento(texto, titulo):
-    doc_out = []
-    doc = nlp(texto)
-    entidades_loc = [entidade for entidade in doc.ents if entidade.label_ == "LOC"]
-    for token in doc:
-        if (token.text not in gensim.parsing.preprocessing.STOPWORDS and token.pos_ in allowed_postags and not verificar_palavra_entidade_loc(token.text, entidades_loc)):
-            doc_out.append(lematização(token.text))
-
-    texto = para_texto(doc_out)
-    f.writerow([titulo, texto])
-
 for texto, titulo in zip(textos, titulo_textos):
-	pre_processamento(texto, titulo)
+	t = pre_processamento(texto, titulo)
+	f.writerow([titulo, t])
