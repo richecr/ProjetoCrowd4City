@@ -139,6 +139,21 @@ def main():
 
 main()
 
+def removeEnderecosDeTexto(texto):
+    parcial = []
+    saida = ""
+    nlp = spacy.load('pt_core_news_sm')
+    doc = nlp(texto)
+    ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
+    for palavra in doc:
+        if (palavra not in ents_loc):
+            saida += palavra.text + " "
+
+    return saida.strip()
+        
+
+
+
 '''
 # Carregando modelo em português.
 nlp = spacy.load('pt_core_news_sm')
