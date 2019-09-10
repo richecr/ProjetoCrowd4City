@@ -12,13 +12,6 @@ ruas = []
 with open("./ruas.json") as f:
     ruas = json.load(f)
 
-def pre_processamento(texto):
-    novo_texto = ""
-    for palavra in texto:
-        novo_texto += palavra.lower()
-
-    return novo_texto
-
 def tf(palavra, texto):
     resultado = 0
     for p in texto:
@@ -47,22 +40,21 @@ def verifica_endereco(end):
     else:
         return False
 
-def achar_inicio_nome_rua(texto):
-    saida = []
-    inicio = 0
-    cont = 0
-    for i in range(len(texto.split())):
-        if texto.split()[i].lower() == "rua":
-            inicio = i + 1
-            break
+def buscar_endereco(texto):
+    response = requests.get("https://api.mapbox.com/geocoding/v5/mapbox.places/rua joao sergio de almeida%20campina grande%20.json?country=BR&fuzzyMatch=true&language=pt&proximity=-7.22592,-35.8755&access_token=pk.eyJ1IjoicmljaGVsdG9uIiwiYSI6ImNqejFrNnRkdDA1NDkzaW1samUyY2pkc2YifQ.Nl_sJiP2M1hm-gXdm7zR1w")
 
-    for i in range(inicio, len(texto.split())):
-        if cont < 3:
-            if (texto.split()[i].lower() not in ["de", "da", "do"]):
-                cont += 1
-            saida.append(texto.split()[i])
+    return response.json()
 
-    return saida
+def verifica_endereco_mapbox(end):
+    if (end['text'].lower() in ruas):
+        return True
+    if (end['relevance'] >= 5):
+        if (", campina grande" in end['place_name'].lower() and ", paraíba" in end['place_name'].lower()):
+            return True
+        else:
+            return False
+    else:
+        return False
 
 textos_limpos = []
 arq = csv.DictReader(open("./textos_videos.csv", encoding='utf-8'))
@@ -71,6 +63,8 @@ for p in arq:
     textos_limpos.append(p['texto'])
 
 # print(textos_limpos)
+
+# Fazer as verificações corretas.
 
 def verfica(ents_loc):
     ends = []
@@ -99,28 +93,43 @@ def verfica(ents_loc):
     else:
         return (False, [])
 
+def verifica_teste_mapbox(ents_loc):
+    ends = []
+    for loc in ents_loc:
+        l = str(loc)
+        # Retorna uma lista de endereços.
+        # Deve se achar o com maior chance dessa lista
+        # E por fim comparar com os melhores das outras lista
+        # Assim restando o melhor entre todos os endereços encontrados.
+        end = buscar_endereco(l)
+        if (end != None):
+            ends.append(end['features'])
+    # print("1: ", json.dumps(ends, indent=4))
+
+    ends_corretos = []
+    for e in ends:
+        if (verifica_endereco_mapbox(e)):
+            ends_corretos.append(e)
+    print("2: ", json.dumps(ends_corretos, indent=4))
+
+    if (len(ends_corretos)):
+        end_final = ends_corretos[0]
+        end_final_confidence = ends_corretos[0]
+        for ed in ends_corretos:
+            if (ed['relevance'] > end_final_confidence['relevance']):
+                end_final = ed
+        print("3: ", end_final)
+        return (True, end_final)
+    else:
+        return (False, [])
+
 '''
 # Testar com a API do mapbox. Pode ser que seja melhor.
-response = requests.get("https://api.mapbox.com/geocoding/v5/mapbox.places/rua joao sergio de almeida.json?access_token=pk.eyJ1IjoicmljaGVsdG9uIiwiYSI6ImNqejFrNnRkdDA1NDkzaW1samUyY2pkc2YifQ.Nl_sJiP2M1hm-gXdm7zR1w")
+response = requests.get("https://api.mapbox.com/geocoding/v5/mapbox.places/rua joao sergio de almeida%20campina grande%20.json?country=BR&fuzzyMatch=true&language=pt&proximity=-7.22592,-35.8755&access_token=pk.eyJ1IjoicmljaGVsdG9uIiwiYSI6ImNqejFrNnRkdDA1NDkzaW1samUyY2pkc2YifQ.Nl_sJiP2M1hm-gXdm7zR1w")
 loc = response.json()
 print(loc)
 print(loc['features'][3]['context'][1]['text']) # Santa Catarina
 '''
-fields = ["texto"]
-f = csv.writer(open('./processamento/textos_limpos.csv', 'w', encoding='utf-8'))
-f.writerow(fields)
-
-def removerEnderecosTextos(ends, texto):
-    t = ""
-    ends = ends['address'].split(", ")[0].lower()
-    for p in texto.split():
-        if (p not in ends):
-            t += p
-        else:
-            continue
-        t += " "
-    t = t.strip()
-    f.writerow([t])
 
 def main():
     cont = 0
@@ -130,87 +139,13 @@ def main():
         ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
         end_encontrados = concantena_end(ents_loc)
         print(ents_loc)
-        result = verfica(end_encontrados)
+        result = verifica_teste_mapbox(end_encontrados)
         if result[0]:
             cont += 1
-            removerEnderecosTextos(result[1], texto.lower())
         print("\n------------------------------------------------\n")
     print(cont)
 
 main()
-
-def removeEnderecosDeTexto(texto):
-    parcial = []
-    saida = ""
-    nlp = spacy.load('pt_core_news_sm')
-    doc = nlp(texto)
-    ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
-    for palavra in doc:
-        if (palavra not in ents_loc):
-            saida += palavra.text + " "
-
-    return saida.strip()
-        
-
-
-
-'''
-# Carregando modelo em português.
-nlp = spacy.load('pt_core_news_sm')
-doc = nlp(textos_limpos[0])
-
-# Salvar as entidades que foram classificadas como LOC.
-ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
-print(ents_loc)
-
-end_encontrados = concantena_end(ents_loc)
-
-print(achar_inicio_nome_rua(textos_limpos[0]))
-# Básico: Indo atras do endereço, da primeira entidade, usando a API do geocoder com arcgis.
-# Para testes # ents_loc[0] = "Rua João Sergio de almeida"
-flag = False
-ends = []
-for loc in ents_loc:
-    l = str(loc)
-    g = geocoder.arcgis(l)
-    end = g.json
-    ends.append(end)
-print("1: ", ends)
-print("\n----------------\n")
-
-ends_corretos = []
-for e in ends:
-    if (verifica_endereco(e)):
-        ends_corretos.append(e)
-print("2: ", ends_corretos)
-print("\n----------------\n")
-
-end_final = ends_corretos[0]
-end_final_confidence = ends_corretos[0]
-
-for ed in ends_corretos:
-    if (ed['confidence'] > end_final_confidence['confidence']):
-        end_final = end
-print("3: ", end_final)
-print("\n----------------\n")
-'''
-
-'''
-# Removendo stop words
-txts = []
-nltk.download('stopwords')
-stop_words = nltk.corpus.stopwords.words('portuguese')
-for t in textos_limpos:
-    te = ""
-    for palavra in t.split(" "):
-        if (palavra not in stop_words):
-            te += palavra
-            te += " "
-    txts.append(te)
-
-print("-----------------------\n")
-print(txts)
-'''
 
 # Básico: Indo atras do endereço, da primeira entidade, usando a API do mapbox - geocoding
 '''
