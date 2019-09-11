@@ -18,15 +18,15 @@ def verificar_palavra_entidade_loc(palavra, entidades_loc):
 
 	Parâmetros:
 	----------
-	palavra : String
+	``palavra`` : String
 		- Palavra a ser verificada.
-	entidades_loc : List
+	``entidades_loc`` : List
 		- Lista de entidades de localizações reconhecidas pelo Spacy.
 
 	Retorno:
 	----------
-	True : Caso a palavra seja uma entidade de localização.\n
-	False : Caso a palavra não seja uma entidade de localização.
+	``True`` : Caso a palavra seja uma entidade de localização.\n
+	``False`` : Caso a palavra não seja uma entidade de localização.
 	"""
     for e in entidades_loc:
     	if (e.text.lower() == palavra.lower()):
@@ -42,12 +42,12 @@ def lematizacao(palavra):
 
 	Parâmetro:
 	----------
-	palavra : String
+	``palavra`` : String
 		- Palavra que irá sofrer a lematização.
 
 	Retorno:
 	----------
-	palavra : String
+	``palavra`` : String
 		- Palavra lematizada.
 	"""
     return stemmer.stem(WordNetLemmatizer().lemmatize(palavra, pos="v"))
@@ -64,14 +64,14 @@ def pre_processamento(texto):
 
 	Parâmetro:
 	----------
-	texto : String
+	``texto`` : String
 		- Texto que irá sofrer o pré-processamento.
-	titulo: String
+	``titulo``: String
 		- Titulo do texto.
 
 	Retorno:
 	----------
-	doc_out : List
+	``doc_out`` : List
 		- Lista de palavras que passaram pelo pré-processamento.
 	"""
     doc_out = []
@@ -82,7 +82,6 @@ def pre_processamento(texto):
             doc_out.append(lematizacao(token.text))
 
     return doc_out
-
 
 # CONFIGURAÇÕES DE BIBLIOTECAS.
 np.random.seed(2018)
