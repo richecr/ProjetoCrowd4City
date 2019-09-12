@@ -100,6 +100,7 @@ def concantena_end(lista_end):
             saida.append(temp)
     return saida
 
+
 def verifica_endereco(end):
 	if (end['address'].lower() in ruas):
 		return True
@@ -128,7 +129,7 @@ def verfica(ents_loc):
     for e in ends:
         if (verifica_endereco(e)):
             ends_corretos.append(e)
-    print("2: ", json.dumps(ends_corretos, indent=4))
+    # print("2: ", json.dumps(ends_corretos, indent=4))
 
     if (len(ends_corretos)):
         end_final = ends_corretos[0]
@@ -136,34 +137,36 @@ def verfica(ents_loc):
         for ed in ends_corretos:
             if (ed['confidence'] > end_final_confidence['confidence']):
                 end_final = ed
-        print("3: ", end_final)
+        print("3: ", end_final['address'])
         return (True, end_final)
     else:
         return (False, [])
 
 def main(textos, titulos):
 	cont = 0
-	nlp = spacy.load('pt_core_news_sm')
+	cont_erros = 0
+	nlp = spacy.load('pt')
 	for texto, titulo in zip(textos, titulos):
 		doc = nlp(texto)
+		doc1 = nlp(titulo)
 		ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
-		end_encontrados = concantena_end(ents_loc)
+		ents_loc1 = [entity for entity in doc1.ents if entity.label_ == "LOC"]
+		end_encontrados = concantena_end(ents_loc + ents_loc1)
+		
 		print(ents_loc)
+		print("------")
+		print(ents_loc1)
+		print("------")
+		print(end_encontrados)
+
 		result = verfica(end_encontrados)
 		if result[0]:
 			f.writerow([result[1]['address'], texto])
 			cont += 1
 		else:
-			doc = nlp(titulo)
-			ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
-			end_encontrados = concantena_end(ents_loc)
-			print(ents_loc)
-			result = verfica(end_encontrados)
-			if result[0]:
-				f.writerow([result[1]['address'], texto])
-				cont += 1
+			cont_erros += 1
 		print("\n------------------------------------------------\n")
-	print(cont)
+		print(cont, " - ", cont_erros)
 
 
 textos_limpos = []
@@ -174,9 +177,6 @@ for p in arq:
 	textos_limpos.append(p['texto'])
 	titulos.append(p['titulo'])
 
-txl = []
-for l in textos_limpos:
-	txt = pre_processamento(l)
-	txl.append(txt)
 
-main(txl, titulos)
+
+main(textos_limpos, titulos)
