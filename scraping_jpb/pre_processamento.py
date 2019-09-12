@@ -57,8 +57,9 @@ def lista_para_texto(lista):
 # Configurando bibliotecas e variaveis globais.
 stemmer = PorterStemmer()
 nlp = spacy.load("pt_core_news_sm")
-gensim.parsing.preprocessing.STOPWORDS.union(["tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"])
 
+nlp.Defaults.stop_words |= {"tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
+stop_words_spacy = nlp.Defaults.stop_words
 
 def lematizacao(palavra):
     """
@@ -102,7 +103,7 @@ def pre_processamento(texto, titulo):
     doc = nlp(texto)
     entidades_loc = [entidade for entidade in doc.ents if entidade.label_ == "LOC"]
     for token in doc:
-        if (token.text not in gensim.parsing.preprocessing.STOPWORDS and token.pos_ in allowed_postags and not verificar_palavra_entidade_loc(token.text, entidades_loc)):
+        if (token.text not in stop_words_spacy and len(token.text) > 3 and token.pos_ in allowed_postags and not verificar_palavra_entidade_loc(token.text, entidades_loc)):
             doc_out.append(lematizacao(token.text))
 
     texto = lista_para_texto(doc_out)

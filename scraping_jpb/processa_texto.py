@@ -23,74 +23,8 @@ f.writerow(fields)
 # Configurando bibliotecas e variaveis globais.
 stemmer = PorterStemmer()
 nlp = spacy.load("pt_core_news_sm")
-stop_words_spacy = n.Defaults.stop_words |= {"tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
-
-def lematizacao(palavra):
-    """
-	Realiza a lematização de uma palavra.
-
-	Parâmetro:
-	----------
-	``palavra`` : String
-		- Palavra que irá sofrer a lematização.
-
-	Retorno:
-	----------
-	``palavra`` : String
-		- Palavra lematizada.
-	"""
-    return stemmer.stem(WordNetLemmatizer().lemmatize(palavra, pos="v"))
-
-def lista_para_texto(lista):
-    """
-	Transforma uma lista de palavras em texto.
-
-	Parâmetros:
-	----------
-	``lista`` : List
-		- Lista de palavras.
-
-	Retorno:
-	----------
-	``texto`` : String
-		- O texto contento todas as palavras da lista.
-	"""
-    texto = ""
-    for palavra in lista:
-        texto += palavra + " "
-
-    return texto.strip()
-
-allowed_postags = ['NOUN', 'ADJ', 'PRON']
-def pre_processamento(texto):
-    """
-	Realiza o pré-processamento de um texto:
-		- Remove Stop Words.
-		- Remove palavras que são entidades de localizações.
-		- Colocar as palavras para caixa baixa.
-		- Realiza a lematização das palavras.
-		- Apenas palavras que são: substantivos, adjetivos e pronomes.
-
-	Parâmetro:
-	----------
-	``texto`` : String
-		- Texto que irá sofrer o pré-processamento.
-	``titulo``: String
-		- Titulo do texto.
-
-	Retorno:
-	----------
-	``doc_out`` : List
-		- Lista de palavras que passaram pelo pré-processamento.
-	"""
-    doc_out = []
-    doc = nlp(texto)
-    for token in doc:
-        if (token.text not in stop_words_spacy):
-            doc_out.append(token.text)
-
-    texto = lista_para_texto(doc_out)
-    return texto
+nlp.Defaults.stop_words |= {"tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
+stop_words_spacy = nlp.Defaults.stop_words
 
 def concantena_end(lista_end):
     saida = []
@@ -99,7 +33,6 @@ def concantena_end(lista_end):
             temp = str(lista_end[i]) + " " + str(lista_end[j])
             saida.append(temp)
     return saida
-
 
 def verifica_endereco(end):
 	if (end['address'].lower() in ruas):
@@ -142,31 +75,37 @@ def verfica(ents_loc):
     else:
         return (False, [])
 
+continuar = "meio-dia 19 minutos JPB tá de volta Os estudantes da Escola Estadual José Guedes Cavalcanti"
 def main(textos, titulos):
 	cont = 0
 	cont_erros = 0
+	flag = False
 	for texto, titulo in zip(textos, titulos):
-		doc = nlp(texto)
-		doc1 = nlp(titulo)
-		ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
-		ents_loc1 = [entity for entity in doc1.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
-		end_encontrados = concantena_end(ents_loc + ents_loc1)
-		
-		print(ents_loc)
-		print("------")
-		print(ents_loc1)
-		print("------")
-		print(end_encontrados)
+		if (flag):
+			doc = nlp(texto)
+			doc1 = nlp(titulo)
+			ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
+			ents_loc1 = [entity for entity in doc1.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
+			end_encontrados = concantena_end(ents_loc + ents_loc1)
+			
+			print(ents_loc)
+			print("------")
+			print(ents_loc1)
+			print("------")
+			print(end_encontrados)
 
-		result = verfica(end_encontrados)
-		if result[0]:
-			f.writerow([result[1]['address'], texto])
-			cont += 1
+			result = verfica(end_encontrados)
+			if result[0]:
+				f.writerow([result[1]['address'], texto])
+				cont += 1
+			else:
+				cont_erros += 1
+			print("\n------------------------------------------------\n")
+			print(cont, " - ", cont_erros)
 		else:
-			cont_erros += 1
-		print("\n------------------------------------------------\n")
-		print(cont, " - ", cont_erros)
-
+			if (continuar in texto):
+				flag = True
+			continue
 
 textos_limpos = []
 titulos = []
@@ -176,6 +115,7 @@ for p in arq:
 	textos_limpos.append(p['texto'])
 	titulos.append(p['titulo'])
 
+'''
 # Colocando todas as letras inicias maíusculas.
 t = []
 for texto in textos_limpos:
@@ -184,5 +124,6 @@ for texto in textos_limpos:
 		texto_ += palavra[0].upper() + palavra[1:len(palavra)]
 		texto_ += " "
 	t.append(texto_.strip())
+'''
 
 main(textos_limpos, titulos)
