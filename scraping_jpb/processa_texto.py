@@ -23,7 +23,7 @@ f.writerow(fields)
 # Configurando bibliotecas e variaveis globais.
 stemmer = PorterStemmer()
 nlp = spacy.load("pt_core_news_sm")
-gensim.parsing.preprocessing.STOPWORDS.union(["tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"])
+stop_words_spacy = n.Defaults.stop_words |= {"tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
 
 def lematizacao(palavra):
     """
@@ -86,7 +86,7 @@ def pre_processamento(texto):
     doc_out = []
     doc = nlp(texto)
     for token in doc:
-        if (token.text not in gensim.parsing.preprocessing.STOPWORDS):
+        if (token.text not in stop_words_spacy):
             doc_out.append(token.text)
 
     texto = lista_para_texto(doc_out)
@@ -145,12 +145,11 @@ def verfica(ents_loc):
 def main(textos, titulos):
 	cont = 0
 	cont_erros = 0
-	nlp = spacy.load('pt')
 	for texto, titulo in zip(textos, titulos):
 		doc = nlp(texto)
 		doc1 = nlp(titulo)
-		ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC"]
-		ents_loc1 = [entity for entity in doc1.ents if entity.label_ == "LOC"]
+		ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
+		ents_loc1 = [entity for entity in doc1.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
 		end_encontrados = concantena_end(ents_loc + ents_loc1)
 		
 		print(ents_loc)
@@ -177,6 +176,13 @@ for p in arq:
 	textos_limpos.append(p['texto'])
 	titulos.append(p['titulo'])
 
-
+# Colocando todas as letras inicias maíusculas.
+t = []
+for texto in textos_limpos:
+	texto_ = ""
+	for palavra in texto.split():
+		texto_ += palavra[0].upper() + palavra[1:len(palavra)]
+		texto_ += " "
+	t.append(texto_.strip())
 
 main(textos_limpos, titulos)
