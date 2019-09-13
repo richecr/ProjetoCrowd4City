@@ -94,7 +94,7 @@ dados.drop_duplicates(['texto'], inplace=True)
 textos = dados['texto']
 # print(textos[:5])
 
-nlp.Defaults.stop_words |= {"tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
+nlp.Defaults.stop_words |= {"volta", "hora", "tapa", "tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
 stop_words_spacy = nlp.Defaults.stop_words
 
 from nltk import word_tokenize, pos_tag

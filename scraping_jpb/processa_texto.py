@@ -26,6 +26,14 @@ nlp = spacy.load("pt_core_news_sm")
 nlp.Defaults.stop_words |= {"tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
 stop_words_spacy = nlp.Defaults.stop_words
 
+def remove_stop_words(texto):
+	saida = ""
+	for palavra in texto.split():
+		if (palavra.lower() not in stop_words_spacy and len(palavra) > 3):
+			saida += palavra + " "
+	s = saida.strip()
+	return s
+
 def concantena_end(lista_end):
     saida = []
     for i in range(len(lista_end) - 1):
@@ -75,15 +83,17 @@ def verfica(ents_loc):
     else:
         return (False, [])
 
-continuar = "meio-dia 19 minutos JPB tá de volta Os estudantes da Escola Estadual José Guedes Cavalcanti"
+continuar = "3027240"
 def main(textos, titulos):
 	cont = 0
 	cont_erros = 0
 	flag = False
 	for texto, titulo in zip(textos, titulos):
 		if (flag):
+			print(titulo)
 			doc = nlp(texto)
-			doc1 = nlp(titulo)
+			titulo = titulo.split("-")
+			doc1 = nlp(titulo[0])
 			ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
 			ents_loc1 = [entity for entity in doc1.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
 			end_encontrados = concantena_end(ents_loc + ents_loc1)
@@ -103,13 +113,15 @@ def main(textos, titulos):
 			print("\n------------------------------------------------\n")
 			print(cont, " - ", cont_erros)
 		else:
-			if (continuar in texto):
+			if (continuar.lower() in titulo.lower()):
 				flag = True
+			if ("4488541" in titulo.lower()):
+				flag = False
 			continue
 
 textos_limpos = []
 titulos = []
-arq = csv.DictReader(open("./textos_videos.csv", encoding='utf-8'))
+arq = csv.DictReader(open("./textos_videos.csv", "r", encoding='utf-8'))
 
 for p in arq:
 	textos_limpos.append(p['texto'])

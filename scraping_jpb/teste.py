@@ -1,12 +1,19 @@
 import os
 import csv
 import json
+import spacy
 from os import path
 from time import sleep
 
-PATH_AUDIOS = path.dirname(path.realpath(__file__)) + "/audios/"
+nlp = spacy.load("pt_core_news_sm")
 
-lista_audios = os.listdir(PATH_AUDIOS)
+f = open('./processamento/textos.txt', 'w', encoding='utf-8')
 
-for audio in lista_audios:
-    print(audio)
+# Carregando dados.
+dados = csv.DictReader(open("./textos_videos.csv", encoding='utf-8'))
+textos = []
+titulo_textos = []
+
+for texto in dados:
+    f.write(texto['texto'])
+    f.write("\n")
