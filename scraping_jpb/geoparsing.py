@@ -17,19 +17,19 @@ with open("./ruas.json") as f:
     ruas = json.load(f)
 
 fields = ["endereco", "texto"]
-f = csv.writer(open('./enderecos.csv', 'w', encoding='utf-8'))
+f = csv.writer(open('./enderecos1.csv', 'w', encoding='utf-8'))
 f.writerow(fields)
 
 # Configurando bibliotecas e variaveis globais.
 stemmer = PorterStemmer()
 nlp = spacy.load("pt_core_news_sm")
-nlp.Defaults.stop_words |= {"tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
+nlp.Defaults.stop_words |= {"vamos", "olha", "pois", "tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
 stop_words_spacy = nlp.Defaults.stop_words
 
 def remove_stop_words(texto):
 	saida = ""
 	for palavra in texto.split():
-		if (palavra.lower() not in stop_words_spacy and len(palavra) > 3):
+		if (palavra.lower() not in stop_words_spacy):
 			saida += palavra + " "
 	s = saida.strip()
 	return s
@@ -83,7 +83,7 @@ def verfica(ents_loc):
     else:
         return (False, [])
 
-continuar = "3027240"
+continuar = "4106572"
 def main(textos, titulos):
 	cont = 0
 	cont_erros = 0
@@ -126,16 +126,5 @@ arq = csv.DictReader(open("./textos_videos.csv", "r", encoding='utf-8'))
 for p in arq:
 	textos_limpos.append(p['texto'])
 	titulos.append(p['titulo'])
-
-'''
-# Colocando todas as letras inicias maíusculas.
-t = []
-for texto in textos_limpos:
-	texto_ = ""
-	for palavra in texto.split():
-		texto_ += palavra[0].upper() + palavra[1:len(palavra)]
-		texto_ += " "
-	t.append(texto_.strip())
-'''
 
 main(textos_limpos, titulos)
