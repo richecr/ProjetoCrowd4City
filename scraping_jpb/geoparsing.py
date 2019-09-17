@@ -11,10 +11,9 @@ import gensim
 from nltk.stem.porter import *
 from nltk.stem import WordNetLemmatizer
 
-# Ruas de Campina grande
-ruas = []
-with open("./ruas.json") as f:
-    ruas = json.load(f)
+from model.model.ner_model import NERModel
+from model.model.config import Config
+from nltk import word_tokenize
 
 fields = ["endereco", "texto"]
 f = csv.writer(open('./enderecos1.csv', 'w', encoding='utf-8'))
@@ -29,7 +28,7 @@ stop_words_spacy = nlp.Defaults.stop_words
 def remove_stop_words(texto):
 	saida = ""
 	for palavra in texto.split():
-		if (palavra.lower() not in stop_words_spacy):
+		if (palavra.lower() not in stop_words_spacy and len(palavra) > 3):
 			saida += palavra + " "
 	s = saida.strip()
 	return s
@@ -83,14 +82,30 @@ def verfica(ents_loc):
     else:
         return (False, [])
 
-continuar = "4106572"
+# create instance of config
+config = Config()
+
+# build model
+model = NERModel(config)
+model.build()
+model.restore_session(config.dir_model)
+
+continuar = "5670399"
 def main(textos, titulos):
 	cont = 0
 	cont_erros = 0
 	flag = False
 	for texto, titulo in zip(textos, titulos):
 		if (flag):
-			print(titulo)
+			# Testar '.upper()' e '.title()'
+			# E ver qual é melhor.
+			texto = remove_stop_words(texto.upper())
+			print(texto)
+			words = word_tokenize(texto, language='portuguese')
+			preds = model.predict(words)
+			print(preds)
+			
+			'''
 			doc = nlp(texto)
 			titulo = titulo.split("-")
 			doc1 = nlp(titulo[0])
@@ -112,11 +127,10 @@ def main(textos, titulos):
 				cont_erros += 1
 			print("\n------------------------------------------------\n")
 			print(cont, " - ", cont_erros)
+			'''
 		else:
 			if (continuar.lower() in titulo.lower()):
 				flag = True
-			if ("4488541" in titulo.lower()):
-				flag = False
 			continue
 
 textos_limpos = []
