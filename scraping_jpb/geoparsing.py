@@ -100,11 +100,18 @@ def main(textos, titulos):
 			# Testar '.upper()' e '.title()'
 			# E ver qual é melhor.
 			texto = remove_stop_words(texto.upper())
-			print(texto)
+			# print(texto)
 			words = word_tokenize(texto, language='portuguese')
-			preds = model.predict(words)
-			print(preds)
+			predsTexto = model.predict(words)
+			# print(predsTexto)
 			
+			# Testar título com Spacy.
+			titulo = titulo.split("-")[0]
+			print(titulo)
+			predsTitulo = model.predict(word_tokenize(titulo, language="portuguese"))
+			print(predsTitulo)
+
+
 			'''
 			doc = nlp(texto)
 			titulo = titulo.split("-")
