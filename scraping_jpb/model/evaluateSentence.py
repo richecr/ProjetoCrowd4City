@@ -53,7 +53,7 @@ model.restore_session(config.dir_model)
 
 while(True):
     words = input("Escreva frase a ser analisada: ")
-    words = word_tokenize(words.lower(), language='portuguese')
+    words = word_tokenize(words, language='portuguese')
     preds = model.predict(words)
     for index, word in enumerate(words):
         if preds[index][0:2] in ['B-', 'I-', 'E-', 'S-']:

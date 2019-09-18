@@ -104,12 +104,18 @@ def main(textos, titulos):
 			words = word_tokenize(texto, language='portuguese')
 			predsTexto = model.predict(words)
 			# print(predsTexto)
-			
+			ents_loc = []
+			texto_ = texto.split()
+			for pos in range(len(predsTexto)):
+				if (predsTexto[pos] == "B-LOCAL" or predsTexto[pos] == "I-LOCAL"):
+					ents_loc.append(texto_[pos])
+
+			print(ents_loc)
 			# Testar título com Spacy.
 			titulo = titulo.split("-")[0]
 			print(titulo)
-			predsTitulo = model.predict(word_tokenize(titulo, language="portuguese"))
-			print(predsTitulo)
+			doc_titulo = nlp(titulo)
+			ents_loc1 = [entity for entity in doc_titulo.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
 
 
 			'''

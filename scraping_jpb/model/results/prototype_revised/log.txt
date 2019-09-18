@@ -665,3 +665,75 @@ Use the retry module or similar alternatives.
 2019-09-17 15:50:28,698:INFO: Initializing tf session
 2019-09-17 15:50:28,932:INFO: Reloading the latest trained model...
 2019-09-17 15:50:28,932:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:37:23,053:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:37:26,113:INFO: Initializing tf session
+2019-09-18 07:37:26,662:INFO: Reloading the latest trained model...
+2019-09-18 07:37:26,662:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:37:43,999:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:37:45,773:INFO: Initializing tf session
+2019-09-18 07:37:46,006:INFO: Reloading the latest trained model...
+2019-09-18 07:37:46,006:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:38:03,570:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:38:05,298:INFO: Initializing tf session
+2019-09-18 07:38:05,526:INFO: Reloading the latest trained model...
+2019-09-18 07:38:05,526:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:38:25,897:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:38:27,613:INFO: Initializing tf session
+2019-09-18 07:38:27,839:INFO: Reloading the latest trained model...
+2019-09-18 07:38:27,840:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:42:22,946:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:42:24,640:INFO: Initializing tf session
+2019-09-18 07:42:24,875:INFO: Reloading the latest trained model...
+2019-09-18 07:42:24,875:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:42:58,422:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:43:00,125:INFO: Initializing tf session
+2019-09-18 07:43:00,350:INFO: Reloading the latest trained model...
+2019-09-18 07:43:00,350:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:44:00,476:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:44:02,158:INFO: Initializing tf session
+2019-09-18 07:44:02,381:INFO: Reloading the latest trained model...
+2019-09-18 07:44:02,381:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:44:19,525:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:44:21,223:INFO: Initializing tf session
+2019-09-18 07:44:21,447:INFO: Reloading the latest trained model...
+2019-09-18 07:44:21,448:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:44:39,324:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:44:41,035:INFO: Initializing tf session
+2019-09-18 07:44:41,273:INFO: Reloading the latest trained model...
+2019-09-18 07:44:41,273:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:45:42,861:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:45:44,626:INFO: Initializing tf session
+2019-09-18 07:45:44,861:INFO: Reloading the latest trained model...
+2019-09-18 07:45:44,861:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:46:23,069:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:46:24,755:INFO: Initializing tf session
+2019-09-18 07:46:24,978:INFO: Reloading the latest trained model...
+2019-09-18 07:46:24,978:INFO: Restoring parameters from results/prototype_revised/model.weights/
+2019-09-18 07:46:56,834:WARNING: From /home/rick/.local/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:198: retry (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use the retry module or similar alternatives.
+2019-09-18 07:46:58,540:INFO: Initializing tf session
+2019-09-18 07:46:58,765:INFO: Reloading the latest trained model...
+2019-09-18 07:46:58,766:INFO: Restoring parameters from results/prototype_revised/model.weights/
