@@ -1,5 +1,5 @@
 # Projeto Crowd4City
-> Repositório para desenvolver as bibliotecas que seram utilizadas para o projeto Crowd4City no LSI.
+> Repositório para desenvolver as atividades realizadas para o projeto do LSI - Crowd4City
 
 ## Repositório para o projeto principal
 > [Respositório principal](https://github.com/pedrofwanderley/Crowd4CityPrototype)
