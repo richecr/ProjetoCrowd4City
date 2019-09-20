@@ -14,6 +14,56 @@ from nltk.stem import WordNetLemmatizer
 from model.model.ner_model import NERModel
 from model.model.config import Config
 from nltk import word_tokenize
+from nltk import tokenize
+
+import nltk
+from nltk.tokenize import sent_tokenize
+from nltk import tokenize
+import re
+from sacremoses import MosesTruecaser, MosesTokenizer
+
+# from treinar_spacy.train_ner import Truecasing
+class Truecasing():
+    def __init__(self):
+        self.nlp = spacy.load("pt_core_news_sm")
+        self.nlp.Defaults.stop_words |= {"vamos", "olha", "pois", "tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
+        self.stop_words_spacy = self.nlp.Defaults.stop_words
+        self.mtr = MosesTruecaser()
+        self.mtok = MosesTokenizer(lang="en")
+        tokenized_docs = [self.mtok.tokenize(line) for line in open('./textos.txt')]
+        self.mtr.train(tokenized_docs, save_to='textos.truecasemodel')
+
+    def truecasing(self, texto):
+        texto = self.remove_stop_words(texto)
+        # texto = self.pre_processamento(texto)
+        texto = self.mtr.truecase(texto, return_str=True)
+        return self.nlp(texto)
+
+    def pre_processamento(self, texto):
+       # texto = self.remove_stop_words(texto)
+        novo_texto = ""
+        lista = ["rua", "r.", "bairro", "avenida", "av", "travessa", "trav."]
+        prox = False
+        for palavra in texto.split():
+            if (prox):
+                novo_texto += palavra[0].upper() + palavra[1:] + " "
+                prox = False
+            elif (palavra.lower() in lista):
+                novo_texto += palavra[0].upper() + palavra[1:] + " "
+                prox = True
+            else:
+                novo_texto += palavra + " "
+
+        return novo_texto.strip()
+    
+    def remove_stop_words(self, texto):
+        saida = ""
+        for palavra in texto.split():
+            if (palavra.lower() not in self.stop_words_spacy):
+                saida += palavra + " "
+        s = saida.strip()
+        return s
+
 
 fields = ["endereco", "texto"]
 f = csv.writer(open('./enderecos1.csv', 'w', encoding='utf-8'))
@@ -42,8 +92,8 @@ def concantena_end(lista_end):
     return saida
 
 def verifica_endereco(end):
-	if (end['address'].lower() in ruas):
-		return True
+	# if (end['address'].lower() in ruas):
+	#	return True
 	if (end['confidence'] >= 5):
 		# ", campina grande" in end['address'].lower() and
 		if (", paraíba" in end['address'].lower()):
@@ -82,7 +132,6 @@ def verfica(ents_loc):
     else:
         return (False, [])
 
-# create instance of config
 config = Config()
 
 # build model
@@ -94,14 +143,14 @@ continuar = "5670399"
 def main(textos, titulos):
 	cont = 0
 	cont_erros = 0
-	flag = False
+	flag = True
 	for texto, titulo in zip(textos, titulos):
-		if (flag):
+		if (flag):			
 			# Testar '.upper()' e '.title()'
 			# E ver qual é melhor.
-			texto = remove_stop_words(texto.upper())
+			# texto = remove_stop_words(texto.upper())
 			# print(texto)
-			words = word_tokenize(texto, language='portuguese')
+			words = tokenize.word_tokenize(texto, language="portuguese")
 			predsTexto = model.predict(words)
 			# print(predsTexto)
 			ents_loc = []
@@ -116,9 +165,9 @@ def main(textos, titulos):
 			print(titulo)
 			doc_titulo = nlp(titulo)
 			ents_loc1 = [entity for entity in doc_titulo.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
-
-
+			
 			'''
+			print(texto)
 			doc = nlp(texto)
 			titulo = titulo.split("-")
 			doc1 = nlp(titulo[0])

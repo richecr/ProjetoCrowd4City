@@ -4,7 +4,9 @@ import json
 import spacy
 from os import path
 from time import sleep
-
+import random
+from spacy.gold import GoldParse
+from spacy.language import EntityRecognizer
 
 TRAIN_DATA = [
     ('quem está de volta agora com o calendário jpb hoje tem missão nova para nossa equipe uma praça abandonada no ernani sátiro aqui na capital na verdade eu nem sei se a gente pode chamar de praça sim viu plínio almeida foi até lá para conferir de um lado a rua abílio paiva desse outro aqui a auta de luna freire no bairro ernani sátiro e no meio tem algo que um dia já pode ser chamado de praça mas do jeito que tá hoje com tudo quebrado esquecido abandonado mato lixo e sem condições nenhuma de uso se tem uma coisa que isso aqui não é mais é uma praça os moradores dizem que faz mais ou menos uns 10 anos da última vez que alguém chegou aqui para fazer algum tipo de conserto manutenção nessa praça né ficar com certeza isso aqui assim eu eu eu tenho 41 anos aqui como ele tem como você já tá vendo aqui que as pessoas lhe darem a gente precisa de uma praça a gente precisa de um lazer a gente tem criança a gente precisa disso as crianças já se furaram aqui as crianças já pegaram o germe de cachorro aqui ali ó ferro enfiado para cavalo para animal aqui só serve para isso que não tem condições de andar eu mesmo vou fazer uma caminhada de zezinho saiu daqui na rua aí rodeio e venho quando estivesse pronto eu sou uma pracinha aqui tá certo é pequeno mas a gente aumentar o número de volta né não só sou eu sou muito idosa que tem aqui temos a prefeitura ela tem aí uma creche em frente à praça das crianças aí vem para aí que eu já vi que ia subir aí e desceu aí pode se acidentar aí tudo rasgado tudo quebrado brincando do jeito que tá aí no jeito que tá aí criança vem amanhã à tarde para pegar porque tá vendo a hora que acidentado que a gente não pagamos também no nosso iptu né não pagamos temos direito como colocar o outro cidadão exatamente nesse local aqui que tá cheio de mato tem metralha também tem vários buracos era uma quadra não é isso léo como era que antes antes de uma quadra de areia aqui é onde a comunidade se divertir né tem várias crianças aqui no bairro e a gente joga futebol a gente praticava vôlei não é isso para comunidade isso é muito importante queria que ele viesse reformar fazer uma quadra não colocaria novamente mas fazer uma quadra fazer um espaço que o pessoal fazer caminhada colocar ali os aparelhos para prática também de musculação isso que nós precisamos a gente que é o mesmo direito que as outros bairros tem que as outras praças tem dona eronildes é uma das pessoas que mora aqui pertinho da praça e que tem muita vontade de fazer caminhada né mas nessas condições olha ali buraco não dá não tem não tem condições porque', {'entities': [[109, 122, 'LOC'], [187, 192, 'LOC'], [254, 270, 'LOC'], [290, 309, 'LOC'], [1795, 1803, 'LOC'], [2389, 2398, 'LOC']]}),
@@ -1015,7 +1017,52 @@ TRAIN_DATA = [
     ('vamos dar uma aliviada vamos falar de calendário tem missão nova hoje o nosso destino é o bairro de mangabeira aqui na capital rua comerciante joão rodrigues de lima o endereço do desmantelo pessoal sabe que é o problema aqui mostra aí menino felipe olha a situação da rua é muita lama e água acumulada uma caatinga e você não tem ideia agora pera aí que eu tô com problema o posto vai conversar comigo tá aí do teu lado né felipe mostra aí pode ficar aí para falar comigo e eu tô do lado de carro dentro desse esgoto eu vou não visse agora nenhum detalhe altura da calçada não é à toa não tem água dentro mas esse portão aqui e foi interrompido não mandaram aqui ó pede o portão portão agora vê só só atravessar de um lado para o outro aqui é alto eu sou atleta eu posso pular mas quem não é crente não tá cansada tem carro de ar aí a gente chega do outro lado da calçada para conseguir conversar com o povo isso aqui é a marca de onde a água vem os moradores mandaram mandaram as imagens para gente quando o negócio tá cheio aqui fica bem pior do que a gente tá vendo né não só passa com essa bicicleta para dentro dessa lama aí faça o favor para mim te mostrar como é ruim mas acontece que se eu passar por aí vou perder minha saúde esculhambar minha bicicleta verdade esse problema não é de agora isso já faz mais de 15 anos que a população aqui da área sofre com esse alargamento já foi feito vários pedidos e até agora a cifra não compareceu ele mandou ninguém para fazer uma avaliação e se essa situação e não tem como você já fez várias reclamações e espero que o pessoal aí que seja responsável pelo problema e resolva o quanto antes a gente tá vendo muito mato a gente tá vendo que tem galeria de esgoto aqui que tá entupido segundo que vocês disseram e tem também uma galeria pluvial que aí a questão daquela água da chuva que tem que escolher por ela não tá dando vencimento infelizmente o fluxo de água é muito grande então dificulta a passagem dos pedestres dos veículos no meu carro também já ia ficando aqui umas duas vezes para terminar o calendário a gente chegou bem pertinho da lama para marcar a data ninguém tá aguentando não é brincadeira não viu 28 de junho a gente volta', {'entities': [[100, 110, 'LOC'], [127, 165, 'LOC'], [180, 190, 'LOC'], [307, 315, 'LOC'], [680, 686, 'LOC']]})
 ]
 
+def train_spacy(data,iterations):
+    TRAIN_DATA = data
+    nlp = spacy.blank('pt')  # create blank Language class
+    # create the built-in pipeline components and add them to the pipeline
+    # nlp.create_pipe works for built-ins that are registered with spaCy
+    if 'ner' not in nlp.pipe_names:
+        ner = nlp.create_pipe('ner')
+        nlp.add_pipe(ner, last=True)
+       
 
+    # add labels
+    for _, annotations in TRAIN_DATA:
+         for ent in annotations.get('entities'):
+            ner.add_label(ent[2])
+
+    # get names of other pipes to disable them during training
+    other_pipes = [pipe for pipe in nlp.pipe_names if pipe != 'ner']
+    with nlp.disable_pipes(*other_pipes):  # only train NER
+        optimizer = nlp.begin_training()
+        for itn in range(iterations):
+            print("Statring iteration " + str(itn))
+            random.shuffle(TRAIN_DATA)
+            losses = {}
+            for text, annotations in TRAIN_DATA:
+                nlp.update(
+                    [text],  # batch of texts
+                    [annotations],  # batch of annotations
+                    drop=0.2,  # dropout - make it harder to memorise data
+                    sgd=optimizer,  # callable to update weights
+                    losses=losses)
+            print(losses)
+    return nlp
+
+prdnlp = train_spacy(TRAIN_DATA, 5) # Correto é 20.
+
+# Save our trained Model
+modelfile = "myMdl"
+prdnlp.to_disk(modelfile)
+
+#Test your text
+test_text = "Agora meio-dia 22 hora do calendário JPB e a gente está muito feliz ainda não é o resolvido mas falta pouco eu tô falando da construção de uma creche no bairro dos Bancários aqui na capital a inauguração estava prevista para 2014 aí passou 2014 2015 2016 e nada as mães e os pais não contaram conversa e chamaram o calendário JPB na nossa segunda visita a situação mudou muito olha que coisa mais linda eles estão aqui admirado a creche né Pois é então já bem ou nada né que a gente teve naquele dia já tá com cara de creche né aquele colorido que não tinha a frente me diz uma coisa se eu tava aqui da outra Face e tem um monte de criança em casa como é que se sente vendo que agora já ganhou uma cara de creche né Ainda bem né Graças a Deus a gente tá vendo aí que realmente eles cumpriram e eu esperar que já terminaram né Vamos esperar que a gente possa trazer o mais rápido possível as crianças da gente aumentar os trabalhadores a obra foi bem avançada que disse que tá 70% mas a gente viu que não né mas agora com pensamento tá 90% E é exatamente isso que a prefeitura disse antes de vir para cá eu entrei em contato com a Secretaria de Educação do município e eles me disseram que essa obra aqui tá em 90% o que tá faltando o segundo eles é um acabamento algumas instalações hidráulicas e a Clara a calçada né porque a calçada não pode ficar assim para que as mães possam caminhar as crianças possam entrar aqui com segurança Então tá faltando muito pouco e a previsão da construtora é que esta obra Fique pronta no fim desse mês então tá muito pertinho chega para cá gente que a gente vai marcar as datas todas no calendário Por que a gente tem que vir aqui conferir o sonho de vocês realizar um sonho bem realizado tanto para mim quanto para ela para todas as mães que vocês viram essa obra parada muito tempo né esse exatamente tava muito tempo parado e a gente agora tá feliz né Tá vendo que tá andando hoje na primeira volta do calendário JPB a gente vai ter um carimbo aqui em andamento certo mas eu vou dizer um negócio é um carinho de andar mesmo com gostinho de Resolvido viu a obra voltou e voltou com força total agora a gente vai marcar ."
+doc = prdnlp(test_text)
+for ent in doc.ents:
+    print(ent.text, ent.start_char, ent.end_char, ent.label_)
+
+'''
 nlp = spacy.load("pt_core_news_sm")
 
 # Carregando dados.
@@ -1069,3 +1116,4 @@ for partial in teste:
     ts.write(',\n')
 
 #print( tuple(teste[0])[1])
+'''
