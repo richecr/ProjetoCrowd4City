@@ -78,8 +78,8 @@ def pre_processamento(texto):
     doc = nlp(texto)
     entidades_loc = [entidade for entidade in doc.ents if entidade.label_ == "LOC"]
     for token in doc:
-        if (token.text.lower() not in stop_words_spacy and len(token.text) > 3 and token.pos_ in allowed_postags and not verificar_palavra_entidade_loc(token.text, entidades_loc)):
-            doc_out.append(lematizacao(token.text))
+        if (token.text.lower() not in stop_words_spacy and len(token.text) > 3 and not verificar_palavra_entidade_loc(token.text, entidades_loc)):
+            doc_out.append(token.text)
 
     return doc_out
 
@@ -102,7 +102,7 @@ from nltk import word_tokenize, pos_tag
 # PRÉ-PROCESSAMENTO DOS DADOS.
 
 # Chamando a função de pré-processamento para cada texto.
-processed_docs = dados['texto'].map(lambda texto: texto.split())
+processed_docs = dados['texto'].map(lambda texto: pre_processamento(texto))
 print(processed_docs[:10])
 
 # Criando dicionário de palavras.
