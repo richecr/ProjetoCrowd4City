@@ -13,41 +13,47 @@ from gensim.utils import simple_preprocess, deaccent
 from gensim.models.coherencemodel import CoherenceModel
 
 def verificar_palavra_entidade_loc(palavra, entidades_loc):
-    """
+	"""
 	Verifica se a palavra é uma entidade de localização.
 
 	Parâmetros:
 	----------
-	``palavra`` : String
+	palavra : String
 		- Palavra a ser verificada.
-	``entidades_loc`` : List
+	entidades_loc : List
 		- Lista de entidades de localizações reconhecidas pelo Spacy.
 
 	Retorno:
 	----------
-	``True`` : Caso a palavra seja uma entidade de localização.\n
-	``False`` : Caso a palavra não seja uma entidade de localização.
+	True : Caso a palavra seja uma entidade de localização.\n
+	False : Caso a palavra não seja uma entidade de localização.
 	"""
-    for e in entidades_loc:
-    	if (e.text.lower() == palavra.lower()):
-            return True
+    
+	for e in entidades_loc:
+		if (e.text.lower() == palavra.lower()):
+			return True
 
-    return False
+	return False
 
 # Configurando bibliotecas e variaveis globais.
 stemmer = PorterStemmer()
+nlp = spacy.load("pt_core_news_sm")
+
+nlp.Defaults.stop_words |= {"tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
+stop_words_spacy = nlp.Defaults.stop_words
+
 def lematizacao(palavra):
     """
 	Realiza a lematização de uma palavra.
 
 	Parâmetro:
 	----------
-	``palavra`` : String
+	palavra : String
 		- Palavra que irá sofrer a lematização.
 
 	Retorno:
 	----------
-	``palavra`` : String
+	palavra : String
 		- Palavra lematizada.
 	"""
     return stemmer.stem(WordNetLemmatizer().lemmatize(palavra, pos="v"))
@@ -64,24 +70,25 @@ def pre_processamento(texto):
 
 	Parâmetro:
 	----------
-	``texto`` : String
+	texto : String
 		- Texto que irá sofrer o pré-processamento.
-	``titulo``: String
+	titulo: String
 		- Titulo do texto.
 
 	Retorno:
 	----------
-	``doc_out`` : List
+	doc_out : List
 		- Lista de palavras que passaram pelo pré-processamento.
 	"""
     doc_out = []
     doc = nlp(texto)
     entidades_loc = [entidade for entidade in doc.ents if entidade.label_ == "LOC"]
     for token in doc:
-        if (token.text.lower() not in stop_words_spacy and len(token.text) > 3 and not verificar_palavra_entidade_loc(token.text, entidades_loc)):
-            doc_out.append(token.text)
+        if (token.text not in stop_words_spacy and len(token.text) > 3 and token.pos_ in allowed_postags and not verificar_palavra_entidade_loc(token.text, entidades_loc)):
+            doc_out.append(lematizacao(token.text))
 
     return doc_out
+
 
 # CONFIGURAÇÕES DE BIBLIOTECAS.
 np.random.seed(2018)
@@ -102,7 +109,7 @@ from nltk import word_tokenize, pos_tag
 # PRÉ-PROCESSAMENTO DOS DADOS.
 
 # Chamando a função de pré-processamento para cada texto.
-processed_docs = dados['texto'].map(lambda texto: pre_processamento(texto))
+processed_docs = dados['texto'].map(lambda texto: texto.split())
 print(processed_docs[:10])
 
 # Criando dicionário de palavras.
@@ -123,6 +130,7 @@ corpus_tfidf = tfidf[bow_corpus]
 
 # Criando e treinando o modelo.
 lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=4, id2word=dictionary, passes=10)
+# lda_model_tfidf.save("./modelo/meu_lda_model")
 
 # Imprimir os tópicos do modelo.
 for topic in lda_model_tfidf.print_topics(-1):
