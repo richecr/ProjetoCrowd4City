@@ -12,6 +12,8 @@ from gensim.parsing.preprocessing import STOPWORDS
 from gensim.utils import simple_preprocess, deaccent
 from gensim.models.coherencemodel import CoherenceModel
 
+import pyLDAvis.gensim
+
 def verificar_palavra_entidade_loc(palavra, entidades_loc):
 	"""
 	Verifica se a palavra é uma entidade de localização.
@@ -131,6 +133,10 @@ corpus_tfidf = tfidf[bow_corpus]
 # Criando e treinando o modelo.
 lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=4, id2word=dictionary, passes=10)
 # lda_model_tfidf.save("./modelo/meu_lda_model")
+
+#pyLDAvis.enable_notebook()
+#vis = pyLDAvis.gensim.prepare(lda_model_tfidf, corpus_tfidf, dictionary=lda_model_tfidf.id2word)
+#vis
 
 # Imprimir os tópicos do modelo.
 for topic in lda_model_tfidf.print_topics(-1, 15):
