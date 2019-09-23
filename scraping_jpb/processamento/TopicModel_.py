@@ -133,7 +133,7 @@ lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=4, id2word
 # lda_model_tfidf.save("./modelo/meu_lda_model")
 
 # Imprimir os tópicos do modelo.
-for topic in lda_model_tfidf.print_topics(-1):
+for topic in lda_model_tfidf.print_topics(-1, 15):
 	print(topic)
 	print("-----------")
 
