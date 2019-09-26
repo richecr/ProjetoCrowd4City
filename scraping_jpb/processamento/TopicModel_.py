@@ -178,7 +178,8 @@ def grafico_topc_docs():
 	# Topic Distribution by Dominant Topics
 	ax1.bar(x='Dominant_Topic', height='count', data=df_dominant_topic_in_each_doc, width=.5, color='firebrick')
 	ax1.set_xticks(range(df_dominant_topic_in_each_doc.Dominant_Topic.unique().__len__()))
-	tick_formatter = FuncFormatter(lambda x, pos: 'Topic ' + str(x)+ '\n' + df_top3words.loc[df_top3words.topic_id==x, 'words'].values[0])
+	
+	tick_formatter = FuncFormatter(lambda x, pos: 'Topic ' + str(x+1)+ '\n' + df_top3words.loc[df_top3words.topic_id==x, 'words'].values[0])
 	ax1.xaxis.set_major_formatter(tick_formatter)
 	ax1.set_title('Number of Documents by Dominant Topic', fontdict=dict(size=10))
 	ax1.set_ylabel('Number of Documents')
@@ -191,7 +192,7 @@ def grafico_topc_docs():
 	ax2.set_title('Number of Documents by Topic Weightage', fontdict=dict(size=10))
 
 	plt.show()
-# grafico_topc_docs()
+grafico_topc_docs()
 
 			# Imprimir os tópicos do modelo.
 def imprimir_topicos():
@@ -205,7 +206,7 @@ def coherence_model(lda_model_, processed_docs, corpus_tfidf, dictionary):
 	coherence_model_lda = CoherenceModel(model=lda_model_, texts=processed_docs, corpus=corpus_tfidf, dictionary=dictionary, coherence='c_v')
 	coherence_lda = coherence_model_lda.get_coherence()
 	print('\nCoherence Score LDAModelTfIdf: ', coherence_lda)
-coherence_model(lda_model_tfidf, processed_docs, corpus_tfidf, dictionary)
+# coherence_model(lda_model_tfidf, processed_docs, corpus_tfidf, dictionary)
 
 			# Testes simples
 def testes():
