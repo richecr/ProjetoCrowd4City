@@ -11,7 +11,6 @@ from gensim import corpora, models
 from gensim.parsing.preprocessing import STOPWORDS
 from gensim.utils import simple_preprocess, deaccent
 from gensim.models.coherencemodel import CoherenceModel
-
 import pyLDAvis.gensim
 
 def verificar_palavra_entidade_loc(palavra, entidades_loc):
@@ -90,7 +89,6 @@ def pre_processamento(texto):
             doc_out.append(lematizacao(token.text))
 
     return doc_out
-
 
 # CONFIGURAÇÕES DE BIBLIOTECAS.
 np.random.seed(2018)
