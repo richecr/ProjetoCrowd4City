@@ -28,14 +28,6 @@ nlp = spacy.load("pt_core_news_sm")
 nlp.Defaults.stop_words |= {"vamos", "olha", "pois", "tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
 stop_words_spacy = nlp.Defaults.stop_words
 
-def remove_stop_words(texto):
-	saida = ""
-	for palavra in texto.split():
-		if (palavra.lower() not in stop_words_spacy and len(palavra) > 3):
-			saida += palavra + " "
-	s = saida.strip()
-	return s
-
 def concantena_end(lista_end):
     saida = []
     for i in range(len(lista_end) - 1):
