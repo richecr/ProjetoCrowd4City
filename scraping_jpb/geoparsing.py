@@ -139,20 +139,31 @@ continuar = "5670399"
 def main(textos, titulos):
 	cont = 0
 	cont_erros = 0
+	total = 0
 	for texto, titulo in zip(textos, titulos):
 		texto = pre_processing(texto)
 		regex = r"[A-ZÀ-Ú]+[a-zà-ú]+[ \-]?(?:d[a-u].)?(?:[A-ZÀ-Ú]+[a-zà-ú]+)*"
 		candidates = re.findall(regex, texto)
 		c = []
-		print(candidates)
+		flag = True
 		for candidate in candidates:
+			achou = False
 			for key in gazetter_ln.keys():
-				if candidate.lower() in key:
+				if candidate.lower() == key:
 					c.append(key)
-		
-		print(len(c))
-		print("--------------------")
-		break
+					achou = True
+					break
+			if achou:
+				print(candidate)
+				print(c)
+				flag = False
+				cont += 1
+				break
+		if flag:
+			cont_erros += 1
+		total += 1
+		if (total == 50):
+			break
 		'''
 		ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
 		ents_loc = remove_repeat(ents_loc)
@@ -180,6 +191,8 @@ def main(textos, titulos):
 			raise Exception("Não foi possivel realizar o geoparsing do texto")
 		'''
 
+	print(cont)
+	print(cont_erros)
 textos_limpos = []
 titulos = []
 arq = csv.DictReader(open("./textos_videos.csv", "r", encoding='utf-8'))
