@@ -28,8 +28,11 @@ nlp = spacy.load("pt_core_news_sm")
 nlp.Defaults.stop_words |= {"ficar", "quando", "aqui", "vamos", "olha", "pois", "tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
 stop_words_spacy = nlp.Defaults.stop_words
 
-gazetter_ln = csv.DictReader(open("./processamento/gazetteer/gazetteer_ln.csv", "r", encoding='utf-8'))
-gazetter_pt = csv.DictReader(open("./processamento/gazetteer/gazetteer_pt.csv", "r", encoding='utf-8'))
+gazetteer_ln = csv.DictReader(open("./processamento/gazetteer/gazetteer_ln.csv", "r", encoding='utf-8'))
+gazetteer_pt = csv.DictReader(open("./processamento/gazetteer/gazetteer_pt.csv", "r", encoding='utf-8'))
+
+suburb = [k['name'].lower() for k in gazetteer_pt if k['fclass'] == "suburb" and len(k['name'].split()) <= 1]
+print(suburb)
 
 def processar_gazetteer(gazetter):
 	saida = {}
@@ -38,8 +41,8 @@ def processar_gazetteer(gazetter):
 
 	return saida
 
-gazetter_ln = processar_gazetteer(gazetter_ln)
-gazetter_pt = processar_gazetteer(gazetter_pt)
+gazetteer_ln = processar_gazetteer(gazetteer_ln)
+gazetteer_pt = processar_gazetteer(gazetteer_pt)
 
 def concantena_end(lista_end):
     saida = []
@@ -142,57 +145,34 @@ def main(textos, titulos):
 	total = 0
 	for texto, titulo in zip(textos, titulos):
 		texto = pre_processing(texto)
-		regex = r"[A-ZÀ-Ú]+[a-zà-ú]+[ \-]?(?:d[a-u].)?(?:[A-ZÀ-Ú]+[a-zà-ú]+)*"
-		candidates = re.findall(regex, texto)
+		texto = texto.lower()
 		c = []
 		flag = True
-		for candidate in candidates:
-			achou = False
-			for key in gazetter_ln.keys():
-				if candidate.lower() == key:
-					c.append(key)
-					achou = True
-					break
-			if achou:
-				print(candidate)
-				print(c)
-				flag = False
-				cont += 1
+		texto_lista = texto.split()
+		for key in gazetteer_ln.keys():
+			if (len(key.split()) > 1 or key in suburb):
+				for i in range(len(texto_lista)):
+					if (key in texto_lista[i]):
+						flag = False
+						cont += 1
+						print(key)
+						print(gazetteer_ln[key])
+						print("achei")
+						break
+			else:
+				continue
+			if not flag:
 				break
+
 		if flag:
 			cont_erros += 1
 		total += 1
-		if (total == 50):
+		if total == 50:
 			break
-		'''
-		ents_loc = [entity for entity in doc.ents if entity.label_ == "LOC" or entity.label_ == "GPE"]
-		ents_loc = remove_repeat(ents_loc)
-		print(ents_loc)
-		for loc in ents_loc:
-			flag = False
-			for key in gazetter_ln.keys():
-				if str(loc).lower() in key:
-					print(str(loc))
-					print("achou")
-					flag = True
-			if not flag:
-				print(str(loc))
-				print("n achou")
-				flag = True
-		print("--------------------")
-		'''
-		'''
-		address_found = concantena_end(ents_loc)
-		result = verfica(address_found, limit)
-		
-		if (result[0]):
-			return result[1]
-		else:
-			raise Exception("Não foi possivel realizar o geoparsing do texto")
-		'''
-
+	print(total)
 	print(cont)
 	print(cont_erros)
+
 textos_limpos = []
 titulos = []
 arq = csv.DictReader(open("./textos_videos.csv", "r", encoding='utf-8'))
