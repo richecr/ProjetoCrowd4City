@@ -32,11 +32,14 @@ gazetteer_ln = csv.DictReader(open("./processamento/gazetteer/gazetteer_ln.csv",
 gazetteer_pt = csv.DictReader(open("./processamento/gazetteer/gazetteer_pt.csv", "r", encoding='utf-8'))
 
 suburb = [k['name'].lower() for k in gazetteer_pt if k['fclass'] == "suburb" and len(k['name'].split()) <= 1]
-print(suburb)
+
+residencial = {}
 
 def processar_gazetteer(gazetter):
 	saida = {}
 	for row in gazetter:
+		if row['fclass'] == "residential":
+			residencial[row['name'].lower()] = row['coordenates']
 		saida[row['name'].lower()] = row['coordenates']
 
 	return saida
@@ -143,22 +146,23 @@ def main(textos, titulos):
 	cont = 0
 	cont_erros = 0
 	total = 0
+	print(gazetteer_ln['rua napoleão crispim'])
 	for texto, titulo in zip(textos, titulos):
-		texto = pre_processing(texto)
+		#texto = pre_processing(texto)
 		texto = texto.lower()
 		c = []
 		flag = True
+		print
 		texto_lista = texto.split()
-		for key in gazetteer_ln.keys():
+		for key in residencial.keys():
 			if (len(key.split()) > 1 or key in suburb):
-				for i in range(len(texto_lista)):
-					if (key in texto_lista[i]):
-						flag = False
-						cont += 1
-						print(key)
-						print(gazetteer_ln[key])
-						print("achei")
-						break
+				tamanho_key = key.split()
+				# Pensar sobre o tamanho da key e ir buscar EXATAMENTE isso no texto.
+				if (key in texto):
+					flag = False
+					cont += 1
+					print(key)
+					c.append(key)
 			else:
 				continue
 			if not flag:
@@ -167,11 +171,12 @@ def main(textos, titulos):
 		if flag:
 			cont_erros += 1
 		total += 1
-		if total == 50:
+		if total == 200:
 			break
 	print(total)
 	print(cont)
 	print(cont_erros)
+	print(c)
 
 textos_limpos = []
 titulos = []
@@ -181,7 +186,10 @@ for p in arq:
 	textos_limpos.append(p['texto'])
 	titulos.append(p['titulo'])
 
+#textos_limpos = ["o calendário JPB foi até a zona leste de Campina Grande os moradores do bairro José Pinheiro estão muito preocupados com trânsito no cruzamento da rua Marinheira Agra seguintes segundo eles e a gente viu de perto também no local não tem sinalização os carros não respeitam os pedestres Vários acidentes acontecem por lá quem foi conseguir essa loucura de perto foi Marcos Vasconcelos Lembra daquela música infantil que fala assim se essa rua fosse minha eu mandava ladrilhar com pedrinhas de brilhante para o meu amor passar pois é o pessoal aqui da rua Marinheira Agra não queria tanto não queria apenas um asfalto e o pessoal conseguiu A rua está um tapete só só que ao chegar no cruzamento com a Campos Sales Esqueceram de um detalhe bastante importante para mim a sinalização por aqui o cruzamento é uma bagunça só E olha que essa comerciante falou que o trânsito está até tranquilo só chegou a Comparar as cruzamento com alguns outro trânsito de assim a solução para que a Índia tem hora que eu tô naquele nojenta Não estou no Brasil não é possível que eu esteja no Brasil por que uma loucura tão grande quem vai passar primeiro que não vai passar primeiro é horrível horrível né o barulho o tempo todo eu tava horrível aqui mas foi ficar apenas poucos minutos e o problema apareceu aqui ninguém sabe de quem é a prioridade para entrar em uma das ruas e se você for um pedestre então é complicado e o pessoal não tem educação não tem ainda Educação de trânsito muita gente não tem educação de trânsito quando vai passar muitas vezes se pede parada ninguém para ficar como não poderia deixar de ser se ninguém se entende neste cruzamento no bairro de José Pinheiro acidente acontece direto é só que vem cruzando a gente é a principal que ele conhece o bairro Passa direto e indireto Faz 15 dias que a senhora e o rapaz aí ela vir aí o carro bateu jogo hoje não tá fazendo ali quebrou a perna foi problema aqui já tem oito meses eu acho que vai acontecer um acidente aqui para tentar resolver esse problema ou trouxemos o calendário JPB até o bairro do José Pinheiro aqui do meu lado Já está o Alex masculino e gerente de operações da sttp o que pode ser feito aqui iremos em diante do problema que está acontecendo com relação a algumas partes das sinalizações que estão em déficit colocarmos a sinalização horizontal vertical colocaremos as placas faremos as pinturas colocaremos Estações intercalados para que possa minimizar a velocidade como também faremos um trabalho de pintura das vias para que possa os veículos não estacionar menos 5 metros aqui como também colocaremos agentes de trânsito para que possa ajudar no tráfico desses veículos Fábio acha que isso resolve nada não chegou ainda aí já que ele tá aqui pessoalmente a gente vai fazer aí não vai fazer como"]
 main(textos_limpos, titulos)
+
+# main(textos_limpos, titulos)
 
 
 '''
