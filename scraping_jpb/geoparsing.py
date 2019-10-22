@@ -144,29 +144,24 @@ def pre_processing(text):
 
         return lista2text(doc_out)
 
-continuar = "5670399"
 def main(textos, titulos):
-	cont = 0
-	cont_erros = 0
+	correct = 0
+	fail = 0
 	total = 0
 	for texto, titulo in zip(textos, titulos):
 		#texto = pre_processing(texto)
 		texto = texto.lower()
 		c = []
 		geral = []
-		flag = True
+		flag = False
 		texto_lista = texto.split()
-		end_resi = False
 		for key in residencial.keys():
 			key_aux = key.split()
 			if key_aux[0] == "rua":
 				key_aux = key_aux[1:]
 			if (len(key_aux) > 1):
 				if re.search("\\b" + key + "\\b", texto):
-					end_resi = True
-					flag = False
-					print(key)
-					print(titulo)
+					flag = True
 					c.append(key)
 
 		for key in gazetteer_ln.keys():
@@ -175,21 +170,15 @@ def main(textos, titulos):
 				key_aux = key_aux[1:]
 			if (len(key_aux) > 1):
 				if re.search("\\b" + key + "\\b", texto):
-					end_resi = True
 					flag = False
-					cont += 1
-					print(key)
-					print(titulo)
 					c.append(key)
 
 		print(c)
 		if flag:
-			cont_erros += 1
+			correct += 1
 		else:
-			cont += 1
+			fail += 1
 		total += 1
-		if total == 200:
-			break
 
 	print(total)
 	print(cont)
