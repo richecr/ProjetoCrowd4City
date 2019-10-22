@@ -41,12 +41,14 @@ def processar_gazetteer(gazetter):
 	for row in gazetter:
 		if row['fclass'] == "residential":
 			residencial[row['name'].lower()] = row['coordenates']
-		saida[row['name'].lower()] = row['coordenates']
+		else:
+			saida[row['name'].lower()] = row['coordenates']
 
 	return saida
 
 gazetteer_ln = processar_gazetteer(gazetteer_ln)
 gazetteer_pt = processar_gazetteer(gazetteer_pt)
+gazetteer_ln.update(gazetteer_pt)
 
 def concantena_end(lista_end):
     saida = []
@@ -147,19 +149,33 @@ def main(textos, titulos):
 	cont = 0
 	cont_erros = 0
 	total = 0
-	print(gazetteer_ln['rua napoleão crispim'])
 	for texto, titulo in zip(textos, titulos):
 		#texto = pre_processing(texto)
 		texto = texto.lower()
 		c = []
+		geral = []
 		flag = True
 		texto_lista = texto.split()
+		end_resi = False
 		for key in residencial.keys():
 			key_aux = key.split()
 			if key_aux[0] == "rua":
 				key_aux = key_aux[1:]
 			if (len(key_aux) > 1):
 				if re.search("\\b" + key + "\\b", texto):
+					end_resi = True
+					flag = False
+					print(key)
+					print(titulo)
+					c.append(key)
+
+		for key in gazetteer_ln.keys():
+			key_aux = key.split()
+			if key_aux[0] == "rua":
+				key_aux = key_aux[1:]
+			if (len(key_aux) > 1):
+				if re.search("\\b" + key + "\\b", texto):
+					end_resi = True
 					flag = False
 					cont += 1
 					print(key)
