@@ -6,6 +6,7 @@ import pandas as pd
 import requests
 import json
 import geocoder
+import re
 
 import gensim
 from nltk.stem.porter import *
@@ -152,31 +153,31 @@ def main(textos, titulos):
 		texto = texto.lower()
 		c = []
 		flag = True
-		print
 		texto_lista = texto.split()
 		for key in residencial.keys():
-			if (len(key.split()) > 1 or key in suburb):
-				tamanho_key = key.split()
-				# Pensar sobre o tamanho da key e ir buscar EXATAMENTE isso no texto.
-				if (key in texto):
+			key_aux = key.split()
+			if key_aux[0] == "rua":
+				key_aux = key_aux[1:]
+			if (len(key_aux) > 1):
+				if re.search("\\b" + key + "\\b", texto):
 					flag = False
 					cont += 1
 					print(key)
+					print(titulo)
 					c.append(key)
-			else:
-				continue
-			if not flag:
-				break
 
+		print(c)
 		if flag:
 			cont_erros += 1
+		else:
+			cont += 1
 		total += 1
 		if total == 200:
 			break
+
 	print(total)
 	print(cont)
 	print(cont_erros)
-	print(c)
 
 textos_limpos = []
 titulos = []
