@@ -151,7 +151,7 @@ def main(textos, titulos):
 	for texto, titulo in zip(textos, titulos):
 		#texto = pre_processing(texto)
 		texto = texto.lower()
-		c = []
+		residential = []
 		geral = []
 		flag = False
 		texto_lista = texto.split()
@@ -162,7 +162,7 @@ def main(textos, titulos):
 			if (len(key_aux) > 1):
 				if re.search("\\b" + key + "\\b", texto):
 					flag = True
-					c.append(key)
+					residential.append(key)
 
 		for key in gazetteer_ln.keys():
 			key_aux = key.split()
@@ -170,10 +170,11 @@ def main(textos, titulos):
 				key_aux = key_aux[1:]
 			if (len(key_aux) > 1):
 				if re.search("\\b" + key + "\\b", texto):
-					flag = False
-					c.append(key)
+					flag = True
+					geral.append(key)
 
-		print(c)
+		print("residencial: ", residential)
+		print("residencial: ", geral)
 		if flag:
 			correct += 1
 		else:
@@ -181,8 +182,8 @@ def main(textos, titulos):
 		total += 1
 
 	print(total)
-	print(cont)
-	print(cont_erros)
+	print(correct)
+	print(fail)
 
 textos_limpos = []
 titulos = []
