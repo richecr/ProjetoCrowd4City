@@ -81,4 +81,4 @@ def features(localidade="cg"):
 		t = [ p['osm_id'].__str__(), p["fclass"].__str__(), p["name"].__str__(), p["type"].__str__(), coord ]
 		f.writerow(t)
 
-features(localidade="pb")
+points(localidade="pb")
