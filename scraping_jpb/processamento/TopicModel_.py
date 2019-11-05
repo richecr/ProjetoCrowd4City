@@ -13,83 +13,6 @@ from gensim.utils import simple_preprocess, deaccent
 from gensim.models.coherencemodel import CoherenceModel
 import pyLDAvis.gensim
 
-def verificar_palavra_entidade_loc(palavra, entidades_loc):
-	"""
-	Verifica se a palavra é uma entidade de localização.
-
-	Parâmetros:
-	----------
-	palavra : String
-		- Palavra a ser verificada.
-	entidades_loc : List
-		- Lista de entidades de localizações reconhecidas pelo Spacy.
-
-	Retorno:
-	----------
-	True : Caso a palavra seja uma entidade de localização.\n
-	False : Caso a palavra não seja uma entidade de localização.
-	"""
-    
-	for e in entidades_loc:
-		if (e.text.lower() == palavra.lower()):
-			return True
-
-	return False
-
-# Configurando bibliotecas e variaveis globais.
-stemmer = PorterStemmer()
-nlp = spacy.load("pt_core_news_sm")
-
-nlp.Defaults.stop_words |= {"tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
-stop_words_spacy = nlp.Defaults.stop_words
-
-def lematizacao(palavra):
-    """
-	Realiza a lematização de uma palavra.
-
-	Parâmetro:
-	----------
-	palavra : String
-		- Palavra que irá sofrer a lematização.
-
-	Retorno:
-	----------
-	palavra : String
-		- Palavra lematizada.
-	"""
-    return stemmer.stem(WordNetLemmatizer().lemmatize(palavra, pos="v"))
-
-allowed_postags = ['NOUN', 'ADJ', 'PRON']
-def pre_processamento(texto):
-    """
-	Realiza o pré-processamento de um texto:
-		- Remove Stop Words.
-		- Remove palavras que são entidades de localizações.
-		- Colocar as palavras para caixa baixa.
-		- Realiza a lematização das palavras.
-		- Apenas palavras que são: substantivos, adjetivos e pronomes.
-
-	Parâmetro:
-	----------
-	texto : String
-		- Texto que irá sofrer o pré-processamento.
-	titulo: String
-		- Titulo do texto.
-
-	Retorno:
-	----------
-	doc_out : List
-		- Lista de palavras que passaram pelo pré-processamento.
-	"""
-    doc_out = []
-    doc = nlp(texto)
-    entidades_loc = [entidade for entidade in doc.ents if entidade.label_ == "LOC"]
-    for token in doc:
-        if (token.text not in stop_words_spacy and len(token.text) > 3 and token.pos_ in allowed_postags and not verificar_palavra_entidade_loc(token.text, entidades_loc)):
-            doc_out.append(lematizacao(token.text))
-
-    return doc_out
-
 # CONFIGURAÇÕES DE BIBLIOTECAS.
 np.random.seed(2018)
 nltk.download('wordnet')
@@ -101,10 +24,6 @@ dados.drop_duplicates(['texto'], inplace=True)
 textos = dados['texto']
 # print(textos[:5])
 
-nlp.Defaults.stop_words |= {"wav", "jpb", "volta", "hora", "tapa", "tudo", "coisa", "toda", "tava", "pessoal", "dessa", "resolvido", "aqui", "gente", "tá", "né", "calendário", "jpb", "agora", "voltar", "lá", "hoje", "aí", "ainda", "então", "vai", "porque", "moradores", "fazer", "rua", "bairro", "prefeitura", "todo", "vamos", "problema", "fica", "ver", "tô"}
-stop_words_spacy = nlp.Defaults.stop_words
-
-from nltk import word_tokenize, pos_tag
 
 # PRÉ-PROCESSAMENTO DOS DADOS.
 
@@ -136,7 +55,15 @@ lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=4, id2word
 #vis = pyLDAvis.gensim.prepare(lda_model_tfidf, corpus_tfidf, dictionary=lda_model_tfidf.id2word)
 #vis
 
-			# Gráficos de tópicos mais discutidos nos documentos.
+# Verificando o 'coherence score' para avaliar a qualidade dos tópicos aprendidos.
+def coherence_model(lda_model_, processed_docs, corpus_tfidf, dictionary):
+	coherence_model_lda = CoherenceModel(model=lda_model_, texts=processed_docs, corpus=corpus_tfidf, dictionary=dictionary, coherence='c_v')
+	coherence_lda = coherence_model_lda.get_coherence()
+	print('\nCoherence Score LDAModelTfIdf: ', coherence_lda)
+coherence_model(lda_model_tfidf, processed_docs, corpus_tfidf, dictionary)
+
+
+# Gráficos de tópicos mais discutidos nos documentos.
 # Sentence Coloring of N Sentences
 def topics_per_document(model, corpus, start=0, end=1):
 		corpus_sel = corpus[start:end]
@@ -190,23 +117,16 @@ def grafico_topc_docs():
 	ax2.set_title('Number of Documents by Topic Weightage', fontdict=dict(size=10))
 
 	plt.show()
-grafico_topc_docs()
+# grafico_topc_docs()
 
-			# Imprimir os tópicos do modelo.
+# Imprimir os tópicos do modelo.
 def imprimir_topicos():
 	for topic in lda_model_tfidf.print_topics(-1, 15):
 		print(topic)
 		print("-----------")
 # imprimir_topicos()
 
-			# Verificando o 'coherence score' para avaliar a qualidade dos tópicos aprendidos.
-def coherence_model(lda_model_, processed_docs, corpus_tfidf, dictionary):
-	coherence_model_lda = CoherenceModel(model=lda_model_, texts=processed_docs, corpus=corpus_tfidf, dictionary=dictionary, coherence='c_v')
-	coherence_lda = coherence_model_lda.get_coherence()
-	print('\nCoherence Score LDAModelTfIdf: ', coherence_lda)
-# coherence_model(lda_model_tfidf, processed_docs, corpus_tfidf, dictionary)
-
-			# Testes simples
+# Testes simples
 def testes():
 	# Deve ser sobre saneamento.
 	print("-------")
@@ -251,7 +171,7 @@ def testes():
 		print("Score: {}\t Topic: {}".format(score, lda_model_tfidf.print_topic(index, 10)))
 # testes()
 
-			# Coherence Score: Avaliar a qualidade dos tópicos aprendidos.
+# Coherence Score: Avaliar a qualidade dos tópicos aprendidos.
 def compute_coherence_values(dct, corpus_tfidf, texts, limit, start, step):
 	coherence_values = []
 	model_list = []
