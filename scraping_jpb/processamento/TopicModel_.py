@@ -51,9 +51,9 @@ corpus_tfidf = tfidf[bow_corpus]
 lda_model_tfidf = gensim.models.LdaMulticore(corpus_tfidf, num_topics=4, id2word=dictionary, passes=10, workers=4)
 # lda_model_tfidf.save("./modelo/meu_lda_model")
 
-#pyLDAvis.enable_notebook()
-#vis = pyLDAvis.gensim.prepare(lda_model_tfidf, corpus_tfidf, dictionary=lda_model_tfidf.id2word)
-#vis
+pyLDAvis.enable_notebook()
+vis = pyLDAvis.gensim.prepare(lda_model_tfidf, corpus_tfidf, dictionary=lda_model_tfidf.id2word)
+vis
 
 # Verificando o 'coherence score' para avaliar a qualidade dos tópicos aprendidos.
 def coherence_model(lda_model_, processed_docs, corpus_tfidf, dictionary):
