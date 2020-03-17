@@ -2,7 +2,7 @@
 > Repositório para desenvolver as atividades realizadas para o projeto do LSI - Crowd4City
 
 ## Repositório para o projeto principal
-> [Respositório principal](https://github.com/pedrofwanderley/Crowd4CityPrototype)
+> [Respositório do site do Crowd4City](https://github.com/pedrofwanderley/Crowd4CityPrototype)
 
 #### OBSERVAÇÃO:
 O código `twittwe_scraping` não foi feito por mim. Um colega do LSI(Anderson Almeida), 
