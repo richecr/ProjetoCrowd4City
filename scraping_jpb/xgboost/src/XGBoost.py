@@ -17,7 +17,7 @@ import nltk
 spacy.cli.download("pt_core_news_sm")
 nltk.download('wordnet')
 
-data = pd.read_csv('textos_videos.csv')
+data = pd.read_csv('textos_videos1.csv')
 
 X = data['texto']
 y = data['classes_problema']
