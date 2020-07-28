@@ -1,8 +1,11 @@
 # Projeto Crowd4City
-> Repositório para desenvolver as atividades realizadas para o projeto do LSI - Crowd4City
+Repositório para desenvolver as atividades realizadas para o projeto do LSI - Crowd4City
+
+Os estudos feitos aqui resultou na criação da biblioteca [PyElit](https://github.com/richecr/PyElit).
 
 ## Repositório para o projeto principal
 > [Respositório do site do Crowd4City](https://github.com/pedrofwanderley/Crowd4CityPrototype)
+
 
 #### OBSERVAÇÃO:
 O código `twittwe_scraping` não foi feito por mim. Um colega do LSI(Anderson Almeida), 
